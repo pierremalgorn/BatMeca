@@ -18,7 +18,7 @@
 <nav class="navbar navbar-inverse" role="navigation">
 	<div class="navbar-header">
   
-    <a class="navbar-brand" href="#">Brand</a>
+    <a class="navbar-brand" href="#">BatMeca</a>
   </div>
 </nav>
 
