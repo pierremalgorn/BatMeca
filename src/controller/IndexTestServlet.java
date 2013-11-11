@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,34 +10,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MaterialService;
+import entity.SubMaterial;
+import entity.Test;
+import service.SubMaterialService;
+import service.TestService;
 import service.manager.ServiceManager;
-import entity.Material;
 
 /**
- * Servlet implementation class addMaterialServlet
+ * Servlet implementation class IndexTestServlet
  */
-@WebServlet("/addMaterial")
-public class AddMaterialServlet extends HttpServlet {
+@WebServlet("/IndexTest")
+public class IndexTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private MaterialService materialService;
-	
+    private TestService testService;
+    private SubMaterialService subMaterialSevice;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddMaterialServlet() {
+    public IndexTestServlet() {
         super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        
+        testService = ServiceManager.INSTANCE.getTestService();
+        subMaterialSevice = ServiceManager.INSTANCE.getSubMaterialService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("idSub");
+		SubMaterial sub = new SubMaterial();
+		sub = subMaterialSevice.find(Integer.parseInt(id));
+		List<Test> tests = testService.findBySub(sub);
+		System.out.println("NB TEST = "+tests.size());
+		request.setAttribute("sub", sub);
+		request.setAttribute("tests", tests);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addMaterial.jsp"));
+				response.encodeURL("/WEB-INF/indexTest.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -44,13 +53,7 @@ public class AddMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("inputName");
-		System.out.println("NAME  = "+name);
-		Material mat = new Material();
-		mat.setName(name);
-		
-		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		// TODO Auto-generated method stub
 	}
 
 }

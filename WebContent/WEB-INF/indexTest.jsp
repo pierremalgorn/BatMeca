@@ -5,11 +5,16 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">Test List
-			<a href="AddTest?idSub=${requestScope.sub.id }" class="btn btn-primary pull-right" >Add Test</a>
+		<h1 class="page-header">
+			Test List <a href="AddTest?idSub=${requestScope.sub.id }"
+				class="btn btn-primary pull-right">Add Test</a>
 		</h1>
 	</div>
 	<div class="row">
+		<ol class="breadcrumb">
+			<li><a href="Material?idMaterial=${requestScope.sub.material.id }">${requestScope.sub.material.name }</a></li>
+			<li class="active">${requestScope.sub.name }</li>
+		</ol>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -20,15 +25,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.tests }" var="test" >
+				<c:forEach items="${requestScope.tests }" var="test">
 					<tr>
 						<td>${test.id }</td>
 						<td>${test.name }</td>
 						<td>${test.date }</td>
 						<td>
-							<ul class="nav nav-pills" >
-								<li><a href="#" >Show</a></li>
-								<li><a href="RemoveTest?id=${test.id }" ><i class="glyphicon glyphicon-remove" ></i></a></li>
+							<ul class="nav nav-pills">
+								<li><a href="#">Show</a></li>
+								<li><a href="RemoveTest?id=${test.id }"><i
+										class="glyphicon glyphicon-remove"></i></a></li>
+								<li><a href="TestHandler">Test Handler</a></li>
 							</ul>
 						</td>
 					</tr>

@@ -2,55 +2,48 @@ package controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MaterialService;
+import entity.SubMaterial;
+import service.SubMaterialService;
 import service.manager.ServiceManager;
-import entity.Material;
 
 /**
- * Servlet implementation class addMaterialServlet
+ * Servlet implementation class RemoveSubMaterialServlet
  */
-@WebServlet("/addMaterial")
-public class AddMaterialServlet extends HttpServlet {
+@WebServlet("/removeSubMaterial")
+public class RemoveSubMaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private MaterialService materialService;
-	
+    private SubMaterialService subMaterialService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddMaterialServlet() {
+    public RemoveSubMaterialServlet() {
         super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        
+        subMaterialService = ServiceManager.INSTANCE.getSubMaterialService();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addMaterial.jsp"));
-		rd.forward(request, response);
+		
+		int id  = Integer.parseInt((String) request.getParameter("id"));
+		SubMaterial sub = subMaterialService.find(id);
+		subMaterialService.remove(id);
+		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Material?idMaterial="+sub.getMaterial().getId()));
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("inputName");
-		System.out.println("NAME  = "+name);
-		Material mat = new Material();
-		mat.setName(name);
-		
-		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		// TODO Auto-generated method stub
 	}
 
 }

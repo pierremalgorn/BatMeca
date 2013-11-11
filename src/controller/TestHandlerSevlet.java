@@ -1,56 +1,46 @@
 package controller;
 
+
+
+import handler.FolderHandler;
+
+
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MaterialService;
-import service.manager.ServiceManager;
-import entity.Material;
-
 /**
- * Servlet implementation class addMaterialServlet
+ * Servlet implementation class TestHandlerSevlet
  */
-@WebServlet("/addMaterial")
-public class AddMaterialServlet extends HttpServlet {
+@WebServlet("/TestHandler")
+public class TestHandlerSevlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private MaterialService materialService;
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddMaterialServlet() {
+    public TestHandlerSevlet() {
         super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addMaterial.jsp"));
-		rd.forward(request, response);
+		//FolderHandler fh = new FolderHandler();
+		FolderHandler f = new FolderHandler();
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("inputName");
-		System.out.println("NAME  = "+name);
-		Material mat = new Material();
-		mat.setName(name);
-		
-		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		// TODO Auto-generated method stub
 	}
 
 }

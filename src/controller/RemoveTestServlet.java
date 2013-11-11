@@ -2,55 +2,45 @@ package controller;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MaterialService;
+import service.TestService;
 import service.manager.ServiceManager;
-import entity.Material;
 
 /**
- * Servlet implementation class addMaterialServlet
+ * Servlet implementation class RemoveTestServlet
  */
-@WebServlet("/addMaterial")
-public class AddMaterialServlet extends HttpServlet {
+@WebServlet("/RemoveTest")
+public class RemoveTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private MaterialService materialService;
-	
+    private TestService testService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddMaterialServlet() {
+    public RemoveTestServlet() {
         super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        
+        testService = ServiceManager.INSTANCE.getTestService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addMaterial.jsp"));
-		rd.forward(request, response);
+		String id = request.getParameter("id");
+		testService.remove(Integer.parseInt(id));
+		
+		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest"));
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("inputName");
-		System.out.println("NAME  = "+name);
-		Material mat = new Material();
-		mat.setName(name);
-		
-		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		// TODO Auto-generated method stub
 	}
 
 }

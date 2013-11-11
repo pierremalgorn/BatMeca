@@ -21,5 +21,16 @@ public class SubMaterialServiceImpl implements SubMaterialService {
 	public List<SubMaterial> findByMat(Material mat) {
 		return subMaterialDao.findByMaterial(mat);
 	}
-	
+	public void add(SubMaterial sub){
+		subMaterialDao.add(sub);
+	}
+	@Override
+	public void remove(int id) {
+		subMaterialDao.remove(id);
+		
+	}
+	@Override
+	public SubMaterial find(int id) {		
+		return subMaterialDao.find(id);
+	}
 }

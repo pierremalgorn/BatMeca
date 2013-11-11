@@ -1,64 +1,64 @@
 package dao.impl;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
-
-
-import dao.SubMaterialDao;
+import dao.TestDao;
 import dao.manager.DaoManager;
-import entity.Material;
 import entity.SubMaterial;
+import entity.Test;
 
-public class SubMaterialDaoImpl implements SubMaterialDao {
+public class TestDaoImpl implements TestDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SubMaterial> findByMaterial(Material mat) {
-		List<SubMaterial> subMats = null;
-		
+	public List<Test> findAll() {
 		EntityManager em = null;
-		
-		try{
+
+		List<Test> list = null;
+
+		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
-			subMats = em.createQuery("Select s From SubMaterial s Where s.material= :material")
-					.setParameter("material", mat)
-					.getResultList();
-				
-		}catch (NoResultException e) {
-			//e.printStackTrace();
+
+			list = em.createNamedQuery("findAllTest").getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			if (em != null)
 				em.close();
 		}
-		
-		
-		return subMats;
+
+		return list;
+
 	}
 
 	@Override
-	public void add(SubMaterial sub) {
+	public void add(Test test) {
 		EntityManager em = null;
 		try {
-			
+
 			em = DaoManager.INSTANCE.getEntityManager();
-			
+
 			em.getTransaction().begin();
-			
-			em.persist(sub);
-			
+
+			em.persist(test);
+
 			em.getTransaction().commit();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(em != null)
+			if (em != null)
 				em.close();
 		}
-		
+
+	}
+
+	@Override
+	public Test find(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -68,10 +68,9 @@ public class SubMaterialDaoImpl implements SubMaterialDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 
-			
-			SubMaterial sub = em.find(SubMaterial.class, id);
+			Test test = em.find(Test.class, id);
 			em.getTransaction().begin();
-			em.remove(sub);
+			em.remove(test);
 			em.getTransaction().commit();
 
 		} catch (Exception e) {
@@ -80,27 +79,32 @@ public class SubMaterialDaoImpl implements SubMaterialDao {
 			if (em != null)
 				em.close();
 		}
-		
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public SubMaterial find(int id) {
+	public List<Test> findBySub(SubMaterial sub) {
+		List<Test> tests = null;
+
 		EntityManager em = null;
-		SubMaterial sub = null;
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 
-			sub = em.find(SubMaterial.class, id);
+			tests = em
+					.createQuery(
+							"Select t From Test t Where t.sub= :sub")
+					.setParameter("sub", sub).getResultList();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (NoResultException e) {
+			// e.printStackTrace();
 		} finally {
 			if (em != null)
 				em.close();
 		}
 
-		return sub;
+		return tests;
 	}
 
 }

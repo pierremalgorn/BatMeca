@@ -25,7 +25,7 @@
 						<td>${sub.id }</td>
 						<td><a href="#" >${sub.name}</a></td>
 						<td>
-							<ul>
+							<ul class="nav nav-pills" >
 								<li>
 									<a href="removeSubMaterial?id=${sub.id}" ><i class="glyphicon glyphicon-remove" ></i></a>
 								</li>
