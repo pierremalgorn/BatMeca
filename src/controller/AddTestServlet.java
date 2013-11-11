@@ -1,5 +1,7 @@
 package controller;
 
+import handler.FolderHandler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -65,14 +67,32 @@ public class AddTestServlet extends HttpServlet {
 		test.setDate(new Date());
 		test.setSub(sub);
 		testService.add(test);
-		
-		String savePath = "C:"+ File.separator +"Users"+ File.separator +"max"+ File.separator+"Ressources";
-		
+		FolderHandler f = new FolderHandler();
+		f.initDirectory(test);
+		String savePath = f.getPathSave(test);
+		int cpt = 0;
 		 for (Part part : request.getParts()) {
 	            String fileName = extractFileName(part);
 	            System.out.println("FILE NAME = "+fileName);
-	            //part.write(savePath + File.separator + fileName);
-	            part.write(fileName);
+	            
+	            if(fileName.compareTo("") != 0){
+	            	if(cpt == 0){
+	            		part.write(savePath + File.separator + "data/"+fileName);
+	            		cpt ++;
+	            	}else{
+	            		part.write(savePath + File.separator +"config/"+ fileName);
+	            	}
+	            	/*if(fileName.matches("dat")){
+	            		part.write(savePath + File.separator + "data/"+fileName);
+	            	}else if(fileName.matches("par")){
+	            		part.write(savePath + File.separator +"config/"+ fileName);
+	            	}else{
+	            		System.out.println("ERROR INVALID FILE");
+	            	}*/
+	            	
+	            }
+	            
+	            //part.write(fileName);
 	        }
 		
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+id));

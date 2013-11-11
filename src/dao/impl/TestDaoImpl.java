@@ -57,8 +57,22 @@ public class TestDaoImpl implements TestDao {
 
 	@Override
 	public Test find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = null;
+		Test test = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			test = em.find(Test.class, id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+
+		return test;
 	}
 
 	@Override

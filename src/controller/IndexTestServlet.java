@@ -38,6 +38,7 @@ public class IndexTestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("idSub");
+		System.out.println("id sub = "+id);
 		SubMaterial sub = new SubMaterial();
 		sub = subMaterialSevice.find(Integer.parseInt(id));
 		List<Test> tests = testService.findBySub(sub);

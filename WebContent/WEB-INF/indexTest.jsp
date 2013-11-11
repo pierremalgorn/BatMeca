@@ -33,9 +33,9 @@
 						<td>
 							<ul class="nav nav-pills">
 								<li><a href="#">Show</a></li>
-								<li><a href="RemoveTest?id=${test.id }"><i
+								<li><a href="RemoveTest?id=${test.id }&idSub=${requestScope.sub.id}"><i
 										class="glyphicon glyphicon-remove"></i></a></li>
-								<li><a href="TestHandler">Test Handler</a></li>
+								<li><a href="TestHandler?id=${test.id }">Test Handler</a></li>
 							</ul>
 						</td>
 					</tr>

@@ -29,8 +29,7 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public Test find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return testDao.find(id);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package controller;
 
+import handler.FolderHandler;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.TestService;
 import service.manager.ServiceManager;
+import entity.Test;
 
 /**
  * Servlet implementation class RemoveTestServlet
@@ -31,9 +34,12 @@ public class RemoveTestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
+		Test t = testService.find(Integer.parseInt(id));
+		FolderHandler f = new FolderHandler();
+		f.deleteFolder(t);
 		testService.remove(Integer.parseInt(id));
 		
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest"));
+		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+request.getParameter("idSub")));
 	}
 
 	/**
