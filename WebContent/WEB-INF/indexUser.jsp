@@ -7,6 +7,7 @@
 <div class="container" >
 	<div class="row" >
 		<h1 class="page-header" >User
+		<a href="addUser" class="btn btn-primary pull-right" >Add User</a>
 		</h1>
 	</div>
 	<div class="row" >
@@ -16,8 +17,9 @@
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
-					
-				
+					<th>Firstname</th>
+					<th>Email</th>
+					<th>Type</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,7 +27,9 @@
 					<tr>
 						<td>${user.id}</td>
 						<td><a href="EditUser?id=${user.id}" >${user.name}</a></td>
-						
+						<td>${user.firstName}</td>
+						<td>${user.email}</td>
+						<td>${user.type.type}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

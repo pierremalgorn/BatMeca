@@ -30,7 +30,7 @@
 					<a href="IndexUser" >Users</a>
 				</c:if></li>
 		<c:if test="${sessionScope.sessionUser != null}">
-			<li><a href="#" >Profil</a></li>
+			<li><a href="User" >Profil</a></li>
 			<li><a href="Login" >Sign out</a></li>
 		</c:if>
 		</ul>
