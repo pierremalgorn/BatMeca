@@ -1,4 +1,5 @@
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE>
 <html>
 <head>
@@ -29,6 +30,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#">BatMeca</a>
+
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,6 +43,16 @@
 			</ul>
 			
 			
-		</div>
-		<!-- /.navbar-collapse -->
+		
+
+		<ul class="nav navbar-nav navbar-right">
+			<li><c:if test="${sessionScope.sessionUser.type.id == 1}">
+					<a href="IndexUser" >Users</a>
+				</c:if></li>
+		<c:if test="${sessionScope.sessionUser != null}">
+			<li><a href="#" >Profil</a></li>
+			<li><a href="Login" >Sign out</a></li>
+		</c:if>
+		</ul>
+	</div>
 	</nav>
