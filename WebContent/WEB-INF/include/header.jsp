@@ -20,11 +20,31 @@
 	src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-inverse" role="navigation">
+	<nav class="navbar navbar-default" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
 			<a class="navbar-brand" href="#">BatMeca</a>
+
 		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li ><a href="IndexMaterial">Material</a></li>
+				<li><a href="ConfigGenerator">Config Generation</a></li>
+				
+			</ul>
+			
+			
+		
+
 		<ul class="nav navbar-nav navbar-right">
 			<li><c:if test="${sessionScope.sessionUser.type.id == 1}">
 					<a href="IndexUser" >Users</a>
@@ -34,4 +54,5 @@
 			<li><a href="Login" >Sign out</a></li>
 		</c:if>
 		</ul>
+	</div>
 	</nav>

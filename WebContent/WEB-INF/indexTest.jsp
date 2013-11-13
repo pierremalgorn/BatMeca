@@ -28,14 +28,13 @@
 				<c:forEach items="${requestScope.tests }" var="test">
 					<tr>
 						<td>${test.id }</td>
-						<td>${test.name }</td>
+						<td><a href="ShowTest?idTest=${test.id }" >${test.name }</a></td>
 						<td>${test.date }</td>
 						<td>
 							<ul class="nav nav-pills">
-								<li><a href="#">Show</a></li>
 								<li><a href="RemoveTest?id=${test.id }&idSub=${requestScope.sub.id}"><i
 										class="glyphicon glyphicon-remove"></i></a></li>
-								<li><a href="TestHandler?id=${test.id }">Test Handler</a></li>
+								<li><a href="ExecTest" ><i class="glyphicon glyphicon-play" ></i></a></li>
 							</ul>
 						</td>
 					</tr>
