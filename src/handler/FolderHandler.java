@@ -49,6 +49,14 @@ public class FolderHandler {
 		this.makeDir(this.root+"/"+path+"/config");
 		this.makeDir(this.root+"/"+path+"/data");
 		this.makeDir(this.root+"/"+path+"/result");
+		this.makeDir(this.root+"/"+path+"/temp");
+		this.makeDir(this.root+"/"+path+"/log");
 	}
+	
+	public File[] getListDir(String path){
+		File f = new File(path);
+		return f.listFiles();
+	}
+	
 	
 }
