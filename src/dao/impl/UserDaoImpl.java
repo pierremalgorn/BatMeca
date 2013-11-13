@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao{
 		List<User> users = null;
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			users = em.createNamedQuery("findAll").getResultList();
+			users = em.createNamedQuery("findAllUsers").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -93,6 +93,55 @@ public class UserDaoImpl implements UserDao{
 			em.getTransaction().begin();
 			
 			em.persist(user);
+			
+			em.getTransaction().commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(em != null)
+				em.close();
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Methode permettant de récuperer un Utilisateur en fonction de son login et son mot de passe
+	 * @param String login Login Utilisateur
+	 * @param String mdp mot de passe utilisateur
+	 * 
+	 * */
+	public User getUser(int id){
+		User user = null;
+		EntityManager em = null;
+		
+		try{
+			em = DaoManager.INSTANCE.getEntityManager();
+			
+			user = (User) em.createQuery("Select u From User u Where u.id= :id")
+					.setParameter("id", id)
+					.getSingleResult();
+		}catch (NoResultException e) {
+			//e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+		
+		return user;
+	}
+	
+	@Override
+	public boolean editUser(User user) {
+		
+		EntityManager em = null;
+		try {
+			
+			em = DaoManager.INSTANCE.getEntityManager();
+			
+			em.getTransaction().begin();
+			
+			em.merge(user);
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {

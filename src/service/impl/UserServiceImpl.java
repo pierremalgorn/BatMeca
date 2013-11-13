@@ -30,5 +30,14 @@ UserDao userDao ;
 	 public boolean loginExist(String login){
 		 return userDao.loginExist(login);
 	 }
+	 
+	 public User getUser(int id){
+			return userDao.getUser(id);
+		}
+	 
+	 public boolean editUser(User user){
+			return userDao.editUser(user);
+		}
+
 
 }

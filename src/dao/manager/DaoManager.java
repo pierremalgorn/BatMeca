@@ -8,11 +8,12 @@ import dao.MaterialDao;
 import dao.SubMaterialDao;
 import dao.TestDao;
 import dao.UserDao;
+import dao.TypeUserDao;
 import dao.impl.MaterialDaoImpl;
 import dao.impl.SubMaterialDaoImpl;
 import dao.impl.TestDaoImpl;
 import dao.impl.UserDaoImpl;
-
+import dao.impl.TypeUserDaoImpl;
 
 
 public enum DaoManager {
@@ -25,6 +26,7 @@ public enum DaoManager {
 	private TestDao testDao;
 	private UserDao userDao;
 	private EntityManagerFactory emf;
+	private TypeUserDao typeUserDao;
 
 	private DaoManager(){
 
@@ -33,6 +35,7 @@ public enum DaoManager {
 		subMaterialDao = new SubMaterialDaoImpl();
 		testDao = new TestDaoImpl();
 		userDao = new UserDaoImpl();
+		typeUserDao = new TypeUserDaoImpl();
 	}
 
 	
@@ -58,6 +61,10 @@ public enum DaoManager {
 
 	public UserDao getUserDao(){
 		return userDao;
+	}
+	
+	public TypeUserDao getTypeUserDao(){
+		return typeUserDao;
 	}
 	
 }

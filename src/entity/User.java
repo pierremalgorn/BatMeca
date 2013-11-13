@@ -2,9 +2,12 @@ package entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -12,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table (name="user")
 @NamedQueries({
-	@NamedQuery(name = "findAllUser", query = "Select u From User u "),})
+	@NamedQuery(name = "findAllUsers", query = "Select u From User u "),})
 
 public class User {
 	
@@ -27,8 +30,9 @@ public class User {
 	private String password;
 	@Column ( name="email" )
 	private String email;
-	@Column ( name="type" )
-	private int type;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type",nullable=true)
+	private TypeUser type;
 	
 	/*@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_user",nullable=true)
@@ -80,12 +84,13 @@ public class User {
 		this.email = email;
 	}
 
-	public int getType() {
+	public TypeUser getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(TypeUser type) {
 		this.type = type;
 	}
+
 
 }

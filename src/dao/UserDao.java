@@ -29,5 +29,18 @@ public interface UserDao {
 	 * @return true si le login existe false sinon
 	 * */
 	public boolean loginExist(String login);
+	/**
+	 * Permet de renvoyer un utilisateur en fonction de son id
+	 * @param String login Login de l'utilisateur
+	 * @param String mdp mot de passe de l'utilisateur
+	 * @retun user
+	 * */
+	public User getUser(int id);
+	/**
+	 * Methode permettant de modifier un utilisateur
+	 * @param user utilisateur à modifier
+	 * @return true si l'utilisateur à bien été modifié false sinon
+	 * */
+	public boolean editUser(User user);
 
 }
