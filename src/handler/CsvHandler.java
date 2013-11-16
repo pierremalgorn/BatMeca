@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
@@ -18,8 +20,12 @@ public class CsvHandler {
 	private String fileInput;
 	
 	
-	public CsvHandler(String input, String output){
-		input = fileInput;
+	public CsvHandler(){
+		
+	}
+	
+	public CsvHandler(String input){
+		fileInput = input;
 
 	}
 	
@@ -35,16 +41,20 @@ public class CsvHandler {
 
 	}
 
-	public void testReadAll() throws IOException {
+	public String readAll(String input) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"),',','"',2);
+				input),',','"',2);
+		StringBuilder sb = new StringBuilder();
 		List<String[]> myEntries = reader.readAll();
 		for (String[] strings : myEntries) {
 			for (String string : strings) {
-				System.out.print(string + "/");
+				sb.append(string+",");
 			}
-			System.out.print("\n");
+			sb.append("\n");
+			
 		}
+		//System.out.println(sb.toString());
+		return new Gson().toJson(sb.toString());
 	}
 
 	/**

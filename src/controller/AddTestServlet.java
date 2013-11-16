@@ -1,5 +1,6 @@
 package controller;
 
+import handler.CsvHandler;
 import handler.FolderHandler;
 
 import java.io.File;
@@ -61,6 +62,7 @@ public class AddTestServlet extends HttpServlet {
 		String id = request.getParameter("idSub");
 		System.out.println("ID  = "+id);
 		SubMaterial sub = subMaterialService.find(Integer.parseInt(id));
+		CsvHandler csv = new CsvHandler();
 		
 		Test test = new Test();
 		test.setName(name);
@@ -94,7 +96,7 @@ public class AddTestServlet extends HttpServlet {
 	            
 	            //part.write(fileName);
 	        }
-		
+		csv.datToCsv(f.getPathSave(test)+"/data/"+f.getFileNameData(test), f.getPathSave(test)+"/data.csv");
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+id));
 	}
 	

@@ -39,7 +39,7 @@ public class ExecTestServlet extends HttpServlet {
 //		RuntimeHandler run = new RuntimeHandler();
 //		//run.execScript();
 //		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="+id));
-		CsvHandler csv = new CsvHandler("","");
+		CsvHandler csv = new CsvHandler();
 		//csv.deletePortionCsv(1,10);
 		//csv.echantillon(100);
 		//csv.lissageOrdre2();
