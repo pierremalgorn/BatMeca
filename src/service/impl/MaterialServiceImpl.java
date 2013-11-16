@@ -32,4 +32,10 @@ public class MaterialServiceImpl implements MaterialService {
 		return materialDao.find(id);
 	}
 
+	@Override
+	public void editMaterial(Material mat) {
+		materialDao.editMaterial(mat);
+		
+	}
+
 }

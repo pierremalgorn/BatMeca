@@ -40,6 +40,7 @@ public class FolderHandler {
 		f.delete();
 	}
 	
+	
 	public void initDirectory(Test test){
 		
 		String path = test.getSub().getMaterial().getName()+"/"+test.getSub().getName()+"/"+test.getName();
@@ -56,6 +57,30 @@ public class FolderHandler {
 	public File[] getListDir(String path){
 		File f = new File(path);
 		return f.listFiles();
+	}
+	
+	public String getFileNameData(Test t){
+		File file = new File(this.getPathSave(t)+"/data");
+		File[] files = file.listFiles();
+		
+		/*for (File f : files) {
+			String name = f.getName();
+		//	System.out.println("NAME FILE = "+name);
+		}*/
+		
+		return files[files.length - 1].getName();
+	}
+	
+	public String getFileNameConfig(Test t ){
+		File file = new File(this.getPathSave(t)+"/config");
+		File[] files = file.listFiles();
+		
+		/*for (File f : files) {
+			String name = f.getName();
+		//	System.out.println("NAME FILE = "+name);
+		}*/
+		
+		return files[files.length - 1].getName();
 	}
 	
 	

@@ -1,5 +1,6 @@
 package controller;
 
+import handler.CsvHandler;
 import handler.RuntimeHandler;
 
 import java.io.IOException;
@@ -33,11 +34,18 @@ public class ExecTestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("idTest"));
-		Test test = testService.find(id);
-		RuntimeHandler run = new RuntimeHandler();
-		run.execScript();
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="+id));
+//		int id = Integer.parseInt(request.getParameter("idTest"));
+//		Test test = testService.find(id);
+//		RuntimeHandler run = new RuntimeHandler();
+//		//run.execScript();
+//		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="+id));
+		CsvHandler csv = new CsvHandler();
+		//csv.deletePortionCsv(1,10);
+		//csv.echantillon(100);
+		//csv.lissageOrdre2();
+		//csv.switchColomn();
+		float result = csv.maxValueColumn(3);
+		System.out.println("RESULT = "+result);
 	}
 
 	/**

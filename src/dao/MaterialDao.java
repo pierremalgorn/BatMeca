@@ -10,4 +10,5 @@ public interface MaterialDao {
 	public List<Material> findAll();
 	public void addMaterial(Material mat);
 	public Material find(int id);
+	public void editMaterial(Material mat);
 }

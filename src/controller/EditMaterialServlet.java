@@ -1,34 +1,31 @@
 package controller;
 
-
-
-import handler.FolderHandler;
-
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.TestService;
+import entity.Material;
+import service.MaterialService;
 import service.manager.ServiceManager;
-import entity.Test;
 
 /**
- * Servlet implementation class TestHandlerSevlet
+ * Servlet implementation class EditMaterialServlet
  */
-@WebServlet("/TestHandler")
-public class TestHandlerSevlet extends HttpServlet {
+@WebServlet("/EditMaterial")
+public class EditMaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private TestService testService;
+    private MaterialService materialService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestHandlerSevlet() {
+    public EditMaterialServlet() {
         super();
-        testService = ServiceManager.INSTANCE.getTestService();
+        materialService = ServiceManager.INSTANCE.getMaterialService();
     }
 
 	/**
@@ -36,18 +33,27 @@ public class TestHandlerSevlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		Test t = testService.find(id);
-		FolderHandler f = new FolderHandler();
-		String name = f.getFileNameData(t);
-		System.out.println(name);
-		//f.initDirectory(t);
+		
+		Material mat = materialService.find(id);
+		//materialService.editMaterial(mat);
+		request.setAttribute("mat", mat);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		response.encodeURL("/WEB-INF/editMaterial.jsp"));
+		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Material mat = materialService.find(id);
+		mat.setName(request.getParameter("name"));
+		
+		materialService.editMaterial(mat);
+		response.sendRedirect(response
+				.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
 	}
 
 }

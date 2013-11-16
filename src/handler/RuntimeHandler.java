@@ -12,12 +12,12 @@ public class RuntimeHandler {
 
 	}
 
-	public void execScript() {
+	public void execScript(String[] cmd) {
 		Runtime runtime = Runtime.getRuntime();
 		try {
-
+			//new String[] { "/home/max/BatMeca/Ressources/script/scriptTest","matTest/subTest/testToto/","X65_ST_L_1.par","X65_ST_L_1.txt" }
 			final Process process = runtime
-					.exec(new String[] { "/home/max/BatMeca/Ressources/script/scriptTest","matTest/subTest/testToto/","X65_ST_L_1.par","X65_ST_L_1.txt" });
+					.exec(cmd);
 
 			// Consommation de la sortie standard de l'application externe dans
 			// un Thread separe

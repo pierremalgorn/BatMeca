@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-
-
 import dao.MaterialDao;
 import dao.manager.DaoManager;
 import entity.Material;
@@ -20,8 +18,7 @@ public class MaterialDaoImpl implements MaterialDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			// Ici on appelle la namedQuery declaree en annotation dans la
-			// classe domain.User
+		
 			list = em.createNamedQuery("findAllMaterial").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,6 +67,29 @@ public class MaterialDaoImpl implements MaterialDao {
 		}
 
 		return material;
+	}
+
+	@Override
+	public void editMaterial(Material mat) {
+		EntityManager em = null;
+		try {
+			
+			em = DaoManager.INSTANCE.getEntityManager();
+			
+			em.getTransaction().begin();
+			
+			em.merge(mat);
+			
+			em.getTransaction().commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(em != null)
+				em.close();
+		}
+		
+		
+		
 	}
 	
 }

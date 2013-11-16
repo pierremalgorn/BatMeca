@@ -12,6 +12,7 @@
 	</div>
 	<div class="row">
 		<ol class="breadcrumb">
+			<li><a href="IndexMaterial" >Index</a></li>
 			<li><a href="Material?idMaterial=${requestScope.sub.material.id }">${requestScope.sub.material.name }</a></li>
 			<li class="active">${requestScope.sub.name }</li>
 		</ol>
@@ -35,6 +36,7 @@
 								<li><a href="RemoveTest?id=${test.id }&idSub=${requestScope.sub.id}"><i
 										class="glyphicon glyphicon-remove"></i></a></li>
 								<li><a href="ExecTest" ><i class="glyphicon glyphicon-play" ></i></a></li>
+								<li><a href="TestHandler?id=${test.id }" >Test</a></li>
 							</ul>
 						</td>
 					</tr>

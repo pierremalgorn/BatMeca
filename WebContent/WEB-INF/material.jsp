@@ -13,8 +13,8 @@
 	</div>
 	<div class="row">
 		<ol class="breadcrumb">
-			<li><a href="IndexMaterial">${requestScope.material.name }</a></li>
-			<li class="active">List submaterial</li>
+			<li><a href="IndexMaterial">Index</a></li>
+			<li class="active">${requestScope.material.name }</li>
 		</ol>
 		<table class="table table-striped">
 			<thead>

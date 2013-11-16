@@ -17,7 +17,7 @@
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
-					
+					<th>Actions</th>
 				
 				</tr>
 			</thead>
@@ -26,7 +26,13 @@
 					<tr>
 						<td>${material.id}</td>
 						<td><a href="Material?idMaterial=${material.id}" >${material.name}</a></td>
-						
+						<td>
+							<ul class="nav nav-pills" >
+								<li>
+									<a href="EditMaterial?id=${material.id }" >Edit</a>
+								</li>
+							</ul>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
