@@ -11,8 +11,8 @@
 	<link rel="stylesheet"	href="${pageContext.request.contextPath}/css/bootstrap-glyphicons.css">
 	<link rel="stylesheet"	href="${pageContext.request.contextPath}/css/style.css">
 	
-	<script	src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+	<script	src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/js/jqBootstrapValidation.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li id="materials"><a href="IndexMaterials">Materials</a></li>
+            <li id="materials"><a href="IndexMaterial">Materials</a></li>
             <li id="configgenerator"><a href="ConfigGenerator">Configuration Generator</a></li>
           </ul>
 	       <ul class="nav navbar-nav navbar-right">

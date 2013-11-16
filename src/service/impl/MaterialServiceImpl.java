@@ -38,4 +38,9 @@ public class MaterialServiceImpl implements MaterialService {
 		
 	}
 
+	@Override
+	public boolean remove(Material mat) {
+		return materialDao.remove(mat);
+	}
+
 }

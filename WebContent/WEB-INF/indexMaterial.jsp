@@ -31,6 +31,7 @@
 								<li>
 									<a href="EditMaterial?id=${material.id }" >Edit</a>
 								</li>
+								<li><a href="RemoveMaterial?idMat=${material.id }" ><span class="glyphicon glyphicon-remove" ></span></a></li>
 							</ul>
 						</td>
 					</tr>

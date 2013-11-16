@@ -15,9 +15,18 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 
 public class CsvHandler {
 
+	private String fileInput;
+	
+	
+	public CsvHandler(String input, String output){
+		input = fileInput;
+
+	}
+	
 	public void test() throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"));
+				"/home/max/BatMeca/data.csv"),',','"',2);
+		
 		String[] nextLine;
 		while ((nextLine = reader.readNext()) != null) {
 			// nextLine[] is an array of values from the line
@@ -28,7 +37,7 @@ public class CsvHandler {
 
 	public void testReadAll() throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"));
+				"/home/max/BatMeca/data.csv"),',','"',2);
 		List<String[]> myEntries = reader.readAll();
 		for (String[] strings : myEntries) {
 			for (String string : strings) {
@@ -43,7 +52,7 @@ public class CsvHandler {
 	 * */
 	public void echantillon(int echant) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"));
+				"/home/max/BatMeca/data.csv"),',','"',2);
 		CSVWriter writer = new CSVWriter(new FileWriter(
 				"/home/max/BatMeca/data1.csv"), ',');
 		List<String[]> myEntries = reader.readAll();
@@ -214,7 +223,7 @@ public class CsvHandler {
 	public Float maxValueColumn(int numColumn) throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"}",
-				"/home/max/BatMeca/data.csv" };
+				this.fileInput };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
@@ -232,6 +241,63 @@ public class CsvHandler {
 			// Traitement du flux de sortie de l'application
 		} // si besoin est
 		return max;
+	}
+	/**
+	 * Calcule du min sur une colonne
+	 * */
+	public Float minValueColumn(int numColumn) throws NumberFormatException, IOException {
+		String[] cmd = new String[] { "awk",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"}",
+				this.fileInput };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				process.getInputStream()));
+		String line = "";
+
+		Float min = (float) 999999999;
+		while ((line = reader.readLine()) != null) {
+		
+			float val = Float.parseFloat(line);
+			if (val < min) {
+				min = val;
+			}
+			
+		} 
+		return min;
+	}
+	
+	public void factorColumn(int numColumn,float factor) throws IOException{
+		String[] cmd = new String[] { "awk",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"*"+factor+"}",
+				this.fileInput };
+		CSVWriter writer = new CSVWriter(new FileWriter(
+				"/home/max/BatMeca/dataFactor.csv"), ',');
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				process.getInputStream()));
+		String line = "";
+
+	
+		while ((line = reader.readLine()) != null) {
+			String[] val =  line.split(",");
+			writer.writeNext(val);
+		} // si besoin est
+		reader.close();
+		writer.close();
+	}
+	
+	/*
+	 * Permet de convertir un fichier .dat en .csv
+	 * */
+	public void datToCsv(String input,String output) throws IOException{
+		String[] cmd = new String[] { "/home/max/BatMeca/script/datToCsv",input,output
+				 };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
 	}
 
 }

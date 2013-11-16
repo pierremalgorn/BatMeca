@@ -91,5 +91,24 @@ public class MaterialDaoImpl implements MaterialDao {
 		
 		
 	}
+
+	@Override
+	public boolean remove(Material mat) {
+		EntityManager em = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			em.getTransaction().begin();
+			em.remove(em.contains(mat) ? mat : em.merge(mat));
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+		return true;
+	}
 	
 }

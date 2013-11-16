@@ -9,5 +9,6 @@ public interface MaterialService {
 	abstract void addMaterial(Material mat);
 	abstract Material find(int id);
 	abstract void editMaterial(Material mat);
+	abstract boolean remove(Material mat);
 
 }

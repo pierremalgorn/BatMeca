@@ -11,4 +11,7 @@ public interface MaterialDao {
 	public void addMaterial(Material mat);
 	public Material find(int id);
 	public void editMaterial(Material mat);
+	public boolean remove(Material mat);
+		
+	
 }

@@ -39,13 +39,15 @@ public class ExecTestServlet extends HttpServlet {
 //		RuntimeHandler run = new RuntimeHandler();
 //		//run.execScript();
 //		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="+id));
-		CsvHandler csv = new CsvHandler();
+		CsvHandler csv = new CsvHandler("","");
 		//csv.deletePortionCsv(1,10);
 		//csv.echantillon(100);
 		//csv.lissageOrdre2();
 		//csv.switchColomn();
-		float result = csv.maxValueColumn(3);
-		System.out.println("RESULT = "+result);
+		//float result = csv.maxValueColumn(3);
+		//System.out.println("RESULT = "+result);
+		//csv.factorColumn(1, 100);
+		csv.datToCsv("/home/max/BatMeca/data/X63_ST_L02.dat", "/home/max/output.csv");
 	}
 
 	/**
