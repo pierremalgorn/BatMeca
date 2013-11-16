@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 
 import dao.UserDao;
 import dao.manager.DaoManager;
+import entity.Test;
 import entity.User;
 
 public class UserDaoImpl implements UserDao{
@@ -29,7 +30,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	/**
-	 * Methode permettant de récuperer un Utilisateur en fonction de son login et son mot de passe
+	 * Methode permettant de rï¿½cuperer un Utilisateur en fonction de son login et son mot de passe
 	 * @param String login Login Utilisateur
 	 * @param String mdp mot de passe utilisateur
 	 * 
@@ -106,7 +107,7 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	/**
-	 * Methode permettant de récuperer un Utilisateur en fonction de son login et son mot de passe
+	 * Methode permettant de rï¿½cuperer un Utilisateur en fonction de son login et son mot de passe
 	 * @param String login Login Utilisateur
 	 * @param String mdp mot de passe utilisateur
 	 * 
@@ -129,6 +130,25 @@ public class UserDaoImpl implements UserDao{
 		}
 		
 		return user;
+	}
+	
+	@Override
+	public void removeUser(User user) {
+		EntityManager em = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			em.getTransaction().begin();
+			em.remove(em.contains(user) ? user : em.merge(user));
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+
 	}
 	
 	@Override

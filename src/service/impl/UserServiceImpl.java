@@ -38,6 +38,10 @@ UserDao userDao ;
 	 public boolean editUser(User user){
 			return userDao.editUser(user);
 		}
+	 
+	 public void removeUser(User user){
+			userDao.removeUser(user);
+		}
 
 
 }

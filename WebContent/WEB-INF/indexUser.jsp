@@ -6,10 +6,13 @@
 
 <div class="container" >
 	<div class="row" >
-		<h1 class="page-header" >User
+		<h1 class="page-header" >Users list
 		<a href="addUser" class="btn btn-primary pull-right" >Add User</a>
 		</h1>
 	</div>
+	<c:if test="${requestScope.event eq 'userremoved'}">
+		<div class="alert alert-success alert-dismissable">The user has been removed successfully!</div>
+	</c:if>
 	<div class="row" >
 		<table class="table table-striped" >
 
@@ -20,16 +23,20 @@
 					<th>Firstname</th>
 					<th>Email</th>
 					<th>Type</th>
+					<th>Edit</th>
+					<th>Delete</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${requestScope.users}" var="user" >
 					<tr>
 						<td>${user.id}</td>
-						<td><a href="EditUser?id=${user.id}" >${user.name}</a></td>
+						<td>${user.name}</td>
 						<td>${user.firstName}</td>
 						<td>${user.email}</td>
 						<td>${user.type.type}</td>
+						<td><a href="EditUser?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
+						<td><a href="RemoveUser?id=${user.id}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -2,34 +2,25 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="include/header.jsp" />
-<div class="container">
-	<div class="row">
-		<h1 class="page-header">Login</h1>
-	</div>
-	<div class="offset3" >
 
-		<form action="Login" method="post" id="formLogin"
-			class="form-horizontal">
-			<div class="control-group">
-				<label class="control-label" for="inputEmail">Email</label>
-				<div class="controls">
-					<input type="text" id="inputEmail" placeholder="Email" name="login">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="inputPassword">Password</label>
-				<div class="controls">
-					<input type="password" id="inputPassword" placeholder="Password"
-						name="password">
-				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-
-					<button type="submit" class="btn">Sign in</button>
-				</div>
-			</div>
-		</form>
-		</div>
-</div>
+    
+    <div class="container">
+      <form action="Login" method="post" id="formLogin" class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <div class="control-group">
+        	<div class="controls">
+	        	<input type="email" id="inputEmail" name="login" class="form-control" placeholder="Email address" required autofocus/>	        	
+	        	<p class="help-block"></p>
+        	</div>
+        </div>
+        <div class="control-group">
+        	<div class="controls">
+		        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required/>
+		        <p class="help-block"></p>
+		    </div>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	  	</div>
+      </form>
+    </div> <!-- /container -->
+    
 <jsp:include page="include/footer.jsp" />

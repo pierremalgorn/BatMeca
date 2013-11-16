@@ -12,4 +12,5 @@ public interface UserService {
 	abstract boolean loginExist(String login);
 	abstract User getUser(int id);
 	abstract boolean editUser(User user);
+	abstract void removeUser(User user);
 }

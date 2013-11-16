@@ -19,8 +19,8 @@ public interface UserDao {
 	public User getUserByLoginMdp(String login,String mdp);
 	/**
 	 * Methode permettant d'ajouter un utilisateur
-	 * @param user utilisateur à ajouter
-	 * @return true si l'utilisateur à bien été ajouter false sinon
+	 * @param user utilisateur a ajouter
+	 * @return true si l'utilisateur ï¿½ bien ï¿½tï¿½ ajouter false sinon
 	 * */
 	public boolean addUser(User user);
 	/**
@@ -38,9 +38,11 @@ public interface UserDao {
 	public User getUser(int id);
 	/**
 	 * Methode permettant de modifier un utilisateur
-	 * @param user utilisateur à modifier
-	 * @return true si l'utilisateur à bien été modifié false sinon
+	 * @param user utilisateur ï¿½ modifier
+	 * @return true si l'utilisateur ï¿½ bien ï¿½tï¿½ modifiï¿½ false sinon
 	 * */
 	public boolean editUser(User user);
+
+	public void removeUser(User user);
 
 }
