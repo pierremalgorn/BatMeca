@@ -32,6 +32,7 @@
           <ul class="nav navbar-nav">
             <li id="materials"><a href="IndexMaterial">Materials</a></li>
             <li id="configgenerator"><a href="ConfigGenerator">Configuration Generator</a></li>
+            <li><a href="IndexTest" >Tests</a></li>
           </ul>
 	       <ul class="nav navbar-nav navbar-right">
 					<li><c:if test="${sessionScope.sessionUser.type.id == 1}">

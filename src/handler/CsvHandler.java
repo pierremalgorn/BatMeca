@@ -40,7 +40,9 @@ public class CsvHandler {
 		}
 
 	}
-
+	/*
+	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un fichier csv
+	 * */
 	public String readAll(String input) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
 				input),',','"',2);
@@ -145,7 +147,7 @@ public class CsvHandler {
 			String[] tab = myEntries.get(i);
 
 			for (int j = 0; j < tab.length; j++) {
-				;
+				
 				float x1 = Float.parseFloat(myEntries.get(i - 1)[j]);
 				float x2 = Float.parseFloat(myEntries.get(i + 1)[j]);
 				tab[j] = Float.toString(this.average(x1, x2));

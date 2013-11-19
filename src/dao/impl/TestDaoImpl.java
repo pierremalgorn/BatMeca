@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 
 import dao.TestDao;
 import dao.manager.DaoManager;
-import entity.SubMaterial;
+
 import entity.Test;
 
 public class TestDaoImpl implements TestDao {
@@ -96,29 +96,6 @@ public class TestDaoImpl implements TestDao {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Test> findBySub(SubMaterial sub) {
-		List<Test> tests = null;
-
-		EntityManager em = null;
-
-		try {
-			em = DaoManager.INSTANCE.getEntityManager();
-
-			tests = em
-					.createQuery(
-							"Select t From Test t Where t.sub= :sub")
-					.setParameter("sub", sub).getResultList();
-
-		} catch (NoResultException e) {
-			// e.printStackTrace();
-		} finally {
-			if (em != null)
-				em.close();
-		}
-
-		return tests;
-	}
+	
 
 }

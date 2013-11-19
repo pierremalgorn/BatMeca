@@ -4,7 +4,7 @@ import java.util.List;
 
 import dao.TestDao;
 import dao.manager.DaoManager;
-import entity.SubMaterial;
+
 import entity.Test;
 import service.TestService;
 
@@ -38,9 +38,6 @@ public class TestServiceImpl implements TestService {
 		
 	}
 
-	@Override
-	public List<Test> findBySub(SubMaterial sub) {
-		return testDao.findBySub(sub);
-	}
+	
 
 }

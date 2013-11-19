@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import service.SubMaterialService;
+
 import service.TestService;
 import service.manager.ServiceManager;
-import entity.SubMaterial;
+
 import entity.Test;
 
 /**
@@ -32,14 +32,14 @@ maxRequestSize=1024*1024*50)   // 50MB
 public class AddTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private TestService testService;    
-    private SubMaterialService subMaterialService;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AddTestServlet() {
         super();
         testService = ServiceManager.INSTANCE.getTestService();
-        subMaterialService = ServiceManager.INSTANCE.getSubMaterialService();
+       
         // TODO Auto-generated constructor stub
     }
 
@@ -59,19 +59,19 @@ public class AddTestServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("inputNameTest");
 		
-		String id = request.getParameter("idSub");
-		System.out.println("ID  = "+id);
-		SubMaterial sub = subMaterialService.find(Integer.parseInt(id));
+		
+
 		CsvHandler csv = new CsvHandler();
 		
 		Test test = new Test();
 		test.setName(name);
 		test.setDate(new Date());
-		test.setSub(sub);
+		
 		testService.add(test);
 		FolderHandler f = new FolderHandler();
 		f.initDirectory(test);
 		String savePath = f.getPathSave(test);
+		//String savePath ="/home/max/BatMeca/Ressources";
 		int cpt = 0;
 		 for (Part part : request.getParts()) {
 	            String fileName = extractFileName(part);
@@ -79,7 +79,7 @@ public class AddTestServlet extends HttpServlet {
 	            
 	            if(fileName.compareTo("") != 0){
 	            	if(cpt == 0){
-	            		part.write(savePath + File.separator + "data/"+fileName);
+	            		part.write(savePath + File.separator +"data/"+fileName);
 	            		cpt ++;
 	            	}else{
 	            		part.write(savePath + File.separator +"config/"+ fileName);
@@ -97,7 +97,7 @@ public class AddTestServlet extends HttpServlet {
 	            //part.write(fileName);
 	        }
 		csv.datToCsv(f.getPathSave(test)+"/data/"+f.getFileNameData(test), f.getPathSave(test)+"/data.csv");
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+id));
+		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest"));
 	}
 	
 	 /**

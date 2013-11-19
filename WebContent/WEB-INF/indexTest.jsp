@@ -33,7 +33,7 @@
 						<td>${test.date }</td>
 						<td>
 							<ul class="nav nav-pills">
-								<li><a href="RemoveTest?id=${test.id }&idSub=${requestScope.sub.id}"><i
+								<li><a href="RemoveTest?id=${test.id }"><i
 										class="glyphicon glyphicon-remove"></i></a></li>
 								<li><a href="ExecTest" ><i class="glyphicon glyphicon-play" ></i></a></li>
 								<li><a href="TestHandler?id=${test.id }" >Test</a></li>

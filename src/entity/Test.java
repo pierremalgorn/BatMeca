@@ -30,9 +30,9 @@ public class Test {
 	private String name;
 	@Column(name="date")
 	private Date date;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_submaterial",nullable=true)
-	private SubMaterial sub;
+	
+
+	
 	public Test(){
 		
 	}
@@ -56,13 +56,7 @@ public class Test {
 		this.date = date;
 	}
 
-	public SubMaterial getSub() {
-		return sub;
-	}
 
-	public void setSub(SubMaterial sub) {
-		this.sub = sub;
-	}
 	
 	
 }

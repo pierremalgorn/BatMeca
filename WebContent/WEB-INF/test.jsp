@@ -15,13 +15,12 @@
 
 		</h1>
 		<a class="btn btn-info"
-			href="IndexTest?idSub=${requestScope.test.sub.id }">Return Test
+			href="IndexTest">Return Test
 			List</a>
 	</div>
 	<div class="row">
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab">Details</a></li>
-			<li><a href="#folder" data-toggle="tab">Folder</a></li>
 			<li><a href="#curve" data-toggle="tab">Curve</a></li>
 
 		</ul>
@@ -42,38 +41,12 @@
 						</tr>
 						<tr>
 							<td>Path</td>
-							<td>ROOT/${requestScope.test.sub.material.name}/${requestScope.test.sub.name }/${requestScope.test.name }</td>
+							<td></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="tab-pane" id="folder">
-
-				<h3>Conf Folder</h3>
-				<ul>
-					<c:forEach items="${requestScope.filesConf }" var="file">
-						<li><a href="#">${file.path }</a></li>
-					</c:forEach>
-				</ul>
-				<h3>Data Folder</h3>
-				<ul>
-					<c:forEach items="${requestScope.filesData }" var="file">
-						<li>${file.path }</li>
-					</c:forEach>
-				</ul>
-				<h3>Result Folder</h3>
-				<ul>
-					<c:forEach items="${requestScope.filesRes }" var="file">
-						<li>${file.path }</li>
-					</c:forEach>
-				</ul>
-				<h3>Temp Folder</h3>
-				<ul>
-					<c:forEach items="${requestScope.filesTemp }" var="file">
-						<li>${file.path }</li>
-					</c:forEach>
-				</ul>
-			</div>
+			
 
 			<div class="tab-pane" id="curve">
 			

@@ -36,7 +36,7 @@ public class RemoveTestServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		Test t = testService.find(Integer.parseInt(id));
 		FolderHandler f = new FolderHandler();
-		f.deleteFolder(t);
+		//f.deleteFolder(t);
 		testService.remove(Integer.parseInt(id));
 		
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+request.getParameter("idSub")));

@@ -32,26 +32,23 @@ public class FolderHandler {
 		f.mkdir();
 	}
 	public String getPathSave(Test test){
-		return this.root+"/"+test.getSub().getMaterial().getName()+"/"+test.getSub().getName()+"/"+test.getName();
+		return this.root+"/"+test.getName();
 	}
-	
+
 	public void deleteFolder(Test test){
 		File f = new File(this.getPathSave(test));
 		f.delete();
 	}
 	
-	
 	public void initDirectory(Test test){
 		
-		String path = test.getSub().getMaterial().getName()+"/"+test.getSub().getName()+"/"+test.getName();
-		System.out.println("PATH = "+path);
-		File f = new File(this.root+"/"+path);
+		String path = this.getPathSave(test);
+
+		File f = new File(path);
 		f.mkdirs();
-		this.makeDir(this.root+"/"+path+"/config");
-		this.makeDir(this.root+"/"+path+"/data");
-		this.makeDir(this.root+"/"+path+"/result");
-		this.makeDir(this.root+"/"+path+"/temp");
-		this.makeDir(this.root+"/"+path+"/log");
+		this.makeDir(path+"/config");
+		this.makeDir(path+"/data");
+		;
 	}
 	
 	public File[] getListDir(String path){

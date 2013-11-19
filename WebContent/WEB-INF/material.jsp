@@ -25,19 +25,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.subs }" var="sub">
-					<tr>
-						<td>${sub.id }</td>
-						<td><a href="IndexTest?idSub=${sub.id}">${sub.name}</a></td>
-						<td>
-							<ul class="nav nav-pills">
-								<li><a href="removeSubMaterial?id=${sub.id}"><i
-										class="glyphicon glyphicon-remove"></i></a></li>
-								
-							</ul>
-						</td>
-					</tr>
-				</c:forEach>
+				
 			</tbody>
 		</table>
 	</div>

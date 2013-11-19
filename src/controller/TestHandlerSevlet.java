@@ -38,8 +38,8 @@ public class TestHandlerSevlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(id);
 		FolderHandler f = new FolderHandler();
-		String name = f.getFileNameData(t);
-		System.out.println(name);
+		//String name = f.getFileNameData(t);
+		//System.out.println(name);
 		//f.initDirectory(t);
 	}
 

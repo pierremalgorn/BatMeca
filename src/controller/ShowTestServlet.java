@@ -44,20 +44,14 @@ public class ShowTestServlet extends HttpServlet {
 		CsvHandler csv = new CsvHandler();	
 		FolderHandler f = new FolderHandler();
 		
-		String path = f.getPathSave(t);
-		File[] filesConf = f.getListDir(path+"/config");
-		File[] filesData = f.getListDir(path+"/data");
-		File[] filesTemp = f.getListDir(path+"/temp");
-		File[] filesRes = f.getListDir(path+"/result");
+		//String path = f.getPathSave(t);
+		
 		
 		String data = csv.readAll(f.getPathSave(t)+"/data.csv");
 		
 		request.setAttribute("data", data);
 		request.setAttribute("test", t);
-		request.setAttribute("filesConf", filesConf);
-		request.setAttribute("filesData", filesData);
-		request.setAttribute("filesTemp", filesTemp);
-		request.setAttribute("filesRes", filesRes);
+	
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/test.jsp"));
