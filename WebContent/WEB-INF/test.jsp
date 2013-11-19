@@ -77,7 +77,7 @@
 
 			<div class="tab-pane" id="curve">
 			
-				<div id="graphdiv3" style="width: 80%; height: 300px;"></div>
+				<div id="graphdiv3" style="width: 80%; height: 500px;"></div>
 				<script charset="UTF-8" >
 				
 				
