@@ -1,6 +1,8 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 
 @Entity
 @Table (name="test")
 @NamedQueries({
 	@NamedQuery(name = "findAllTest", query = "Select t From Test t"),
+	@NamedQuery(name="findTest",query = "Select t From Test t Where t.id = :id" )
 	
 
 })
@@ -30,8 +37,12 @@ public class Test {
 	private String name;
 	@Column(name="date")
 	private Date date;
+	@ManyToOne
+	@JoinColumn(name="id_material",nullable=true)
+	private Material material;
+	@OneToMany(mappedBy="test",fetch=FetchType.EAGER)
+	private Set<TestAttribute> testAttributs;
 	
-
 	
 	public Test(){
 		
@@ -54,6 +65,27 @@ public class Test {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Set<TestAttribute> getTestAttributs() {
+		return testAttributs;
+	}
+
+	public void setTestAttributs(Set<TestAttribute> testAttributs) {
+		this.testAttributs = testAttributs;
+	}
+
+
+	public Material getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
+		if (!material.getTests().contains(this)) {
+            material.getTests().add(this);
+        }
+		
 	}
 
 

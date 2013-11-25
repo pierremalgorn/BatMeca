@@ -25,7 +25,7 @@
 				<c:forEach items="${requestScope.materials}" var="material" >
 					<tr>
 						<td>${material.id}</td>
-						<td><a href="Material?idMaterial=${material.id}" >${material.name}</a></td>
+						<td><a href="Material?idMat=${material.id}" >${material.name}</a></td>
 						<td>
 							<ul class="nav nav-pills" >
 								<li>

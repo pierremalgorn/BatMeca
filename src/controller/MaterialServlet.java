@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entity.Material;
-
 import service.MaterialService;
-
+import service.TestService;
 import service.manager.ServiceManager;
 
 /**
@@ -23,6 +22,7 @@ import service.manager.ServiceManager;
 public class MaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 MaterialService materialService;
+	 TestService testService;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,6 +30,7 @@ public class MaterialServlet extends HttpServlet {
     public MaterialServlet() {
         super();
         materialService = ServiceManager.INSTANCE.getMaterialService();
+        testService = ServiceManager.INSTANCE.getTestService();
 
     }
 
@@ -37,13 +38,16 @@ public class MaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("idMaterial");
+		String id = request.getParameter("idMat");
 		Material mat = null;
+		
 		mat = materialService.find(Integer.parseInt(id));
 
 	
 		request.setAttribute("material", mat);
 	
+
+		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/material.jsp"));
 		rd.forward(request, response);

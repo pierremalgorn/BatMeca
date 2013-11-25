@@ -43,6 +43,19 @@
 							<td>Path</td>
 							<td></td>
 						</tr>
+						<tr>
+							<ul>
+							<c:forEach items="${requestScope.test.testAttributs }" var="attr" > 
+								<li>
+									${attr.name}
+								</li>
+								<li>
+								${attr.typeTestAttr.name}
+								</li>
+							</c:forEach>
+							</ul>
+							
+						</tr>
 					</tbody>
 				</table>
 			</div>

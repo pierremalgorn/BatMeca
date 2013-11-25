@@ -4,7 +4,7 @@ import java.util.List;
 
 import dao.TestDao;
 import dao.manager.DaoManager;
-
+import entity.Material;
 import entity.Test;
 import service.TestService;
 
@@ -36,6 +36,11 @@ public class TestServiceImpl implements TestService {
 	public void remove(int id) {
 		testDao.remove(id);
 		
+	}
+
+	@Override
+	public List<Test> findByMaterial(Material mat) {
+		return testDao.findByMaterial(mat);
 	}
 
 	

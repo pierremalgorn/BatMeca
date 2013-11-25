@@ -47,9 +47,9 @@ public class ShowTestServlet extends HttpServlet {
 		//String path = f.getPathSave(t);
 		
 		
-		String data = csv.readAll(f.getPathSave(t)+"/data.csv");
+		//String data = csv.readAll(f.getPathSave(t)+"/data.csv");
 		
-		request.setAttribute("data", data);
+		//request.setAttribute("data", data);
 		request.setAttribute("test", t);
 	
 		

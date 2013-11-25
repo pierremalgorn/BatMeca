@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 
 import dao.TestDao;
 import dao.manager.DaoManager;
-
+import entity.Material;
 import entity.Test;
 
 public class TestDaoImpl implements TestDao {
@@ -62,8 +62,9 @@ public class TestDaoImpl implements TestDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
-			test = em.find(Test.class, id);
+			//test = (Test) em.createNamedQuery("findTest").setParameter("id", id).getSingleResult();
+			test = (Test) em.createQuery("Select t From Test t left join t.testAttributs ta Where t.id=:id").setParameter("id", id).getSingleResult();
+			//test = em.find(Test.class, id);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,6 +95,30 @@ public class TestDaoImpl implements TestDao {
 				em.close();
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Test> findByMaterial(Material mat) {
+		List<Test> tests = null;
+        EntityManager em = null;
+
+        try {
+                em = DaoManager.INSTANCE.getEntityManager();
+           
+                tests = em
+                                .createQuery(
+                                                "Select t From Test t Where t.material = :material")
+                                .setParameter("material", mat.getId())
+                                .getResultList();
+
+        } catch (NoResultException e) {
+                // e.printStackTrace();
+        } finally {
+                if (em != null)
+                        em.close();
+        }
+		return null;
 	}
 
 	
