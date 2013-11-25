@@ -38,7 +38,8 @@ public class IndexMaterialServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> list = null;
-		list =  materialService.findAll();
+		list = materialService.findAllNoParent();
+		//list =  materialService.findAll();
 		 request.setAttribute("materials",list);
 		 System.out.println("TAILLE LIST = "+list.size());
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(

@@ -7,7 +7,7 @@
 		<h1 class="page-header">Add Material</h1>
 	</div>
 	<div class="row">
-		<form role="form" action="addMaterial" method="post">
+		<form role="form" action="AddSubMaterial" method="post">
 			<div class="form-group">
 				<label for="inputName">Name</label> <input type="name"
 					class="form-control" id="inputName" placeholder="Enter Name"
@@ -17,9 +17,7 @@
 			<table>
 				<tbody>
 					<tr>
-						<td>
-							Material Attribut
-						</td>
+						<td>Material Attribut</td>
 						<td>
 							<div class="form-group">
 
@@ -41,21 +39,10 @@
 				</tbody>
 
 			</table>
+			<input type="hidden" id="inputMaterialParent"
+				name="inputMaterialParent" value="${requestScope.idParent }" >
 
 
-			<div class="form-group">
-
-								<select class="form-control" id="inputMaterialParent"
-									name="inputMaterialParent">
-										<option value="" >...</option>
-										<c:forEach items="${requestScope.mats }" var="mat" >
-											<option value="${mat.id }" >${mat.name }</option>
-										</c:forEach>
-									
-								</select>
-
-							</div>
-			
 
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
@@ -63,6 +50,6 @@
 </div>
 
 <script>
-
+	
 </script>
 <jsp:include page="include/footer.jsp" />

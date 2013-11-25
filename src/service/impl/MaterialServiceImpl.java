@@ -43,4 +43,14 @@ public class MaterialServiceImpl implements MaterialService {
 		return materialDao.remove(mat);
 	}
 
+	@Override
+	public List<Material> findAllNoParent() {
+		return materialDao.findAllNoParent();
+	}
+
+	@Override
+	public List<Material> findByParent(Material parent) {
+		return materialDao.findByParent(parent);
+	}
+
 }

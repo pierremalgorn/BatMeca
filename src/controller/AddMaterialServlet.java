@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,6 +36,9 @@ public class AddMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Material> materials;
+		materials = materialService.findAll();
+		request.setAttribute("mats", materials);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addMaterial.jsp"));
 		rd.forward(request, response);
@@ -48,6 +52,11 @@ public class AddMaterialServlet extends HttpServlet {
 		System.out.println("NAME  = "+name);
 		Material mat = new Material();
 		mat.setName(name);
+		String parent = request.getParameter("inputMaterialParent");
+		if(parent != null){
+			Material matParent = materialService.find(Integer.parseInt(parent));
+			mat.setMaterialParent(matParent);
+		}
 		
 		materialService.addMaterial(mat);
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));

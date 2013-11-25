@@ -40,12 +40,13 @@ public class MaterialServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("idMat");
 		Material mat = null;
+		List<Material> childs = null;
 		
 		mat = materialService.find(Integer.parseInt(id));
-
-	
+		childs = materialService.findByParent(mat);
+		System.out.println("NB child = "+childs.size());
 		request.setAttribute("material", mat);
-	
+		request.setAttribute("childs", childs);
 
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(

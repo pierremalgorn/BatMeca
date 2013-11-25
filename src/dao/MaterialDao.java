@@ -12,6 +12,8 @@ public interface MaterialDao {
 	public Material find(int id);
 	public void editMaterial(Material mat);
 	public boolean remove(Material mat);
+	public List<Material> findAllNoParent();
+	public List<Material> findByParent(Material parent);
 		
 	
 }

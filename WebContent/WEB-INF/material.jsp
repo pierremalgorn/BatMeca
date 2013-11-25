@@ -7,6 +7,8 @@
 	<div class="row">
 		<h1 class="page-header">
 			Material Details - ${requestScope.material.name } 
+			<a class="btn btn-info" href="AddSubMaterial?idParent=${requestScope.material.id }" >Add Sub-MAterial</a>
+			<a class="btn btn-info" href="#" >Add Test</a>
 		</h1>
 	</div>
 	<div class="row">
@@ -14,6 +16,15 @@
 			<li><a href="IndexMaterial">Index</a></li>
 			<li class="active">${requestScope.material.name }</li>
 		</ol>
+		<ul class="nav nav-tabs">
+			<li><a href="#tests" data-toggle="tab">Test</a></li>
+			<li><a href="#subMat" data-toggle="tab">SubMaterial</a></li>
+
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="tests">
+		
+			
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -42,6 +53,28 @@
 				</c:forEach>
 			</tbody>
 		</table>
+			</div>
+			<div class="tab-pane" id="subMat" >
+				<table class="table table-striped" >
+					<thead>
+						<tr>
+							<th>
+								ID
+							</th>
+							<th>Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${requestScope.childs }" var="child" >
+							<tr>
+								<td>${child.id }</td>
+								<td><a href="Material?idMat=${child.id}" >${child.name }</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
 <jsp:include page="include/footer.jsp" />

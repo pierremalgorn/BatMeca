@@ -10,5 +10,7 @@ public interface MaterialService {
 	abstract Material find(int id);
 	abstract void editMaterial(Material mat);
 	abstract boolean remove(Material mat);
+	abstract List<Material> findAllNoParent();
+	abstract List<Material> findByParent(Material parent);
 
 }

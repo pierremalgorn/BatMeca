@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-
 import dao.MaterialDao;
 import dao.manager.DaoManager;
 import entity.Material;
+
 
 public class MaterialDaoImpl implements MaterialDao {
 
@@ -117,5 +117,49 @@ public class MaterialDaoImpl implements MaterialDao {
 		}
 		return true;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Material> findAllNoParent(){
+		EntityManager em = null;
+		List<Material> materials = null;
+		
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			
+			materials =  em.createQuery("Select m From Material m Where m.materialParent IS NULL").getResultList();
+		
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
+
+		return materials;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Material> findByParent(Material parent) {
+		EntityManager em = null;
+		List<Material> materials = null;
+		try{
+			 em = DaoManager.INSTANCE.getEntityManager();
+			 materials = em.createQuery("Select m From Material m Where m.materialParent=:mParent").setParameter("mParent", parent).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (em != null)
+				em.close();
+		}
+		
+		
+		 
+		return materials;
+	}
+
+	
 
 }
