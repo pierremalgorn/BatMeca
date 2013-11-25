@@ -85,7 +85,7 @@ public class TestDaoImpl implements TestDao {
 
 			Test test = em.find(Test.class, id);
 			em.getTransaction().begin();
-			em.remove(test);
+			em.remove(em.contains(test) ? test : em.merge(test));
 			em.getTransaction().commit();
 
 		} catch (Exception e) {

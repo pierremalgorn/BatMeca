@@ -10,7 +10,7 @@
 	</div>
 	<div class="row">
 		<form method="post" action="AddTest" enctype="multipart/form-data" >
-		<input type="hidden" value="${requestScope.idSub }" name="idSub" id="idSub">
+		<input type="hidden" value="${requestScope.idMat }" name="idMat" id="idMat">
 			<div class="form-group">
 				<label for="inputNameTest">Name</label> <input
 					type="text" class="form-control" id="inputNameTest"

@@ -39,7 +39,15 @@ public class RemoveMaterialServlet extends HttpServlet {
 		Material mat = materialService.find(id);
 		materialService.remove(mat);
 		RequestDispatcher rd = null;
-		rd = getServletContext().getRequestDispatcher("/IndexMaterial");
+		if (request.getParameter("idParent") != null) {
+			rd = getServletContext().getRequestDispatcher("/Material?idMat="+request.getParameter("idParent"));
+			
+		} else {
+			
+			rd = getServletContext().getRequestDispatcher("/IndexMaterial");
+		
+		}
+
 		rd.forward(request, response);
 	}
 

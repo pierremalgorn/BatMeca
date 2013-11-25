@@ -9,36 +9,19 @@
 	<div class="row">
 		<form role="form" action="AddSubMaterial" method="post">
 			<div class="form-group">
-				<label for="inputName">Name</label> <input type="name"
+				<label for="inputName">Name</label> <input type="text"
 					class="form-control" id="inputName" placeholder="Enter Name"
 					name="inputName">
 			</div>
-
-			<table>
-				<tbody>
-					<tr>
-						<td>Material Attribut</td>
-						<td>
-							<div class="form-group">
-
-								<select class="form-control" id="inputTypeAttr"
-									name="inputTypeAttr">
-									<option value="value1">Valeur 1</option>
-								</select>
-
-							</div>
-						</td>
-						<td>
-
-							<div class="form-group">
-								<input type="text" class="form-control" id="inputNameAttr"
-									name="inputNameAttr" placeholder="Value">
-							</div>
-						</td>
-					</tr>
-				</tbody>
-
-			</table>
+	</div>
+			<h3>Material Attribute</h3>
+			<c:forEach items="${requestScope.matAttrs }" var="attr" >
+				<div class="form-group" >
+					<label form="input${attr.name }" >${attr.name }</label>
+					<input type="text" class="form-control" id="input${attr.name }" name="input${attr.name }" >
+				</div>
+			</c:forEach>
+			
 			<input type="hidden" id="inputMaterialParent"
 				name="inputMaterialParent" value="${requestScope.idParent }" >
 

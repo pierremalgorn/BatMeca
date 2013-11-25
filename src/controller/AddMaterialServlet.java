@@ -1,7 +1,12 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.MaterialService;
+import service.TypeMaterialAttributService;
 import service.manager.ServiceManager;
 import entity.Material;
+import entity.MaterialAttribute;
+import entity.TypeMaterialAttribute;
 
 /**
  * Servlet implementation class addMaterialServlet
@@ -22,6 +30,7 @@ public class AddMaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	private MaterialService materialService;
+	private TypeMaterialAttributService typeMaterialAttributService;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,6 +38,7 @@ public class AddMaterialServlet extends HttpServlet {
     public AddMaterialServlet() {
         super();
         materialService = ServiceManager.INSTANCE.getMaterialService();
+        typeMaterialAttributService = ServiceManager.INSTANCE.getTypeMaterialAttributService();
         
     }
 
@@ -38,7 +48,11 @@ public class AddMaterialServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> materials;
 		materials = materialService.findAll();
+		List<TypeMaterialAttribute> listAttr;
+		listAttr = typeMaterialAttributService.findAll();
+		
 		request.setAttribute("mats", materials);
+		request.setAttribute("matAttrs", listAttr);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addMaterial.jsp"));
 		rd.forward(request, response);
@@ -49,11 +63,26 @@ public class AddMaterialServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("inputName");
-		System.out.println("NAME  = "+name);
 		Material mat = new Material();
 		mat.setName(name);
 		String parent = request.getParameter("inputMaterialParent");
-		if(parent != null){
+		List<TypeMaterialAttribute> listAttr;
+		listAttr = typeMaterialAttributService.findAll();
+		
+		mat.setMatAttrs(new HashSet<MaterialAttribute>());
+			
+			
+		for (TypeMaterialAttribute tMatAttr : listAttr) {
+			MaterialAttribute matAttr = new MaterialAttribute();
+			String nameAttr = request.getParameter("input"+tMatAttr.getName());
+
+			matAttr.setValue(nameAttr);
+			matAttr.setTypeMatAttr(tMatAttr);
+			matAttr.setMaterial(mat);
+			mat.addMaterialAttribute(matAttr);
+		}
+		
+		if(parent.compareTo("")!= 0){
 			Material matParent = materialService.find(Integer.parseInt(parent));
 			mat.setMaterialParent(matParent);
 		}

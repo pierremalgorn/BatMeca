@@ -6,10 +6,14 @@ import javax.persistence.Persistence;
 
 import dao.MaterialDao;
 import dao.TestDao;
+import dao.TypeMaterialAttributDao;
+import dao.TypeTestAttributDao;
 import dao.UserDao;
 import dao.TypeUserDao;
 import dao.impl.MaterialDaoImpl;
 import dao.impl.TestDaoImpl;
+import dao.impl.TypeMaterialAttributDaoImpl;
+import dao.impl.TypeTestAttributDaoImpl;
 import dao.impl.UserDaoImpl;
 import dao.impl.TypeUserDaoImpl;
 
@@ -24,6 +28,8 @@ public enum DaoManager {
 	private UserDao userDao;
 	private EntityManagerFactory emf;
 	private TypeUserDao typeUserDao;
+	private TypeMaterialAttributDao typeMaterialAttributDao ;
+	private TypeTestAttributDao typeTestAttributDao;
 
 	private DaoManager(){
 
@@ -32,6 +38,8 @@ public enum DaoManager {
 		testDao = new TestDaoImpl();
 		userDao = new UserDaoImpl();
 		typeUserDao = new TypeUserDaoImpl();
+		typeMaterialAttributDao = new TypeMaterialAttributDaoImpl();
+		typeTestAttributDao = new TypeTestAttributDaoImpl();
 	}
 
 	
@@ -59,5 +67,17 @@ public enum DaoManager {
 	public TypeUserDao getTypeUserDao(){
 		return typeUserDao;
 	}
+
+
+	public TypeMaterialAttributDao getTypeMaterialAttributDao() {
+		return typeMaterialAttributDao;
+	}
+
+
+	public TypeTestAttributDao getTypeTestAttributDao() {
+		return typeTestAttributDao;
+	}
+
+
 	
 }

@@ -9,36 +9,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Material;
-import service.MaterialService;
+import service.TypeTestAttributService;
 import service.manager.ServiceManager;
+import entity.TypeMaterialAttribute;
+import entity.TypeTestAttribute;
 
 /**
- * Servlet implementation class EditMaterialServlet
+ * Servlet implementation class RemoveTypeTestAttrServlet
  */
-@WebServlet("/EditMaterial")
-public class EditMaterialServlet extends HttpServlet {
+@WebServlet("/RemoveTypeTestAttr")
+public class RemoveTypeTestAttrServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private MaterialService materialService;
+	private TypeTestAttributService typeService;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditMaterialServlet() {
+    public RemoveTypeTestAttrServlet() {
         super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
+        typeService = ServiceManager.INSTANCE.getTypeTestAttributService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		TypeTestAttribute type;
+		type = typeService.find(Integer.parseInt(request.getParameter("id")));
+		typeService.remove(type);
 		
-		Material mat = materialService.find(id);
-		//materialService.editMaterial(mat);
-		request.setAttribute("mat", mat);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-		response.encodeURL("/WEB-INF/editMaterial.jsp"));
+		RequestDispatcher rd = null;
+		rd = getServletContext().getRequestDispatcher("/Config");
 		rd.forward(request, response);
 	}
 
@@ -46,14 +47,7 @@ public class EditMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		
-		Material mat = materialService.find(id);
-		mat.setName(request.getParameter("inputName"));
-		
-		materialService.editMaterial(mat);
-		response.sendRedirect(response
-				.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		// TODO Auto-generated method stub
 	}
 
 }

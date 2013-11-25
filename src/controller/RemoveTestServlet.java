@@ -39,7 +39,7 @@ public class RemoveTestServlet extends HttpServlet {
 		//f.deleteFolder(t);
 		testService.remove(Integer.parseInt(id));
 		
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexTest?idSub="+request.getParameter("idSub")));
+		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Material?idMat="+request.getParameter("idMat")));
 	}
 
 	/**
