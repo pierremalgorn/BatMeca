@@ -304,7 +304,7 @@ public class CsvHandler {
 	 * Permet de convertir un fichier .dat en .csv
 	 * */
 	public void datToCsv(String input,String output) throws IOException{
-		String[] cmd = new String[] { "/home/max/BatMeca/script/datToCsv",input,output
+		String[] cmd = new String[] { "/home/max/BatMeca/BatmecaNewGeneration/script/datToCsv",input,output
 				 };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);

@@ -1,0 +1,13 @@
+#!/bin/bash
+#recupere ligne de 3 a 5
+cut --delimiter=, -f3-5 data1.csv >> fichier.csv
+awk 'BEGIN { FS=","; OFS=","; } {print $1,$2,$3}' file
+echo "To remove a column, not print it:"
+awk 'BEGIN { FS=","; OFS=","; } {print $1,$3}' file
+echo "To change the order:"
+
+awk 'BEGIN { FS=","; OFS=","; } {print $3,$1,$2}' file
+echo "Re-direct to an output file."
+
+awk 'BEGIN { FS=","; OFS=","; } {print $3,$1,$2}' file > output.file
+

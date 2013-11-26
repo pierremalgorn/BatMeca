@@ -1,13 +1,9 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,9 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Column;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "material")
@@ -39,7 +32,7 @@ public class Material {
 	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER,orphanRemoval=true)
 	private Set<Test> tests;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "material", fetch = FetchType.EAGER)
+	@OneToMany( mappedBy = "material", fetch = FetchType.EAGER,orphanRemoval=true)
 	private Set<MaterialAttribute> matAttrs;
 
 	@ManyToOne
