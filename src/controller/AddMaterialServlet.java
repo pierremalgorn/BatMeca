@@ -14,13 +14,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.MaterialService;
 import service.TypeMaterialAttributService;
+import service.UserService;
 import service.manager.ServiceManager;
 import entity.Material;
 import entity.MaterialAttribute;
 import entity.TypeMaterialAttribute;
+import entity.User;
 
 /**
  * Servlet implementation class addMaterialServlet
@@ -31,6 +34,7 @@ public class AddMaterialServlet extends HttpServlet {
        
 	private MaterialService materialService;
 	private TypeMaterialAttributService typeMaterialAttributService;
+	private UserService userService;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,6 +43,7 @@ public class AddMaterialServlet extends HttpServlet {
         super();
         materialService = ServiceManager.INSTANCE.getMaterialService();
         typeMaterialAttributService = ServiceManager.INSTANCE.getTypeMaterialAttributService();
+        userService = ServiceManager.INSTANCE.getUserService();
         
     }
 
@@ -75,17 +80,22 @@ public class AddMaterialServlet extends HttpServlet {
 		for (TypeMaterialAttribute tMatAttr : listAttr) {
 			MaterialAttribute matAttr = new MaterialAttribute();
 			String nameAttr = request.getParameter("input"+tMatAttr.getName());
-
-			matAttr.setValue(nameAttr);
-			matAttr.setTypeMatAttr(tMatAttr);
-			matAttr.setMaterial(mat);
-			mat.addMaterialAttribute(matAttr);
+			if(nameAttr.compareTo("") != 0){
+				matAttr.setValue(nameAttr);
+				matAttr.setTypeMatAttr(tMatAttr);
+				matAttr.setMaterial(mat);
+				mat.addMaterialAttribute(matAttr);
+			}
+			
 		}
 		
 		if(parent.compareTo("")!= 0){
 			Material matParent = materialService.find(Integer.parseInt(parent));
 			mat.setMaterialParent(matParent);
 		}
+		
+		HttpSession session = request.getSession();
+		mat.setUser((User) session.getAttribute("sessionUser"));
 		
 		materialService.addMaterial(mat);
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));

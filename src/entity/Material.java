@@ -46,11 +46,15 @@ public class Material {
 	@JoinColumn(name = "id_parent", nullable = true)
 	private Material materialParent;
 
+	@ManyToOne
+	@JoinColumn(name = "id_creator", nullable = true)
+	private User user;
+
 	public Material() {
 		super();
-		//this.tests = new ArrayList<Test>();
-		//this.matAttrs = new ArrayList<MaterialAttribute>();
-				
+		// this.tests = new ArrayList<Test>();
+		// this.matAttrs = new ArrayList<MaterialAttribute>();
+
 	}
 
 	public int getId() {
@@ -106,9 +110,13 @@ public class Material {
 			matAttr.setMaterial(this);
 		}
 	}
-	/*
-	 * public User getUser() { return user; } public void setUser(User user) {
-	 * this.user = user; }
-	 */
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

@@ -51,12 +51,12 @@ public class TestAttribute {
 		this.test = test;
 	}
 	
-	public String getName() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setName(String name) {
-		this.value = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public TypeTestAttribute getTypeTestAttr() {

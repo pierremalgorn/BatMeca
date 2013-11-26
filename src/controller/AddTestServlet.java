@@ -6,6 +6,8 @@ import handler.FolderHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,13 +16,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import service.MaterialService;
 import service.TestService;
+import service.TypeMaterialAttributService;
+import service.TypeTestAttributService;
 import service.manager.ServiceManager;
 import entity.Material;
 import entity.Test;
+import entity.TestAttribute;
+import entity.TypeTestAttribute;
+import entity.User;
 
 /**
  * Servlet implementation class AddTestServlet
@@ -33,6 +41,8 @@ public class AddTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private TestService testService;    
     private MaterialService materialService;
+    //private TypeMaterialAttributService typeMatService;
+    private TypeTestAttributService typeTestService;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,14 +50,18 @@ public class AddTestServlet extends HttpServlet {
         super();
         testService = ServiceManager.INSTANCE.getTestService();
         materialService = ServiceManager.INSTANCE.getMaterialService();
-       
-        // TODO Auto-generated constructor stub
+       //typeMatService = ServiceManager.INSTANCE.getTypeMaterialAttributService();
+       typeTestService = ServiceManager.INSTANCE.getTypeTestAttributService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<TypeTestAttribute> typesTest;
+		typesTest = typeTestService.findAll();
+		
+		request.setAttribute("typesTest", typesTest);
 		request.setAttribute("idMat", request.getParameter("idMat"));
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addTest.jsp"));
@@ -59,6 +73,8 @@ public class AddTestServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("inputNameTest");
+		List<TypeTestAttribute> typesTest;
+		typesTest = typeTestService.findAll();
 		
 		/**
 		 * Recuperation du materiel associé
@@ -70,6 +86,21 @@ public class AddTestServlet extends HttpServlet {
 		test.setName(name);
 		test.setDate(new Date());
 		test.setMaterial(mat);
+		
+		//Ajout des attributs
+		
+		test.setTestAttributs(new HashSet<TestAttribute>());
+		for (TypeTestAttribute typeAttr : typesTest) {
+			TestAttribute testAttr = new TestAttribute();
+			testAttr.setValue(request.getParameter("input"+typeAttr.getName()));
+			testAttr.setTest(test);
+			testAttr.setTypeTestAttr(typeAttr);
+			test.addTestAttribute(testAttr);
+		}
+		
+		HttpSession session = request.getSession();
+		test.setUser((User) session.getAttribute("sessionUser"));
+		
 		//Enregistrement en base de données
 		testService.add(test);
 		//Création de repertoire associer

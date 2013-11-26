@@ -4,19 +4,13 @@
 <%@ page import="entity.*"%>
 <%@ page import="java.io.File"%>
 <jsp:include page="include/header.jsp" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/dygraph-combined.js"></script>
-  
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/dygraph-combined.js"></script>
+
 <div class="container">
 	<div class="row">
-		<h1>
-			Test Details - ${requestScope.test.name } <a
-				href="ExecTest?idTest=${requestScope.test.id }"
-				class="btn btn-info pull-right">Play</a>
-
-		</h1>
-		<a class="btn btn-info"
-			href="IndexTest">Return Test
-			List</a>
+		<h1>Test Details - ${requestScope.test.name }</h1>
+		<a class="btn btn-info" href="IndexTest">Return Test List</a>
 	</div>
 	<div class="row">
 		<ul class="nav nav-tabs">
@@ -40,38 +34,38 @@
 							<td>${requestScope.test.name }</td>
 						</tr>
 						<tr>
-							<td>Path</td>
-							<td></td>
+							<th>Material Attribute</th>
+							<td>
+													</td>
 						</tr>
 						<tr>
-							<ul>
-							<c:forEach items="${requestScope.test.testAttributs }" var="attr" > 
-								<li>
-									${attr.name}
-								</li>
-								<li>
-								${attr.typeTestAttr.name}
-								</li>
-							</c:forEach>
-							</ul>
-							
+						<th>
+							Test Attribute
+						</th>
+							<td>
+								<ul>
+									<c:forEach items="${requestScope.test.testAttributs }"
+										var="attr">
+										<li>${attr.typeTestAttr.name}: ${attr.value }</li>
+									</c:forEach>
+								</ul>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			
+
 
 			<div class="tab-pane" id="curve">
-			
+
 				<div id="graphdiv3" style="width: 80%; height: 500px;"></div>
-				<script charset="UTF-8" >
-				
-				
-				var data  = '${requestScope.data }';
-				//console.log(data);
-				g3 = new Dygraph(document.getElementById("graphdiv3"),data,{});
+				<script charset="UTF-8">
+					var data = '${requestScope.data }';
+					//console.log(data);
+					g3 = new Dygraph(document.getElementById("graphdiv3"),
+							data, {});
 				</script>
-				
+
 			</div>
 		</div>
 	</div>

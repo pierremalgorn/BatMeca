@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.MaterialService;
 import service.TypeMaterialAttributService;
@@ -17,6 +18,7 @@ import service.manager.ServiceManager;
 import entity.Material;
 import entity.MaterialAttribute;
 import entity.TypeMaterialAttribute;
+import entity.User;
 
 /**
  * Servlet implementation class AddSubMaterialServlet
@@ -86,6 +88,9 @@ public class AddSubMaterialServlet extends HttpServlet {
 			matAttr.setMaterial(mat);
 			mat.addMaterialAttribute(matAttr);
 		}
+		
+		HttpSession session = request.getSession();
+		mat.setUser((User) session.getAttribute("sessionUser"));
 		materialService.addMaterial(mat);
 		response.sendRedirect(response
 				.encodeURL("/BatmecaNewGeneration/Material?idMat="+mat.getId()));

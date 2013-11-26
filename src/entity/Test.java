@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,8 @@ import javax.persistence.Table;
 
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.Fetch;
+
+import controller.AddTestServlet;
 
 
 @Entity
@@ -40,9 +43,11 @@ public class Test {
 	@ManyToOne
 	@JoinColumn(name="id_material",nullable=true)
 	private Material material;
-	@OneToMany(mappedBy="test",fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="test",fetch=FetchType.EAGER)
 	private Set<TestAttribute> testAttributs;
-	
+	@ManyToOne
+	@JoinColumn(name="id_creator",nullable=true)
+	private User user;
 	
 	public Test(){
 		
@@ -88,7 +93,20 @@ public class Test {
 		
 	}
 
+	public void addTestAttribute(TestAttribute testAttr){
+		this.testAttributs.add(testAttr);
+		if (testAttr.getTest() != null) {
+			testAttr.setTest(this);
+		}
+	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	
 }

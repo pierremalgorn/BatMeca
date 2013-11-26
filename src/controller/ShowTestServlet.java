@@ -50,6 +50,7 @@ public class ShowTestServlet extends HttpServlet {
 		//String data = csv.readAll(f.getPathSave(t)+"/data.csv");
 		
 		//request.setAttribute("data", data);
+		System.out.println("NB ATTR "+t.getTestAttributs().size());
 		request.setAttribute("test", t);
 	
 		
