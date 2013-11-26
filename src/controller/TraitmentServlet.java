@@ -58,7 +58,7 @@ public class TraitmentServlet extends HttpServlet {
 		
 		String calMax = request.getParameter("calMax");
 		if( calMax!= null){
-			float max = csv.maxValueColumn(Integer.parseInt(calMax),f.getPathSave(t)+"/data.csv");
+			float max = csv.maxValueColumn(Integer.parseInt(calMax),f.getPathSave(t)+"/dataInput.csv");
 			
 			f.addDataHistoryFile("MAX FILE", t);
 			response.getWriter().write(new Gson().toJson(max));

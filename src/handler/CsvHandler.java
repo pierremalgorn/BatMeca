@@ -135,8 +135,8 @@ public class CsvHandler {
 	 * Lissage des points
 	 * */
 	public void lissageOrdre2(String input,String output) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(input), ',');
-		CSVWriter writer = new CSVWriter(new FileWriter(output), ',');
+		CSVReader reader = new CSVReader(new FileReader(input), ',',Character.MIN_VALUE);
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',Character.MIN_VALUE);
 		List<String[]> myEntries = reader.readAll();
 
 		String[] ligne0 = myEntries.get(0);
