@@ -64,8 +64,22 @@
 					</div>
 					<div class="col-md-10">
 
-
-						<div id="graphdiv3" style="width: 80%; height: 500px;"></div>
+						<table  class="table">
+							<thead>
+								<tr>
+									<c:forEach items="${requestScope.colHeader[0]}" var="rowName" >
+										<th>${rowName }</th>
+									</c:forEach>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${requestScope.colHeader[1]}" var="rowUnit" >
+										<td>${rowUnit }</td>
+									</c:forEach>
+							</tbody>
+						</table>
+						
+						<div id="graphdiv3" style="width: 100%; height: 500px;"></div>
 						<script charset="UTF-8">
 						$(function(){
 							
@@ -75,6 +89,13 @@
 							//console.log(data);
 							g3 = new Dygraph(document
 									.getElementById("graphdiv3"), data, {});
+							
+							
+							
+						});
+						
+						$("#graphdiv3").on('click',function(){
+							console.log("SELECTION ="+g3.getSelection());
 						});
 						</script>
 					</div>

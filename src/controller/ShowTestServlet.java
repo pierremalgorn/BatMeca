@@ -5,6 +5,7 @@ import handler.FolderHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -46,11 +47,13 @@ public class ShowTestServlet extends HttpServlet {
 		
 		//String path = f.getPathSave(t);
 		
-		
+		ArrayList<String[]> list = f.getheaderColumn(f.getPathSave(t)+"/data/"+f.getFileNameData(t));
+		f.saveToJson(list, f.getPathSave(t)+"/header.json");
 		String data = csv.readAll(f.getPathSave(t)+"/data.csv");
 		
+		request.setAttribute("colHeader", list);
 		request.setAttribute("data", data);
-		System.out.println("NB ATTR "+t.getTestAttributs().size());
+		
 		request.setAttribute("test", t);
 	
 		

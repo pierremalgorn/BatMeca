@@ -4,7 +4,7 @@ cp $1 $2
 
 sed -i -e "s/,/./g" $2
 echo "Suppression du header"
-sed -i -e '1,3d' $2
+sed -i -e '1,2d' $2
 echo "remplacement des tabulations"
 sed -i -e "s/\t\t\t\t\t//g" $2
 sed -i -e "s/\t/,/g" $2

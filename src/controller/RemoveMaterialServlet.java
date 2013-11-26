@@ -1,5 +1,7 @@
 package controller;
 
+import handler.FolderHandler;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -37,6 +39,8 @@ public class RemoveMaterialServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("idMat"));
 		Material mat = materialService.find(id);
+		FolderHandler f = new FolderHandler();
+		f.cleanMatFolder(mat);
 		materialService.remove(mat);
 		RequestDispatcher rd = null;
 		if (request.getParameter("idParent") != null) {
