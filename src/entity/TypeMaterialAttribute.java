@@ -16,6 +16,8 @@ public class TypeMaterialAttribute {
 	@Column(name="name")
 	private String name;
 	
+	@Column (name="pattern")
+	private String pattern;
 	/*
 	private MaterialAttribute matAttr;
 	*/
@@ -42,5 +44,11 @@ public class TypeMaterialAttribute {
 	public void setMatAttr(MaterialAttribute matAttr) {
 		this.matAttr = matAttr;
 	}*/
+	public String getPattern() {
+		return pattern;
+	}
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
 	
 }

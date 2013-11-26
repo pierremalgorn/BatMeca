@@ -45,7 +45,7 @@ public class AddTypeTestAttrServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TypeTestAttribute type = new TypeTestAttribute();
 		type.setName(request.getParameter("inputName"));
-		
+		type.setPattern(request.getParameter("inputPattern"));
 		typeService.add(type);
 		
 		/*RequestDispatcher rd = null;

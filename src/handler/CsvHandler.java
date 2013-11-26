@@ -1,6 +1,7 @@
 package handler;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import entity.Test;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
@@ -138,10 +140,10 @@ public class CsvHandler {
 		List<String[]> myEntries = reader.readAll();
 
 		String[] ligne0 = myEntries.get(0);
-
+		String[] ligne1 = myEntries.get(1);
 		writer.writeNext(ligne0);
-
-		for (int i = 1; i < myEntries.size() - 1; i++) {
+		writer.writeNext(ligne1);
+		for (int i = 2; i < myEntries.size() - 1; i++) {
 			String[] tab = myEntries.get(i);
 
 			for (int j = 0; j < tab.length; j++) {
@@ -160,7 +162,8 @@ public class CsvHandler {
 	}
 
 	/*
-	 * Séparer les colonnes d'un fichier csv
+	 * Séparer les colonnes d'un fichier csv 
+	 * pas operationnel
 	 */
 	public void switchColomn() throws IOException {
 		String[] cmd = new String[] { "awk",
@@ -230,17 +233,17 @@ public class CsvHandler {
 
 	}
 
-	public Float maxValueColumn(int numColumn) throws NumberFormatException, IOException {
+	public Float maxValueColumn(int numColumn,String input) throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"}",
-				this.fileInput };
+				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
-
+		reader.readLine();
 		Float max = (float) -999999999;
 		while ((line = reader.readLine()) != null) {
 		
@@ -309,5 +312,7 @@ public class CsvHandler {
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 	}
+	
+	
 
 }

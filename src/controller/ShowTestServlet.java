@@ -49,7 +49,7 @@ public class ShowTestServlet extends HttpServlet {
 		
 		ArrayList<String[]> list = f.getheaderColumn(f.getPathSave(t)+"/data/"+f.getFileNameData(t));
 		f.saveToJson(list, f.getPathSave(t)+"/header.json");
-		String data = csv.readAll(f.getPathSave(t)+"/data.csv");
+		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 		
 		request.setAttribute("colHeader", list);
 		request.setAttribute("data", data);

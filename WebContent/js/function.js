@@ -2,15 +2,15 @@
  * 
  */
 
-function lisser(url,id,action){
+function lisser(url,data){
 	$.ajax({
 		url: url,
 		type: 'get',
-		data: 'id='+id+"&action="+action,
+		data: data,
 		dataType: 'json',
 		success: function(json){
 			//console.log(json);
-			refreshCurve(data);
+			refreshCurve(json);
 		},
 		error:function(error){
 			console.log(error);
@@ -26,8 +26,26 @@ function action(url,data){
 		data: data,
 		dataType: 'json',
 		success: function(json){
-			//console.log(json);
-			refreshCurve(data);
+			console.log(json);
+			//refreshCurve(data);
+		},
+		error:function(error){
+			console.log(error);
+		}
+			
+	});
+}
+
+function calculMax(url,data){
+	$.ajax({
+		url: url,
+		type: 'get',
+		data: data,
+		dataType: 'json',
+		success: function(json){
+			console.log(json);
+			$('#valRm').html(json);
+			//refreshCurve(data);
 		},
 		error:function(error){
 			console.log(error);

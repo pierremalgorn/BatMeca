@@ -16,6 +16,8 @@ public class TypeTestAttribute {
 	@Column(name="name")
 	private String name;
 	
+	@Column (name="pattern")
+	private String pattern;
 	
 	public TypeTestAttribute() {
 		super();
@@ -33,6 +35,11 @@ public class TypeTestAttribute {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public String getPattern() {
+		return pattern;
+	}
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
+	}
 	
 }

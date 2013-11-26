@@ -6,11 +6,13 @@
 <jsp:include page="include/header.jsp" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/dygraph-combined.js"></script>
-<script	src="${pageContext.request.contextPath}/js/function.js"></script>
+<script src="${pageContext.request.contextPath}/js/function.js"></script>
 <div class="container">
 	<div class="row">
 		<h1>Test Details - ${requestScope.test.name }</h1>
-		<a class="btn btn-info" href="IndexTest">Return Test List</a>
+		<a class="btn btn-info"
+			href="Material?idMat=${requestScope.test.material.id }">Return
+			Test List</a>
 	</div>
 	<div class="row">
 		<ul class="nav nav-tabs">
@@ -40,12 +42,15 @@
 						<tr>
 							<th>Test Attribute</th>
 							<td>
-								<ul>
+								<table class="table">
 									<c:forEach items="${requestScope.test.testAttributs }"
 										var="attr">
-										<li>${attr.typeTestAttr.name}:${attr.value }</li>
+										<tr>
+											<th>${attr.typeTestAttr.name}</th>
+											<td>${attr.value }</td>
+										</tr>
 									</c:forEach>
-								</ul>
+								</table>
 							</td>
 						</tr>
 					</tbody>
@@ -57,28 +62,55 @@
 				<div class="row">
 					<div class="col-md-2">
 						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#" onclick="lisser('${pageContext.request.contextPath}/Traitment',${requestScope.test.id },'lisser');" >Lisser</a></li>
-							<li><a href="#" >Calcul Max</a></li>
-							<li><a href="#" onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&cut=10000');" >Cut</a></li>
+							<li><a href="#"
+								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Lisser</a></li>
+							<li><a href="#" onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=5');" >Calcul Max</a></li>
+							<li><a href="#"
+								onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&cut=10000');">Cut</a></li>
+							<li><a href="#" onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&factor=2');" >Factor</a></li>
+							<li><a href="#">Echantillon</a></li>
+
 						</ul>
+
+						<table>
+
+
+
+
+							<tr>
+								<th>Plot 1:</th>
+								<td id="valPlot1"></td>
+							</tr>
+							<tr>
+								<th>Rm :</th>
+								<td id="valRm" ></td>
+							</tr>
+						</table>
 					</div>
 					<div class="col-md-10">
-
-						<table  class="table">
-							<thead>
-								<tr>
-									<c:forEach items="${requestScope.colHeader[0]}" var="rowName" >
-										<th>${rowName }</th>
+						<form action="" method="post">
+							<table class="table">
+								<thead>
+									<tr>
+										<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
+											<th>
+												<div class="checkbox">
+													<label> ${rowName } <input name="check${rowName }"
+														type="checkbox">
+													</label>
+												</div>
+											</th>
+										</c:forEach>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${requestScope.colHeader[1]}" var="rowUnit">
+										<td><input class="form-control" type="text"
+											value="${rowUnit }"></td>
 									</c:forEach>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${requestScope.colHeader[1]}" var="rowUnit" >
-										<td>${rowUnit }</td>
-									</c:forEach>
-							</tbody>
-						</table>
-						
+								</tbody>
+							</table>
+						</form>
 						<div id="graphdiv3" style="width: 100%; height: 500px;"></div>
 						<script charset="UTF-8">
 						$(function(){
@@ -96,6 +128,7 @@
 						
 						$("#graphdiv3").on('click',function(){
 							console.log("SELECTION ="+g3.getSelection());
+							$("#valPlot1").html(g3.getSelection());
 						});
 						</script>
 					</div>

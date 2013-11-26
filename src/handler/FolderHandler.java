@@ -56,7 +56,7 @@ public class FolderHandler {
 		final Process process = runtime.exec(cmd);
 	}
 
-	public void initDirectory(Test test) {
+	public void initDirectory(Test test) throws IOException {
 
 		String path = this.getPathSave(test);
 
@@ -64,7 +64,10 @@ public class FolderHandler {
 		f.mkdirs();
 		this.makeDir(path + "/config");
 		this.makeDir(path + "/data");
-		;
+		this.makeDir(path + "/history");
+		File fh = new File(path + "/history/historic");
+		fh.createNewFile();
+		
 	}
 
 	public File[] getListDir(String path) {
@@ -127,7 +130,7 @@ public class FolderHandler {
 		String[] header = new String[3];
 		int cpt = 0;
 		while (cpt < 3 && (ligne = br.readLine()) != null) {
-			System.out.println(ligne);
+			
 			header[cpt] = ligne;
 			cpt++;
 		}
@@ -140,7 +143,7 @@ public class FolderHandler {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (int i = 1; i < tab.length; i++) {
-			System.out.println("I =" + i);
+			
 			tab[i] = tab[i].replaceAll("#", "");
 			String[] row = tab[i].split("\t");
 			for (int j = 0; j < row.length; j++) {
@@ -165,4 +168,19 @@ public class FolderHandler {
 
 		pr.close();
 	}
+	public void addDataHistoryFile(String data,Test test) throws IOException{
+		PrintWriter pr;
+
+		pr = new PrintWriter(new BufferedWriter(new FileWriter(this.getPathSave(test)+"/history/historic",true)));
+		pr.println(data);
+		//pr.write(data);
+		pr.close();
+	}
+	
+	public void renameCsvOutput(Test test){
+		File file = new File(this.getPathSave(test)+"/dataOutput.csv");
+		file.renameTo(new File(this.getPathSave(test)+"/dataInput.csv"));
+	}
+	
+	
 }

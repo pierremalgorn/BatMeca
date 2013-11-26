@@ -43,7 +43,7 @@ public class AddTypeAttrMatServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TypeMaterialAttribute type = new TypeMaterialAttribute();
 		type.setName(request.getParameter("inputName"));
-		
+		type.setPattern(request.getParameter("inputPattern"));
 		typeMatAttrService.add(type);
 		
 		/*RequestDispatcher rd = null;
