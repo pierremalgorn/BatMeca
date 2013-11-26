@@ -36,7 +36,7 @@ public class Material {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "material", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER,orphanRemoval=true)
 	private Set<Test> tests;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "material", fetch = FetchType.EAGER)

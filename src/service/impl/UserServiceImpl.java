@@ -5,6 +5,7 @@ import java.util.List;
 import service.UserService;
 import dao.UserDao;
 import dao.manager.DaoManager;
+import entity.Material;
 import entity.User;
 
 
@@ -42,6 +43,8 @@ UserDao userDao ;
 	 public void removeUser(User user){
 			userDao.removeUser(user);
 		}
+
+	
 
 
 }

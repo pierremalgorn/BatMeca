@@ -2,36 +2,65 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="entity.*"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header col-md-offset-2">
-			Material Details - ${requestScope.material.name } 
-		</h1>
+		<h1 class="page-header col-md-offset-2">Material Details -
+			${requestScope.material.name }</h1>
 	</div>
 	<div class="row">
 		<div id="arbo" class="col-md-3">
 			<div class="well">
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="AddSubMaterial?idParent=${requestScope.material.id }"><span class="glyphicon glyphicon-plus" ></span> Add Sub-MAterial</a></li>
-					<li><a href="AddTest?idMat=${requestScope.material.id }" ><span class="glyphicon glyphicon-plus" ></span> Add Test</a></li>
-					<li><a href="RemoveMaterial?idMat=${requestScope.material.id }" ><span class="glyphicon glyphicon-trash"></span>
-				Remove</a></li>
-					<li><a href="EditMaterial?id=${requestScope.material.id }" ><span class="glyphicon glyphicon-edit" ></span> Edit</a></li>
-							
+					<li><a
+						href="AddSubMaterial?idParent=${requestScope.material.id }"><span
+							class="glyphicon glyphicon-plus"></span> Add Sub-MAterial</a></li>
+					<li><a href="AddTest?idMat=${requestScope.material.id }"><span
+							class="glyphicon glyphicon-plus"></span> Add Test</a></li>
+					<li><a
+						href="RemoveMaterial?idMat=${requestScope.material.id }"><span
+							class="glyphicon glyphicon-trash"></span> Remove</a></li>
+					<li><a href="EditMaterial?id=${requestScope.material.id }"><span
+							class="glyphicon glyphicon-edit"></span> Edit</a></li>
+
 				</ul>
 			</div>
 		</div>
 		<div id="contentMat" class="col-md-9">
+			<%
+				Material mat = (Material) request.getAttribute("material");
+				List<Material> list = new ArrayList<Material>();
+					while(mat.getMaterialParent() != null){
+						
+						list.add(mat);
+						mat = mat.getMaterialParent();
+						
+					}
+					list.add(mat);
+					
+			%>
 			<ol class="breadcrumb">
 
-				<li><a href="IndexMaterial">Index</a></li>
-				<c:if test="${requestScope.material.materialParent != null }">
-					<li><a
-						href="Material?idMat=${requestScope.material.materialParent.id }">${requestScope.material.materialParent.name }</a></li>
-				</c:if>
-				<li class="active">${requestScope.material.name }</li>
+ 				<li><a href="IndexMaterial">Index</a></li>
+			
+				<%
+					
+					for(int i = list.size() - 1;i >= 0;i--){
+						
+						out.println("<li><a href=\"Material?idMat="+list.get(i).getId()+"\" >"+list.get(i).getName()+"</a></li>");
+					}
+									
+					
+				%>
+
+
 			</ol>
+
+
+
+
 			<h3>Material Attribute</h3>
 
 			<table class="table table-striped">

@@ -36,8 +36,8 @@ public class RemoveTestServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		Test t = testService.find(Integer.parseInt(id));
 		FolderHandler f = new FolderHandler();
-		//f.deleteFolder(t);
-		testService.remove(Integer.parseInt(id));
+		f.deleteFolder(t);
+		testService.remove(t);
 		
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Material?idMat="+request.getParameter("idMat")));
 	}

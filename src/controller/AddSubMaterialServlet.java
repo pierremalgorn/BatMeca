@@ -82,11 +82,14 @@ public class AddSubMaterialServlet extends HttpServlet {
 		for (TypeMaterialAttribute tMatAttr : listAttr) {
 			MaterialAttribute matAttr = new MaterialAttribute();
 			String nameAttr = request.getParameter("input"+tMatAttr.getName());
-			System.out.println("Name = "+nameAttr);
-			matAttr.setValue(nameAttr);
-			matAttr.setTypeMatAttr(tMatAttr);
-			matAttr.setMaterial(mat);
-			mat.addMaterialAttribute(matAttr);
+			if(nameAttr.compareTo("") != 0 ){
+				matAttr.setValue(nameAttr);
+				matAttr.setTypeMatAttr(tMatAttr);
+				matAttr.setMaterial(mat);
+				mat.addMaterialAttribute(matAttr);
+			}
+		
+			
 		}
 		
 		HttpSession session = request.getSession();

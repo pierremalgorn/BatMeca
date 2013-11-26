@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import entity.Material;
 import entity.User;
 
 public interface UserService {
@@ -13,4 +14,5 @@ public interface UserService {
 	abstract User getUser(int id);
 	abstract boolean editUser(User user);
 	abstract void removeUser(User user);
+	
 }

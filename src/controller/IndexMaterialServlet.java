@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entity.Material;
+import entity.User;
 import service.MaterialService;
 import service.manager.ServiceManager;
 
@@ -38,7 +40,15 @@ public class IndexMaterialServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> list = null;
-		list = materialService.findAllNoParent();
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("sessionUser");
+		if(user.getType().getId() == 1){
+			list = materialService.findAllNoParent();
+		}else{
+			list = materialService.findByUser((User) session.getAttribute("sessionUser"));
+		}
+		
 		//list =  materialService.findAll();
 		 request.setAttribute("materials",list);
 		 System.out.println("TAILLE LIST = "+list.size());

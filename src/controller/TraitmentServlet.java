@@ -3,34 +3,29 @@ package controller;
 import handler.CsvHandler;
 import handler.FolderHandler;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import entity.Test;
 import service.TestService;
 import service.manager.ServiceManager;
 
 /**
- * Servlet implementation class ShowTestServlet
+ * Servlet implementation class TraitmentServlet
  */
-@WebServlet("/ShowTest")
-public class ShowTestServlet extends HttpServlet {
+@WebServlet("/Traitment")
+public class TraitmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private TestService testService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowTestServlet() {
+    public TraitmentServlet() {
         super();
         testService = ServiceManager.INSTANCE.getTestService();
     }
@@ -39,31 +34,30 @@ public class ShowTestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idTest = Integer.parseInt(request.getParameter("idTest"));
+		
+		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler();	
+		CsvHandler csv = new CsvHandler();
 		FolderHandler f = new FolderHandler();
 		
-		//String path = f.getPathSave(t);
+		String action = request.getParameter("action");
+		if(action != null && action.compareTo("lisser") == 0){
+			csv.lissageOrdre2(f.getPathSave(t)+"/data.csv", f.getPathSave(t)+"/lissage.csv");
+			String data = csv.readAll(f.getPathSave(t)+"/lissage.csv");
+			response.getWriter().write(data);
+		}
+		String cut = request.getParameter("cut");
+		if( cut!= null){
+			System.out.println("CUT = "+cut);
+		}
 		
-		
-		String data = csv.readAll(f.getPathSave(t)+"/data.csv");
-		
-		request.setAttribute("data", data);
-		System.out.println("NB ATTR "+t.getTestAttributs().size());
-		request.setAttribute("test", t);
-	
-		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/test.jsp"));
-		rd.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 }

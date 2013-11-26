@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import entity.Material;
+import entity.User;
 
 public interface MaterialService {
 	abstract List<Material> findAll();
@@ -12,5 +13,6 @@ public interface MaterialService {
 	abstract boolean remove(Material mat);
 	abstract List<Material> findAllNoParent();
 	abstract List<Material> findByParent(Material parent);
+	abstract List<Material> findByUser(User user);
 
 }

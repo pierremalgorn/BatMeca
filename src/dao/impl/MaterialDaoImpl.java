@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import dao.MaterialDao;
 import dao.manager.DaoManager;
 import entity.Material;
+import entity.User;
 
 
 public class MaterialDaoImpl implements MaterialDao {
@@ -148,6 +149,26 @@ public class MaterialDaoImpl implements MaterialDao {
 		try{
 			 em = DaoManager.INSTANCE.getEntityManager();
 			 materials = em.createQuery("Select m From Material m Where m.materialParent=:mParent").setParameter("mParent", parent).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (em != null)
+				em.close();
+		}
+		
+		
+		 
+		return materials;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Material> findByUser(User user) {
+		EntityManager em = null;
+		List<Material> materials = null;
+		try{
+			 em = DaoManager.INSTANCE.getEntityManager();
+			 materials = em.createQuery("Select m From Material m Where m.user=:user AND m.materialParent IS NULL").setParameter("user", user).getResultList();
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

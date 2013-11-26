@@ -6,6 +6,7 @@ import dao.TestDao;
 import dao.manager.DaoManager;
 import entity.Material;
 import entity.Test;
+import entity.User;
 import service.TestService;
 
 public class TestServiceImpl implements TestService {
@@ -33,14 +34,20 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public void remove(int id) {
-		testDao.remove(id);
+	public void remove(Test test) {
+		testDao.remove(test);
 		
 	}
 
 	@Override
 	public List<Test> findByMaterial(Material mat) {
 		return testDao.findByMaterial(mat);
+	}
+
+	@Override
+	public List<Test> findByUser(User user) {
+		
+		return testDao.findByUser(user);
 	}
 
 	

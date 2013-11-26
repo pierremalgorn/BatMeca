@@ -9,6 +9,7 @@ import dao.TestDao;
 import dao.manager.DaoManager;
 import entity.Material;
 import entity.Test;
+import entity.User;
 
 public class TestDaoImpl implements TestDao {
 
@@ -77,14 +78,14 @@ public class TestDaoImpl implements TestDao {
 	}
 
 	@Override
-	public void remove(int id) {
+	public void remove(Test test) {
 		EntityManager em = null;
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
-			Test test = em.find(Test.class, id);
 			em.getTransaction().begin();
+			
+			
 			em.remove(em.contains(test) ? test : em.merge(test));
 			em.getTransaction().commit();
 
@@ -119,6 +120,26 @@ public class TestDaoImpl implements TestDao {
                         em.close();
         }
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Test> findByUser(User user) {
+		EntityManager em = null;
+		List<Test> tests = null;
+		try{
+			 em = DaoManager.INSTANCE.getEntityManager();
+			 tests = em.createQuery("Select t From Test t Where t.user=:user").setParameter("user", user.getId()).getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (em != null)
+				em.close();
+		}
+		
+		
+		 
+		return tests;
 	}
 
 	

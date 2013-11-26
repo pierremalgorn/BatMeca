@@ -1,6 +1,7 @@
 package handler;
 
 import java.io.File;
+import java.io.IOException;
 
 import entity.Test;
 
@@ -35,9 +36,11 @@ public class FolderHandler {
 		return this.root+"/"+test.getName();
 	}
 
-	public void deleteFolder(Test test){
-		File f = new File(this.getPathSave(test));
-		f.delete();
+	public void deleteFolder(Test test) throws IOException{
+		
+		String[] cmd = new String[] { "rm", "-r",this.getPathSave(test) };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
 	}
 	
 	public void initDirectory(Test test){

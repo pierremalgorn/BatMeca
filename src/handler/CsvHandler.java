@@ -132,11 +132,9 @@ public class CsvHandler {
 	/**
 	 * Lissage des points
 	 * */
-	public void lissageOrdre2() throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"), ',');
-		CSVWriter writer = new CSVWriter(new FileWriter(
-				"/home/max/BatMeca/dataLisser.csv"), ',');
+	public void lissageOrdre2(String input,String output) throws IOException {
+		CSVReader reader = new CSVReader(new FileReader(input), ',');
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',');
 		List<String[]> myEntries = reader.readAll();
 
 		String[] ligne0 = myEntries.get(0);

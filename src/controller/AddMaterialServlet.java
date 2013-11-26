@@ -81,6 +81,7 @@ public class AddMaterialServlet extends HttpServlet {
 			MaterialAttribute matAttr = new MaterialAttribute();
 			String nameAttr = request.getParameter("input"+tMatAttr.getName());
 			if(nameAttr.compareTo("") != 0){
+				System.out.println("add attr");
 				matAttr.setValue(nameAttr);
 				matAttr.setTypeMatAttr(tMatAttr);
 				matAttr.setMaterial(mat);

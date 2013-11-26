@@ -4,9 +4,11 @@ import java.util.List;
 
 
 
+
 import dao.MaterialDao;
 import dao.manager.DaoManager;
 import entity.Material;
+import entity.User;
 import service.MaterialService;
 
 public class MaterialServiceImpl implements MaterialService {
@@ -51,6 +53,12 @@ public class MaterialServiceImpl implements MaterialService {
 	@Override
 	public List<Material> findByParent(Material parent) {
 		return materialDao.findByParent(parent);
+	}
+
+	@Override
+	public List<Material> findByUser(User user) {
+		
+		return materialDao.findByUser(user);
 	}
 
 }

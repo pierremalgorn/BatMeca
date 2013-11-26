@@ -21,7 +21,6 @@ import javax.servlet.http.Part;
 
 import service.MaterialService;
 import service.TestService;
-import service.TypeMaterialAttributService;
 import service.TypeTestAttributService;
 import service.manager.ServiceManager;
 import entity.Material;
@@ -92,10 +91,14 @@ public class AddTestServlet extends HttpServlet {
 		test.setTestAttributs(new HashSet<TestAttribute>());
 		for (TypeTestAttribute typeAttr : typesTest) {
 			TestAttribute testAttr = new TestAttribute();
-			testAttr.setValue(request.getParameter("input"+typeAttr.getName()));
-			testAttr.setTest(test);
-			testAttr.setTypeTestAttr(typeAttr);
-			test.addTestAttribute(testAttr);
+			String value = request.getParameter("input"+typeAttr.getName());
+			if(value.compareTo("") != 0){
+				testAttr.setValue(value);
+				testAttr.setTest(test);
+				testAttr.setTypeTestAttr(typeAttr);
+				test.addTestAttribute(testAttr);
+			}
+			
 		}
 		
 		HttpSession session = request.getSession();
