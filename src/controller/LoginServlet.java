@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("sessionUser", user);
 			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
 		} else {
-			request.setAttribute("error", "Login ou mot de passe incorrect");
+			request.setAttribute("error", "yes");
 			this.doGet(request, response);
 		}
 

@@ -25,8 +25,8 @@
 			      	<div class="control-group">
 					  <label class="control-label" for="name">Last Name</label>
 					  <div class="controls">
-					  	<input hidden="true" name="id" value="${user.id}" />
-					    <input id="inputName" name="inputName" placeholder="Last Name" class="form-control" value="${user.name}" required="" type="text">
+					  	<input hidden="true" id="id" name="id" value="${user.id}" />
+					    <input id="name" name="name" placeholder="Last Name" class="form-control" value="${user.name}" required="" type="text">
 					    <p class="help-block"></p>
 					  </div>
 					</div>
@@ -50,7 +50,7 @@
 					<div class="control-group">
 					  <label class="control-label" for="typeuser">Account Type</label>
 					  <div class="controls">
-					    <select id="selectType" name="type" class="form-control">
+					    <select id="type" name="type" class="form-control">
 					      	<c:forEach items="${requestScope.types}" var="type">
 											<option value="${type.id}">${type.type}</option>
 							</c:forEach>
@@ -103,15 +103,12 @@
 			  </div>
 			</div>
 						
-				
-				
-				
 				<!-- Button (Double) -->
 				<div class="control-group">
 				  <label class="control-label" for="Edit"></label>
 				  <div class="controls">
 				    <button type="submit" id="edit" name="Edit" class="btn btn-success">Edit</button>
-				    <a href="IndexUser"><button class="btn btn-danger">Discard</button></a>
+				    <a href="#" onClick="history.go(-1);" class="btn btn-danger">Discard</a>
 				  </div>
 				</div>
 							
@@ -122,6 +119,6 @@
 	
 	<script>
 		var id = '<c:out value="${user.type.id}"/>';
-		$("#idselectComp option[value="+id+"]").attr("selected","selected");
+		$("#type option[value="+id+"]").attr("selected","selected");
 	</script>
 <jsp:include page="include/footer.jsp" />

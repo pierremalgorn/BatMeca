@@ -26,7 +26,7 @@ public class EditUserServlet extends HttpServlet{
 	 */
 	public EditUserServlet() {
 		super();
-		//création des Services
+		//crï¿½ation des Services
 		userService = ServiceManager.INSTANCE.getUserService();
 		typeUserService = ServiceManager.INSTANCE.getTypeUserService();
 	}
@@ -40,12 +40,12 @@ public class EditUserServlet extends HttpServlet{
 		String edit = request.getParameter("id");
 		int id = Integer.parseInt(edit);
 
-		request.setAttribute("user", userService.getUser(id));//récupération de l'ordinateur à modifier
-		request.setAttribute("types", typeUserService.getTypes());//envoie de la liste des companies
+		request.setAttribute("user", userService.getUser(id));
+		request.setAttribute("types", typeUserService.getTypes());
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/editUser.jsp"));
-		rd.forward(request, response);//envoie sur le formulaire de modification d'ordinateur
+		rd.forward(request, response);
 	}
 
 	/**
@@ -54,12 +54,15 @@ public class EditUserServlet extends HttpServlet{
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String edit = request.getParameter("id");
-		int id = Integer.parseInt(edit);
+		int id = Integer.parseInt(request.getParameter("id"));
 		String name = request.getParameter("name");
 		String firtsname = request.getParameter("firstName");
 		String email = request.getParameter("email");
 		String type = request.getParameter("type");
+		String password = request.getParameter("password");
+		String newPassword = request.getParameter("newpassword");
+		String newPasswordConfirm = request.getParameter("newpasswordconfirm");
+		String target = request.getParameter("target");
 		
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
@@ -69,13 +72,22 @@ public class EditUserServlet extends HttpServlet{
 		user.setFirstName(firtsname);
 		user.setEmail(email);
 		user.setType(typeUser);
-		String p = user.getPassword();
-		user.setPassword(p);
-		ServiceManager.INSTANCE.getUserService().editUser(user);//on modifie l'ordinateur dans la BDD
+		//if user wants to change his password
+		if(!password.equals("") 
+				&& !newPassword.equals("") 
+				&& newPassword.equals(newPasswordConfirm)){
+			user.setPassword(newPassword);
+		} else {
+			user.setPassword(user.getPassword());
+		}
 
-			// Redirection vers la page de la liste des utilisateur
-			response.sendRedirect(response
-					.encodeURL("/BatmecaNewGeneration/IndexUser"));
+		ServiceManager.INSTANCE.getUserService().editUser(user);
+
+		if(target.equals("profile")){
+			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/User"));
+		} else {
+			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
+		}
 	}
 
 

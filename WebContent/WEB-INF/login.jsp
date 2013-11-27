@@ -3,9 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="include/header.jsp" />
 
-    
     <div class="container">
       <form action="Login" method="post" id="formLogin" class="form-signin">
+	     <c:if test="${requestScope.error eq 'yes'}">
+			<div class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<p>Wrong email/password combination.</p>
+			</div>
+		</c:if>
         <h2 class="form-signin-heading">Please sign in</h2>
         <div class="control-group">
         	<div class="controls">

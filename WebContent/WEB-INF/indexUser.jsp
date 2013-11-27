@@ -6,16 +6,19 @@
 
 <div class="container" >
 	<div class="row" >
-		<h1 class="page-header" >Users list
-		<a href="addUser" class="btn btn-primary pull-right" >Add User</a>
+		<h1 class="page-header" >
+			Users list
+			<a href="addUser" class="btn btn-primary pull-right" >Add User</a>
 		</h1>
 	</div>
 	<c:if test="${requestScope.event eq 'userremoved'}">
-		<div class="alert alert-success alert-dismissable">The user has been removed successfully!</div>
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			The user has been removed successfully!
+		</div>
 	</c:if>
 	<div class="row" >
 		<table class="table table-striped" >
-
 			<thead>
 				<tr>
 					<th>Id</th>
@@ -43,7 +46,5 @@
 		</table>
 	</div>
 </div>
-
-	
 
 <jsp:include page="include/footer.jsp" />
