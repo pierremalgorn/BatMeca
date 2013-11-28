@@ -19,6 +19,23 @@ function lisser(url,data){
 	});
 }
 
+function cut(url,data){
+	$.ajax({
+		url: url,
+		type: 'get',
+		data: 'cut=true&'+data,
+		dataType: 'json',
+		success: function(json){
+			//console.log(json);
+			refreshCurve(json);
+		},
+		error:function(error){
+			console.log(error);
+		}
+			
+	});
+}
+
 function action(url,data){
 	$.ajax({
 		url: url,

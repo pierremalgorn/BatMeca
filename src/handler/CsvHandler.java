@@ -225,9 +225,9 @@ public class CsvHandler {
 	/**
 	 * Permet de supprimer un interval de point
 	 * */
-	public void deletePortionCsv(int start, int end) throws IOException {
+	public void deletePortionCsv(String input,int start, int end) throws IOException {
 		String[] cmd = new String[] { "/bin/sed", "-i", "-e",
-				start + "," + end + "d", "/home/max/BatMeca/data.csv" };
+				start + "," + end + "d", input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 

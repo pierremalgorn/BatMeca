@@ -66,7 +66,7 @@
 								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Lisser</a></li>
 							<li><a href="#" onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=5');" >Calcul Max</a></li>
 							<li><a href="#"
-								onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&cut=10000');">Cut</a></li>
+								id="btnCut">Cut</a></li>
 							<li><a href="#" onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&factor=2');" >Factor</a></li>
 							<li><a href="#">Echantillon</a></li>
 
@@ -80,6 +80,10 @@
 							<tr>
 								<th>Plot 1:</th>
 								<td id="valPlot1"></td>
+							</tr>
+							<tr>
+								<th>Plot 2:</th>
+								<td id="valPlot2" ></td>
 							</tr>
 							<tr>
 								<th>Rm :</th>
@@ -137,5 +141,29 @@
 		</div>
 	</div>
 </div>
+<script>
 
+$('#btnCut').on('click',function(){
+	var nbPlot = 1;
+	var plot1 = 0;
+	var plot2 = 0;
+	$("#graphdiv3").on('click',function(){
+		if(nbPlot == 1){
+			plot1 = g3.getSelection();
+			nbPlot = 2;
+		}else{
+			plot2 = g3.getSelection();
+			nbPlot = 1;
+			
+		}
+		if(plot1!= 0 && plot2!=0){
+			console.log('Courbe cut');
+			cut('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&start='+plot1+'&end='+plot2);
+		}
+		console.log('NB PLOT = '+nbPlot);
+	});
+
+	
+});
+</script>
 <jsp:include page="include/footer.jsp" />
