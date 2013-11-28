@@ -2,6 +2,23 @@
  * 
  */
 
+function reset(url,data){
+	$.ajax({
+		url: url,
+		type: 'get',
+		data: data,
+		dataType: 'json',
+		success: function(json){
+			//console.log(json);
+			refreshCurve(json);
+		},
+		error:function(error){
+			console.log(error);
+		}
+			
+	});
+}
+
 function lisser(url,data){
 	$.ajax({
 		url: url,

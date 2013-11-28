@@ -68,7 +68,8 @@
 							<li><a href="#"
 								id="btnCut">Cut</a></li>
 							<li><a href="#" onclick="action('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&factor=2');" >Factor</a></li>
-							<li><a href="#">Echantillon</a></li>
+							<li><a href="#" onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');" >Reset</a></li>
+							
 
 						</ul>
 

@@ -74,6 +74,15 @@ public class TraitmentServlet extends HttpServlet {
 			f.addDataHistoryFile("factor FILE", t);
 		}
 		
+		String reset = request.getParameter("reset");
+		if(reset != null){
+			csv.datToCsv(f.getPathSave(t)+"/data/"+f.getFileNameData(t), f.getPathSave(t)+"/dataInput.csv");
+			String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
+			System.out.println("RESET = "+reset);
+			f.addDataHistoryFile("RESET FILE", t);
+			response.getWriter().write(data);
+		}
+		
 	}
 
 	/**
