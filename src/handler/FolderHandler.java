@@ -45,10 +45,16 @@ public class FolderHandler {
 		f.mkdir();
 	}
 
+	/**
+	 * Permet de recuperer les chemin de sauvegarde du Test
+	 * */
 	public String getPathSave(Test test) {
 		return this.root + "/" + test.getName();
 	}
 
+	/**
+	 * Permet de supprimer le dossier de sauvegarde d'un test
+	 * */
 	public void deleteFolder(Test test) throws IOException {
 
 		String[] cmd = new String[] { "rm", "-r", this.getPathSave(test) };
@@ -56,6 +62,10 @@ public class FolderHandler {
 		final Process process = runtime.exec(cmd);
 	}
 
+	/**
+	 * Permet de creer les repertoires relatif à une essai
+	 * @param test: essai à initialisé
+	 * */
 	public void initDirectory(Test test) throws IOException {
 
 		String path = this.getPathSave(test);
@@ -65,6 +75,7 @@ public class FolderHandler {
 		this.makeDir(path + "/config");
 		this.makeDir(path + "/data");
 		this.makeDir(path + "/history");
+		this.makeDir(path + "/curve");
 		File fh = new File(path + "/history/historic");
 		fh.createNewFile();
 		
@@ -157,7 +168,9 @@ public class FolderHandler {
 		
 		return list;
 	}
-
+	/**
+	 * Permet de sauver un  liste dans un fichier json
+	 * */
 	public void saveToJson(ArrayList<String[]> list, String output)
 			throws IOException {
 		PrintWriter pr;
@@ -168,6 +181,10 @@ public class FolderHandler {
 
 		pr.close();
 	}
+	
+	/**
+	 * Permet d'ajouter un information au fichier d'historique d'un essai
+	 * */
 	public void addDataHistoryFile(String data,Test test) throws IOException{
 		PrintWriter pr;
 
@@ -177,9 +194,19 @@ public class FolderHandler {
 		pr.close();
 	}
 	
+	/**
+	 * permet de renommer le fichier de sortie d'un essai
+	 * */
 	public void renameCsvOutput(Test test){
 		File file = new File(this.getPathSave(test)+"/dataOutput.csv");
 		file.renameTo(new File(this.getPathSave(test)+"/dataInput.csv"));
+	}
+	
+	public File[] listCurve(Test test){
+		
+		File file = new File(this.getPathSave(test) + "/curve");
+		File[] files = file.listFiles();
+		return files;
 	}
 	
 	

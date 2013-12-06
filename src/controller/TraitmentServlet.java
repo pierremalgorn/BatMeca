@@ -89,6 +89,27 @@ public class TraitmentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idTest = Integer.parseInt(request.getParameter("inputId"));
+		float factor = Float.parseFloat(request.getParameter("inputFactor"));
+		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
+		System.out.println("+++++++++++++++++++++++++++++++++");
+		System.out.println("ID TEST = "+idTest);
+		System.out.println("FACTOR = "+factor);
+		System.out.println("NB COLUMN = "+nbColumn);
+		
+		CsvHandler csv = new CsvHandler();
+		FolderHandler f = new FolderHandler();
+		Test test = testService.find(idTest);
+		
+		csv.factorColumn(nbColumn, factor,f.getPathSave(test)+"/dataInput.csv",f.getPathSave(test)+"/dataOutput.csv");
+		
+		String data = csv.readAll(f.getPathSave(test)+"/dataOutput.csv");
+		f.renameCsvOutput(test);
+		response.getWriter().write(data);
+		
+		
+		
+		
 		
 	}
 

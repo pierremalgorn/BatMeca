@@ -281,12 +281,12 @@ public class CsvHandler {
 		return min;
 	}
 	
-	public void factorColumn(int numColumn,float factor) throws IOException{
+	public void factorColumn(int numColumn,float factor,String input,String output) throws IOException{
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"*"+factor+"}",
-				this.fileInput };
+				input};
 		CSVWriter writer = new CSVWriter(new FileWriter(
-				"/home/max/BatMeca/dataFactor.csv"), ',');
+				output), ',');
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
@@ -298,7 +298,7 @@ public class CsvHandler {
 		while ((line = reader.readLine()) != null) {
 			String[] val =  line.split(",");
 			writer.writeNext(val);
-		} // si besoin est
+		} 
 		reader.close();
 		writer.close();
 	}
@@ -313,6 +313,35 @@ public class CsvHandler {
 		final Process process = runtime.exec(cmd);
 	}
 	
+	/**
+	 * Permet de selctionner un axe en fonction d'un autre
+	 * @param input: fichier csv d'entré
+	 * @param output: fichier csv de sortie
+	 * @param x axe en abscisse
+	 * @param y axe en ordonnée
+	 * */
+	public void selectCurve(String input,String output,int x,int y) throws IOException{
+		String[] cmd = new String[] { "awk",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+x+",$"+y+"}",
+				input};
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
+		CSVWriter writer = new CSVWriter(new FileWriter(
+				output), ',');
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				process.getInputStream()));
+		String line = "";
+
+		System.out.println("SELECT Row");
+		while ((line = reader.readLine()) != null) {
+			System.out.println("LIne = "+line);
+			String[] val =  line.split(",");
+			writer.writeNext(val);
+		} 
+		reader.close();
+		writer.close();
+	}
 	
 	
 	
