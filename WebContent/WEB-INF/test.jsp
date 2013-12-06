@@ -15,13 +15,14 @@
 			Test List</a>
 	</div>
 	<div class="row">
-		<form id="formSelect" class="form-inline well" action="SelectRow" method="post" role="form">
-			<input type="hidden" id="inputId" name="inputId" value="${requestScope.test.id }">
-			<label for="inputX">X: </label> <select id="inputX" name="inputX"
-				class="form-control">
+		<form id="formSelect" class="form-inline well" action="SelectRow"
+			method="post" role="form">
+			<input type="hidden" id="inputId" name="inputId"
+				value="${requestScope.test.id }"> <label for="inputX">X:
+			</label> <select id="inputX" name="inputX" class="form-control">
 				<c:set var="i" value="0" />
 				<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
-					
+
 					<option value="${i + 1 }">${rowName }</option>
 					<c:set var="i" value="${i + 1}"></c:set>
 				</c:forEach>
@@ -35,12 +36,14 @@
 				</c:forEach>
 			</select>
 			<button type="button" class="btn btn-info" id="btnSelectRow">Submit</button>
-			
-			<a class="btn btn-defaults" href="SelectRow?idTest=${requestScope.test.id }" >Test select column</a>
+
+			<a class="btn btn-defaults"
+				href="SelectRow?idTest=${requestScope.test.id }">Test select
+				column</a>
 		</form>
-<script>
-selectRow();
-</script>
+		<script>
+			selectRow();
+		</script>
 
 
 		<ul class="nav nav-tabs">
@@ -146,41 +149,39 @@ selectRow();
 								</tbody>
 							</table>
 						</form>
+						<c:set var="i" value="1" />
 
 						<ul id="navCurve" class="nav nav-tabs">
-							<li><a href="#curve1" data-toggle="tab">Curve 1</a></li>
-							<li><a href="#curve2" data-toggle="tab">Curve 2</a></li>
+							<c:forEach items="${requestScope.listData }" var="data">
+								<li><a href="#curve${i }" data-toggle="tab">Curve ${i }</a></li>
+								<c:set var="i" value="${i + 1}"></c:set>
+							</c:forEach>
 
 						</ul>
 
 						<div id="contentCurves" class="tab-content">
-							<div class="tab-pane" id="curve1">
-								<div id="graphdiv3" style="width: 100%; height: 500px;"></div>
-
-								<script charset="UTF-8">
+							<c:set var="i" value="1" />
+							<c:forEach items="${requestScope.listData }" var="data">
+								<div class="tab-pane" id="curve${i }">
+									<div id="graph${i }" style="width: 100%; height: 500px;"></div>
+									<script charset="UTF-8">
 									$(function() {
-
-										var data = '${requestScope.data }';
+										var nb = '${i}';
+										var data = '${data }';
 										//console.log(data);
 										g3 = new Dygraph(document
-												.getElementById("graphdiv3"),
+												.getElementById("graph"+nb),
 												data, {});
 
 									});
 
-									$("#graphdiv3").on(
-											'click',
-											function() {
-												console.log("SELECTION ="
-														+ g3.getSelection());
-												$("#valPlot1").html(
-														g3.getSelection());
-											});
 								</script>
-							</div>
-							<div class="tab-pane" id="curve2">
-								<h1>courbe 2</h1>
-							</div>
+									
+								</div>
+								<c:set var="i" value="${i + 1}"></c:set>
+							</c:forEach>
+							
+
 						</div>
 
 
@@ -240,7 +241,6 @@ selectRow();
 
 
 <script>
-addOnglet('curve 3',3);
 	$('#btnFormFactor').on('click', function() {
 		console.log('FACTOR');
 		//$('#formFactor').submit();

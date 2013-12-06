@@ -51,9 +51,18 @@ public class ShowTestServlet extends HttpServlet {
 		f.saveToJson(list, f.getPathSave(t)+"/header.json");
 		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 		
+		File[] files = f.listCurve(t);
+		ArrayList<String> listData = new ArrayList<String>();
+		for (File file : files) {
+			
+			System.out.println("NAME = "+file.getAbsolutePath());
+			listData.add(csv.readAll(file.getAbsolutePath()));
+		}
+		
+		
 		request.setAttribute("colHeader", list);
 		request.setAttribute("data", data);
-		
+		request.setAttribute("listData", listData);
 		request.setAttribute("test", t);
 	
 		

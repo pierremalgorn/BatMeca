@@ -102,9 +102,10 @@ function selectRow() {
 			dataType : 'json',
 			success : function(json) {
 				console.log(json);
-				//addOnglet(test, nbCurve);
-				//addOnglet(title, nbCurve);
-				refreshCurve(json.data);
+				addOnglet("Curve "+json.nbCurve, json.nbCurve);
+				addContent(json.nbCurve,json.data);
+				
+				//refreshCurve(json.data);
 				console.log("NB Curve = "+json.nbCurve);
 				
 			},
@@ -116,13 +117,20 @@ function selectRow() {
 }
 
 function addOnglet(title, nbCurve) {
-	$('<li><a href="#curve' + nbCurve + '" >' + title + '</a></li>').appendTo(
+	$('<li><a href="#curve' + nbCurve + '" data-toggle="tab" >' + title + '</a></li>').appendTo(
 			"#navCurve");
 }
 
-function addContent(nbCurve) {
+function addContent(nbCurve,data) {
+
 	$(
 			'<div class="tab-pane" id="curve' + nbCurve + '" >'
-					+ '<div id="graph' + nbCurbe + '" ></div>' + '</div>')
-			.appendTo('#contentCurves')
+					+ '<div id="graph' + nbCurve + '" ></div>'
+			+ '</div>')
+			.appendTo('#contentCurves');
+	g = new Dygraph(document.getElementById("graph"+nbCurve), data, {});
+}
+
+function initCurve(){
+	
 }

@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 
@@ -206,6 +207,7 @@ public class FolderHandler {
 		
 		File file = new File(this.getPathSave(test) + "/curve");
 		File[] files = file.listFiles();
+		Arrays.sort(files);
 		return files;
 	}
 	

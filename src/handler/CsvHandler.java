@@ -333,9 +333,7 @@ public class CsvHandler {
 				process.getInputStream()));
 		String line = "";
 
-		System.out.println("SELECT Row");
 		while ((line = reader.readLine()) != null) {
-			System.out.println("LIne = "+line);
 			String[] val =  line.split(",");
 			writer.writeNext(val);
 		} 
