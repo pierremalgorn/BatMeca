@@ -94,7 +94,7 @@
 							<li><a href="#"
 								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
 									Max</a></li>
-							<li><a href="#" id="btnCut">Cut</a></li>
+							<li><a href="#" id="btnCut" onclick="cutCurve('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });">Cut</a></li>
 							<li><a href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>
 							<li><a href="#"
 								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
@@ -149,12 +149,15 @@
 						
 						var tabGraph = new Array() ;
 						</script>
-						
+
 						<c:set var="i" value="1" />
 
 						<ul id="navCurve" class="nav nav-tabs">
 							<c:forEach items="${requestScope.listData }" var="data">
-								<li><a class="ongletCurve" href="#curve${i }" data-toggle="tab" data="${i }">Curve ${i }<button class="close pull-right" >&times;</button></a></li>
+								<li><a class="ongletCurve" href="#curve${i }"
+									data-toggle="tab" data="${i }">Curve ${i }
+										<button class="close pull-right">&times;</button>
+								</a></li>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
 
@@ -173,22 +176,29 @@
 										//console.log(data);
 										g = new Dygraph(document
 												.getElementById("graph"+nb),
-												data, {});
+												data, {
+											title: 'Titre',
+											xlabel:'time',
+											ylabel:'value',
+											strokeWidth: 1.5,
+										});
 										tabGraph.push(g);
 										
 										$("#graph"+nb).on('click',function(){
 											console.log("SELECTION ="+tabGraph[focus -1 ].getSelection());
+											var select = tabGraph[focus -1 ].getSelection();
 									         $("#valPlot1").html(tabGraph[focus -1 ].getSelection());
+									         console.log(tabGraph[focus -1 ].getValue(select, 1));
 										});
 									//});
 
 								</script>
-									
+
 								</div>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
-							
-							
+
+
 						</div>
 
 
@@ -245,8 +255,8 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<button class="btn btn-info" onclick="test();" >TEST</button>
-<button class="btn btn-info" onclick="printTab();" >toto</button>
+<button class="btn btn-info" onclick="test();">TEST</button>
+<button class="btn btn-info" onclick="printTab();">toto</button>
 
 <script>
 var focus = 1;
@@ -268,5 +278,64 @@ cutCurve();
 	
 var listFile = ${requestScope.listFile};
 console.log(listFile);
+
+
+/*$('#graph'+focus).on('click',function(){
+	var select = tabGraph[focus -1 ].getSelection();
+    //console.log(tabGraph[focus -1 ].getValue(select, 1));
+    //console.log(tabGraph[focus -1 ].getValue(0, 1));
+   /* tabGraph[focus -1 ].ready(function() {
+    	tabGraph[0].setAnnotations([
+        {
+          series: tabGraph[focus -1 ].getLabels()[0],
+          x: tabGraph[focus -1 ].getValue(select, 1),
+          shortText: "X",
+          text: "plot",
+        }
+        ]);*/
+      
+    
+   /* tabGraph[focus -1 ].updateOptions( {
+        annotationClickHandler: function(ann, point, dg, event) {
+         // eventDiv.innerHTML += "click: " + nameAnnotation(ann) + "<br/>";
+       	console.log("simple click");
+        },
+        annotationDblClickHandler: function(ann, point, dg, event) {
+     		console.log('Double click');
+        },
+        annotationMouseOverHandler: function(ann, point, dg, event) {
+          document.getElementById(nameAnnotation(ann)).style.fontWeight = 'bold';
+          saveBg = ann.div.style.backgroundColor;
+          ann.div.style.backgroundColor = '#ddd';
+          console.log("MOUSE OVER");
+        },
+        annotationMouseOutHandler: function(ann, point, dg, event) {
+          document.getElementById(nameAnnotation(ann)).style.fontWeight = 'normal';
+          ann.div.style.backgroundColor = saveBg;
+          console.log("MOUSE OUT");
+        },
+    
+        pointClickCallback: function(event, p) {
+          // Check if the point is already annotated.
+          if (p.annotation) return;
+    
+          // If not, add one.
+          var ann = {
+        		  
+        	          series: tabGraph[focus -1 ].getLabels()[0],
+        	          x: tabGraph[focus -1 ].getValue(select, 1),
+        	          shortText: "X",
+        	          text: "plot",
+        	        };
+          var anns = g.annotations();
+          anns.push(ann);
+          g.setAnnotations(anns);
+    
+         
+        }
+      });
+
+});*/
+
 </script>
 <jsp:include page="include/footer.jsp" />

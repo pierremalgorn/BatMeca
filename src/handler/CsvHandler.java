@@ -1,8 +1,6 @@
 package handler;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,11 +9,10 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import entity.Test;
+
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
+
 
 public class CsvHandler {
 
@@ -37,8 +34,8 @@ public class CsvHandler {
 	 * @param input fichier a lire
 	 * */
 	public String readAll(String input) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(
-				input),',','"',2);
+		//CSVReader reader = new CSVReader(new FileReader(input),',','"',2);
+		CSVReader reader = new CSVReader(new FileReader(input),',','"');	
 		StringBuilder sb = new StringBuilder();
 		List<String[]> myEntries = reader.readAll();
 		for (String[] strings : myEntries) {
@@ -48,6 +45,7 @@ public class CsvHandler {
 			sb.append("\n");
 			
 		}
+		reader.close();
 		//System.out.println(sb.toString());
 		return new Gson().toJson(sb.toString());
 	}

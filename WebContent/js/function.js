@@ -42,14 +42,16 @@ function lisser(url, data) {
 }
 
 function cut(url, data) {
+	console.log("URL = "+url);
+	console.log(data);
 	$.ajax({
 		url : url,
 		type : 'get',
-		data : 'cut=true&' + data,
+		data : 'cut=true&'+data+"&file="+listFile[focus - 1 ],
 		dataType : 'json',
-		success : function(json) {
-			// console.log(json);
-			refreshCurve(json);
+		success : function(data) {
+			
+			tabGraph[focus - 1] = new Dygraph(document.getElementById("graph"+focus), data, {});
 		},
 		error : function(error) {
 			console.log(error);
@@ -174,31 +176,29 @@ function factorCol(){
 	});
 }
 
-function cutCurve(){
-	$('#btnCut')
-	.on(
-			'click',
-			function() {
+function cutCurve(url,id){
+
 				var nbPlot = 1;
 				var plot1 = 0;
 				var plot2 = 0;
-				$("#graphdiv3")
+				$("#graph"+focus)
 						.on(
 								'click',
 								function() {
 									if (nbPlot == 1) {
-										plot1 = g3.getSelection();
+										plot1 = tabGraph[focus -1].getSelection();
 										nbPlot = 2;
 									} else {
-										plot2 = g3.getSelection();
+										plot2 = tabGraph[focus -1].getSelection();
 										nbPlot = 1;
 
 									}
 									if (plot1 != 0 && plot2 != 0) {
 										console.log('Courbe cut');
+										
 										cut(
-												'${pageContext.request.contextPath}/Traitment',
-												'id=${requestScope.test.id }&start='
+												url,
+												'id='+id+'&start='
 														+ plot1
 														+ '&end='
 														+ plot2);
@@ -206,5 +206,6 @@ function cutCurve(){
 									console.log('NB PLOT = ' + nbPlot);
 								});
 
-			});
+			
 }
+
