@@ -211,5 +211,9 @@ public class FolderHandler {
 		return files;
 	}
 	
+	public void renameFile(String input,String output){
+		File file = new File(input);
+		file.renameTo(new File(output));
+	}
 	
 }

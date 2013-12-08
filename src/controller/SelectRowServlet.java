@@ -66,10 +66,22 @@ public class SelectRowServlet extends HttpServlet {
 		System.out.println("nbCurve");
 		System.out.println("X = "+x);
 		System.out.println("Y = "+y);
-		csv.selectCurve(f.getPathSave(test)+"/dataInput.csv", f.getPathSave(test)+"/curve/curve"+(nbCurve +1 )+".csv", x, y);
-		String data = csv.readAll(f.getPathSave(test)+"/curve/curve"+(nbCurve +1 )+".csv");
-		response.setContentType("application/json");
-		response.getWriter().write("{\"data\":"+data+",\"nbCurve\":"+(nbCurve +1)+"}");
+		boolean content = false;
+		for (File file : list) {
+			if(file.getName().compareTo(x+"-"+y+".csv") == 0){
+				content = true;
+			}
+		}
+		if(content == false){
+			csv.selectCurve(f.getPathSave(test)+"/dataInput.csv", f.getPathSave(test)+"/curve/"+x+"-"+y+".csv", x, y);
+			String data = csv.readAll(f.getPathSave(test)+"/curve/"+x+"-"+y+".csv");
+			response.setContentType("application/json");
+			response.getWriter().write("{\"data\":"+data+",\"nbCurve\":"+(nbCurve +1)+"}");
+		}else{
+			response.setContentType("application/json");
+			response.getWriter().write("{\"content\":true}");
+		}
+		
 		//response.getWriter().write((new Gson().toJson(nbCurve)));
 	
 		

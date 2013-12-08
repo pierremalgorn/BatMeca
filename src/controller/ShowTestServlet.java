@@ -52,18 +52,23 @@ public class ShowTestServlet extends HttpServlet {
 		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 		
 		File[] files = f.listCurve(t);
-		ArrayList<String> listData = new ArrayList<String>();
+		ArrayList<String[]> listData = new ArrayList<String[]>();
+		ArrayList<String> listFile = new ArrayList<String>();
 		for (File file : files) {
 			
 			System.out.println("NAME = "+file.getAbsolutePath());
-			listData.add(csv.readAll(file.getAbsolutePath()));
+			listFile.add(file.getAbsolutePath());
+			String[] tab = {csv.readAll(file.getAbsolutePath()),file.getAbsolutePath()};
+			listData.add(tab);
 		}
 		
 		
 		request.setAttribute("colHeader", list);
+		request.setAttribute("files", files);
 		request.setAttribute("data", data);
 		request.setAttribute("listData", listData);
 		request.setAttribute("test", t);
+		request.setAttribute("listFile", new Gson().toJson(listFile));
 	
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(

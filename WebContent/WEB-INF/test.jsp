@@ -36,10 +36,6 @@
 				</c:forEach>
 			</select>
 			<button type="button" class="btn btn-info" id="btnSelectRow">Submit</button>
-
-			<a class="btn btn-defaults"
-				href="SelectRow?idTest=${requestScope.test.id }">Test select
-				column</a>
 		</form>
 		<script>
 			selectRow();
@@ -149,11 +145,16 @@
 								</tbody>
 							</table>
 						</form>
+						<script>
+						
+						var tabGraph = new Array() ;
+						</script>
+						
 						<c:set var="i" value="1" />
 
 						<ul id="navCurve" class="nav nav-tabs">
 							<c:forEach items="${requestScope.listData }" var="data">
-								<li><a href="#curve${i }" data-toggle="tab">Curve ${i }</a></li>
+								<li><a class="ongletCurve" href="#curve${i }" data-toggle="tab" data="${i }">Curve ${i }<button class="close pull-right" >&times;</button></a></li>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
 
@@ -163,17 +164,23 @@
 							<c:set var="i" value="1" />
 							<c:forEach items="${requestScope.listData }" var="data">
 								<div class="tab-pane" id="curve${i }">
+									<h3>${data[1] }</h3>
 									<div id="graph${i }" style="width: 100%; height: 500px;"></div>
 									<script charset="UTF-8">
-									$(function() {
+									//$(function(tabGraph) {
 										var nb = '${i}';
-										var data = '${data }';
+										var data = '${data[0] }';
 										//console.log(data);
-										g3 = new Dygraph(document
+										g = new Dygraph(document
 												.getElementById("graph"+nb),
 												data, {});
-
-									});
+										tabGraph.push(g);
+										
+										$("#graph"+nb).on('click',function(){
+											console.log("SELECTION ="+tabGraph[focus -1 ].getSelection());
+									         $("#valPlot1").html(tabGraph[focus -1 ].getSelection());
+										});
+									//});
 
 								</script>
 									
@@ -181,7 +188,7 @@
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
 							
-
+							
 						</div>
 
 
@@ -238,56 +245,28 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
+<button class="btn btn-info" onclick="test();" >TEST</button>
+<button class="btn btn-info" onclick="printTab();" >toto</button>
 
 <script>
-	$('#btnFormFactor').on('click', function() {
-		console.log('FACTOR');
-		//$('#formFactor').submit();
-		$.ajax({
-			url : $('#formFactor').attr('action'),
-			type : $('#formFactor').attr('method'),
-			data : $('#formFactor').serialize(),
-			dataType : 'json',
-			success : function(json) {
-				console.log('form factor');
-				$('#myModal').modal('hide')
-				refreshCurve(json);
-			}
+var focus = 1;
+
+
+
+
+factorCol();
+cutCurve();
+	$('#navCurve a').click(function (e) {
+		  e.preventDefault();
+		  $(this).tab('show');
 		});
+	$('#navCurve a:first').tab('show') ;// Select first tab
+	$(".ongletCurve").on('click',function(){
+		focus = $(this).attr("data");
+		console.log(focus);
 	});
-
-	$('#btnCut')
-			.on(
-					'click',
-					function() {
-						var nbPlot = 1;
-						var plot1 = 0;
-						var plot2 = 0;
-						$("#graphdiv3")
-								.on(
-										'click',
-										function() {
-											if (nbPlot == 1) {
-												plot1 = g3.getSelection();
-												nbPlot = 2;
-											} else {
-												plot2 = g3.getSelection();
-												nbPlot = 1;
-
-											}
-											if (plot1 != 0 && plot2 != 0) {
-												console.log('Courbe cut');
-												cut(
-														'${pageContext.request.contextPath}/Traitment',
-														'id=${requestScope.test.id }&start='
-																+ plot1
-																+ '&end='
-																+ plot2);
-											}
-											console.log('NB PLOT = ' + nbPlot);
-										});
-
-					});
+	
+var listFile = ${requestScope.listFile};
+console.log(listFile);
 </script>
 <jsp:include page="include/footer.jsp" />

@@ -45,9 +45,12 @@ public class TraitmentServlet extends HttpServlet {
 		String lisser = request.getParameter("lisser");
 		if(lisser != null ){
 			f.addDataHistoryFile("Lisser Data", t);
-			csv.lissageOrdre2(f.getPathSave(t)+"/dataInput.csv", f.getPathSave(t)+"/dataOutput.csv");
-			String data = csv.readAll(f.getPathSave(t)+"/dataOutput.csv");
-			f.renameCsvOutput(t);
+			String file = request.getParameter("file");
+			
+			csv.lissageOrdre2(file, f.getPathSave(t)+"/curve/outputLissageTmp.csv");
+			//csv.lissageOrdre2(f.getPathSave(t)+"/dataInput.csv", f.getPathSave(t)+"/dataOutput.csv");
+			String data = csv.readAll(f.getPathSave(t)+"/curve/outputLissageTmp.csv");
+			f.renameFile(f.getPathSave(t)+"/curve/outputLissageTmp.csv", file);
 			response.getWriter().write(data);
 		}
 		String cut = request.getParameter("cut");
