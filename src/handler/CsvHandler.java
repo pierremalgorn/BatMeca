@@ -31,19 +31,10 @@ public class CsvHandler {
 
 	}
 	
-	public void test() throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"),',','"',2);
-		
-		String[] nextLine;
-		while ((nextLine = reader.readNext()) != null) {
-			// nextLine[] is an array of values from the line
-			System.out.println(nextLine[0] + "/" + nextLine[1]);
-		}
-
-	}
-	/*
+	
+	/**
 	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un fichier csv
+	 * @param input fichier a lire
 	 * */
 	public String readAll(String input) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
@@ -79,15 +70,7 @@ public class CsvHandler {
 		writer.close();
 	}
 
-	public void testWriter() throws IOException {
-		CSVWriter writer = new CSVWriter(new FileWriter(
-				"/home/max/BatMeca/data.csv"), ',');
-		// feed in your array (or convert your data to an array)
-		String[] entries = "first#second#third".split("#");
-		writer.writeNext(entries);
-		writer.close();
-	}
-
+	
 	public void testCutCsv(int start, int end) throws IOException {
 		String[] cmd = new String[] { "/usr/bin/cut", "--delimiter=,", "-f3-5",
 				"/home/max/BatMeca/data.csv" };
@@ -126,7 +109,9 @@ public class CsvHandler {
 			}
 		}.start();
 	}
-
+	/**
+	 * Permet de faire la moyenne entre deux points
+	 * */
 	public float average(float f1, float f2) {
 		return (f1 + f2) / 2;
 	}
@@ -243,10 +228,11 @@ public class CsvHandler {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
+		
 		reader.readLine();
 		Float max = (float) -999999999;
 		while ((line = reader.readLine()) != null) {
-		
+			System.out.println("LINE ="+line);
 			float val = Float.parseFloat(line);
 			if (val > max) {
 				max = val;
@@ -327,7 +313,7 @@ public class CsvHandler {
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 		CSVWriter writer = new CSVWriter(new FileWriter(
-				output), ',');
+				output), ',',CSVWriter.NO_QUOTE_CHARACTER ,Character.MIN_VALUE);
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));

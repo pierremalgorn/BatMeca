@@ -92,7 +92,7 @@
 							<li><a href="#"
 								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Lisser</a></li>
 							<li><a href="#"
-								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=5');">Calcul
+								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
 									Max</a></li>
 							<li><a href="#" id="btnCut">Cut</a></li>
 							<li><a href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>

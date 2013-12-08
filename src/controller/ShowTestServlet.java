@@ -51,6 +51,7 @@ public class ShowTestServlet extends HttpServlet {
 		f.saveToJson(list, f.getPathSave(t)+"/header.json");
 		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 		
+		//Recuperation des données et du nom des fichiers
 		File[] files = f.listCurve(t);
 		ArrayList<String[]> listData = new ArrayList<String[]>();
 		ArrayList<String> listFile = new ArrayList<String>();

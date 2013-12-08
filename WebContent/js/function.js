@@ -79,7 +79,7 @@ function calculMax(url, data) {
 	$.ajax({
 		url : url,
 		type : 'get',
-		data : data,
+		data : data+"&file="+listFile[focus - 1 ],
 		dataType : 'json',
 		success : function(json) {
 			console.log(json);
