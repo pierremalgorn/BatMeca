@@ -2,6 +2,7 @@
 echo "remplacement des virgules"
 cp $1 $2
 
+sed -i -n -e '/^[0-9]/p' $2
 sed -i -e "s/,/./g" $2
 echo "Suppression du header"
 sed -i -e '1,2d' $2

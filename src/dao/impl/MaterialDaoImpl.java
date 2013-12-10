@@ -14,6 +14,10 @@ import entity.User;
 public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * Permet de recuperer la list de tous les materiaux
+	 * 
+	 * */
 	public List<Material> findAll() {
 		EntityManager em = null;
 
@@ -33,6 +37,10 @@ public class MaterialDaoImpl implements MaterialDao {
 		return list;
 	}
 
+	/**
+	 * Permet d'ajouter un material à la base de données
+	 * @param mat material a ajouter
+	 * */
 	public void addMaterial(Material mat) {
 		EntityManager em = null;
 		try {
@@ -53,6 +61,11 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 
 	@Override
+	/**
+	 * Permet de recuperer un material en fonction de son Id
+	 * @param id du material
+	 * @return Material 
+	 * */
 	public Material find(int id) {
 		 EntityManager em = null;
 		
@@ -80,6 +93,10 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 
 	@Override
+	/**
+	 * Permet de modifier un material present dans la base de données
+	 * @param Material mat : materail a modifier
+	 * */
 	public void editMaterial(Material mat) {
 		EntityManager em = null;
 		try {
@@ -101,6 +118,10 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 
 	@Override
+	/**
+	 * Permet de modifier un material present dans la base de données
+	 * @param Material mat 
+	 * */
 	public boolean remove(Material mat) {
 		EntityManager em = null;
 
@@ -120,6 +141,9 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	/**
+	 * Permet de renvoyer la liste des materiaux sans parents
+	 * */
 	public List<Material> findAllNoParent(){
 		EntityManager em = null;
 		List<Material> materials = null;
@@ -143,6 +167,9 @@ public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	/**
+	 * Permet d'obtenir la liste des materiaux en focntion du parent
+	 * */
 	public List<Material> findByParent(Material parent) {
 		EntityManager em = null;
 		List<Material> materials = null;
@@ -163,6 +190,9 @@ public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	/**
+	 * Permet d'obtenir la liste des materiaux apartenant à un utilisateur
+	 * */
 	public List<Material> findByUser(User user) {
 		EntityManager em = null;
 		List<Material> materials = null;

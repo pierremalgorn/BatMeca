@@ -47,6 +47,10 @@ public class ShowTestServlet extends HttpServlet {
 		
 		//String path = f.getPathSave(t);
 		
+		List<String[]> listCol = f.deserializeFileJson(f.getPathSave(t)+"/ColValue.json");
+		System.out.println("nb col "+listCol.size());
+		
+		
 		ArrayList<String[]> list = f.getheaderColumn(f.getPathSave(t)+"/data/"+f.getFileNameData(t));
 		f.saveToJson(list, f.getPathSave(t)+"/header.json");
 		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
@@ -70,7 +74,7 @@ public class ShowTestServlet extends HttpServlet {
 		request.setAttribute("listData", listData);
 		request.setAttribute("test", t);
 		request.setAttribute("listFile", new Gson().toJson(listFile));
-	
+		request.setAttribute("listCol", listCol);
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/test.jsp"));

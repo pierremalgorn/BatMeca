@@ -1,12 +1,14 @@
 #!/bin/bash
 echo "remplacement des virgules"
-cp $1 $2
-
+#cp $1 $2
+touch $2
+sed -n -e '/^[0-9]/p' >> $2
 sed -i -e "s/,/./g" $2
 echo "Suppression du header"
 sed -i -e '1,2d' $2
 echo "remplacement des tabulations"
 sed -i -e "s/\t\t\t\t\t\t\t\t\t//g" $2
+sed -i -e "s/\t\t\t\t\t//g" $2
 sed -i -e "s/\t/,/g" $2
 chmod 666 $2
 #echo "remplacement des espaces"

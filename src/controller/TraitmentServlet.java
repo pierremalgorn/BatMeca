@@ -97,19 +97,34 @@ public class TraitmentServlet extends HttpServlet {
 		int idTest = Integer.parseInt(request.getParameter("inputId"));
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));
 		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
+		String file = request.getParameter("file");
 		System.out.println("+++++++++++++++++++++++++++++++++");
 		System.out.println("ID TEST = "+idTest);
 		System.out.println("FACTOR = "+factor);
 		System.out.println("NB COLUMN = "+nbColumn);
-		
+		System.out.println("FILE "+file);
 		CsvHandler csv = new CsvHandler();
 		FolderHandler f = new FolderHandler();
 		Test test = testService.find(idTest);
+		String[] tab = file.split("\\.");
+	
+		System.out.println("size  :"+tab.length);
+		tab = tab[0].split("/");
+		tab = tab[tab.length -1].split("-");
+		int other = 0;
+		if(nbColumn == Integer.parseInt(tab[0])){
+			nbColumn = 1;
+			other = 2;
+		}else{
+			nbColumn = 2;
+			other =1;
+		}
+		csv.factorColumn(nbColumn, other,factor, file,f.getPathSave(test)+"/curve/factorcurve.csv" );
 		
-		csv.factorColumn(nbColumn, factor,f.getPathSave(test)+"/dataInput.csv",f.getPathSave(test)+"/dataOutput.csv");
 		
-		String data = csv.readAll(f.getPathSave(test)+"/dataOutput.csv");
-		f.renameCsvOutput(test);
+		
+		String data = csv.readAll(f.getPathSave(test)+"/curve/factorcurve.csv");
+		f.renameFile(f.getPathSave(test)+"/curve/factorcurve.csv", file);
 		response.getWriter().write(data);
 		
 		

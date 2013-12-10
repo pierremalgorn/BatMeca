@@ -1,12 +1,20 @@
 package handler;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.google.gson.Gson;
 
 import entity.MaterialAttribute;
 import entity.Test;
@@ -18,34 +26,56 @@ public class ParserConfig {
 	
 	
 	public Test parseFileConfig(Test test,String input,List<TypeMaterialAttribute> listAttrMat,List<TypeTestAttribute> listAttrTest) throws IOException{
+		FolderHandler f = new FolderHandler();
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		String ligne = "";
-		
+		ArrayList<String[]> list = new ArrayList<String[]>();
+		ArrayList<String[]> listCol = new ArrayList<String[]>();
+		String[] row = {"",""}; 
 		while ((ligne = br.readLine()) != null) {
 			System.out.println(ligne);
 			MaterialAttribute matAttr = this.getAttributMat(ligne, listAttrMat);
-			if(matAttr != null){
+			if(ligne.matches("^c_(.*)")){
+			
+				listCol.add(ligne.split("\t"));
+				list.add(row);
+			}
+			else if(matAttr != null){
 				matAttr.setMaterial(test.getMaterial());
 				test.getMaterial().addMaterialAttribute(matAttr);
-				System.out.println("+++++++++++++++++++++++++++++++++++++");
-				System.out.println("MATCH");
-				System.out.println("+++++++++++++++++++++++++++++++++++++");
+				
 			}else{
 				TestAttribute testAttr = this.getAttributTest(ligne, listAttrTest);
 				if(testAttr != null){
 					testAttr.setTest(test);
 					test.addTestAttribute(testAttr);
 					
-					System.out.println("+++++++++++++++++++++++++++++++++++++");
-					System.out.println("MATCH");
-					System.out.println("+++++++++++++++++++++++++++++++++++++");
+				
 				}
 			}
 			
 		}
+		
+		for (String[] elem : listCol) {
+			System.out.println("NB = "+Integer.parseInt(elem[1]));
+			System.out.println("ELEM = "+elem[0]);
+			String[] tab = { elem[0],"" };
+			list.set(Integer.parseInt(elem[1]) -1 ,tab);
+		}
+		
 		br.close();
+		File file = new File(f.getPathSave(test)+"/ColValue.json");
+		
+		PrintWriter pr;
+
+		//pr = new PrintWriter(new BufferedWriter(new FileWriter(f.getFileNameData(test)+"/ColValue.json")));
+		pr = new PrintWriter(file);
+		
+		pr.println(new Gson().toJson(list));
+
+		pr.close();
 		return test;
 	}
 	

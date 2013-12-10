@@ -95,11 +95,11 @@
 								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
 									Max</a></li>
 							<li><a href="#" id="btnCut" onclick="cutCurve('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });">Cut</a></li>
-							<li><a href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>
+							<li><a id="btnFactor" href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>
 							<li><a href="#"
 								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
 
-
+							<li><a href="#" onclick="coeffDir();" >Coeff dir</a></li>
 						</ul>
 
 						<table>
@@ -122,28 +122,30 @@
 						</table>
 					</div>
 					<div class="col-md-10">
-						<form action="" method="post">
+						<form class="form-inline" action="ColValue" method="post" role="form">
 							<table class="table">
-								<thead>
-									<tr>
-										<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
-											<th>
-												<div class="checkbox">
-													<label> ${rowName } <input name="check${rowName }"
-														type="checkbox">
-													</label>
-												</div>
-											</th>
-										</c:forEach>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${requestScope.colHeader[1]}" var="rowUnit">
-										<td><input class="form-control" type="text"
-											value="${rowUnit }"></td>
-									</c:forEach>
-								</tbody>
+								<tr>
+								<th>Column</th>
+								<c:forEach items="${requestScope.listCol }" var="row" >
+								<td>
+									<div class=""  >
+										<input class="form-control" type="text" value="${row[0]} }" >		
+									</div>
+									</td>
+								</c:forEach>
+								</tr>
+								<tr>
+									<th>Unity</th>
+									<c:forEach items="${requestScope.listCol }" var="row" >
+									<td>
+									<div class=""  >
+										<input class="form-control" type="text" value="${row[1]} }" >
+									</div>
+									</td>
+								</c:forEach>
+								</tr>
 							</table>
+							<button type="submit" class="btn btn-primary pull-right" >Save</button>
 						</form>
 						<script>
 						
@@ -234,10 +236,10 @@
 					<div class="form-group">
 						<select class="form-control" id="selectRow" name="selectRow">
 							<option value="">...</option>
-							<c:set var="i" value="0" />
+							<c:set var="i" value="1" />
 							<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
 
-								<option value="${i }">${rowName }</option>
+								<option class="elemList" id="elem${i }" value="${i }">${rowName }</option>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
 						</select>
@@ -255,14 +257,12 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<button class="btn btn-info" onclick="test();">TEST</button>
-<button class="btn btn-info" onclick="printTab();">toto</button>
-
+<button class="btn btn-info" onclick="listCol();" >TEST</button>
 <script>
 var focus = 1;
 
 
-
+listCol();
 
 factorCol();
 cutCurve();

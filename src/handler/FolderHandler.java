@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -203,6 +204,10 @@ public class FolderHandler {
 		file.renameTo(new File(this.getPathSave(test)+"/dataInput.csv"));
 	}
 	
+	/**
+	 * Methode permettant de renvoyer la liste des fichiers de courbes
+	 * @param test
+	 * */
 	public File[] listCurve(Test test){
 		
 		File file = new File(this.getPathSave(test) + "/curve");
@@ -210,10 +215,35 @@ public class FolderHandler {
 		Arrays.sort(files);
 		return files;
 	}
-	
+	/**
+	 * Methode permettant de renomer un fichier 
+	 * @param input fichier à renommer
+	 * @param output nom de fichier de sortie 
+	 * */
 	public void renameFile(String input,String output){
 		File file = new File(input);
 		file.renameTo(new File(output));
+	}
+	
+	/**
+	 * Permet de deserializer un fichier Json
+	 * @param input path du fichier à lire
+	 * */
+	public List<String[]> deserializeFileJson(String input) throws IOException{
+		InputStream ips = new FileInputStream(input);
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		String ligne = "";
+		Gson gson = new Gson();
+		ArrayList<String[]> list = null;
+		while ((ligne = br.readLine()) != null) {
+			System.out.println(ligne);
+		
+			list = gson.fromJson(ligne, ArrayList.class);
+			
+		}
+		br.close();
+		return list;
 	}
 	
 }

@@ -35,7 +35,7 @@ public class CsvHandler {
 	 * */
 	public String readAll(String input) throws IOException {
 		//CSVReader reader = new CSVReader(new FileReader(input),',','"',2);
-		CSVReader reader = new CSVReader(new FileReader(input),',','"');	
+		CSVReader reader = new CSVReader(new FileReader(input),',',CSVWriter.NO_QUOTE_CHARACTER);	
 		StringBuilder sb = new StringBuilder();
 		List<String[]> myEntries = reader.readAll();
 		for (String[] strings : myEntries) {
@@ -55,7 +55,7 @@ public class CsvHandler {
 	 * */
 	public void echantillon(int echant) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"),',','"',2);
+				"/home/max/BatMeca/data.csv"),',',CSVWriter.NO_QUOTE_CHARACTER,2);
 		CSVWriter writer = new CSVWriter(new FileWriter(
 				"/home/max/BatMeca/data1.csv"), ',');
 		List<String[]> myEntries = reader.readAll();
@@ -118,8 +118,8 @@ public class CsvHandler {
 	 * Lissage des points
 	 * */
 	public void lissageOrdre2(String input,String output) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(input), ',','"',Character.MIN_VALUE);
-		CSVWriter writer = new CSVWriter(new FileWriter(output), ',','"',Character.MIN_VALUE);
+		CSVReader reader = new CSVReader(new FileReader(input), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
 		List<String[]> myEntries = reader.readAll();
 
 		String[] ligne0 = myEntries.get(0);
@@ -265,12 +265,21 @@ public class CsvHandler {
 		return min;
 	}
 	
-	public void factorColumn(int numColumn,float factor,String input,String output) throws IOException{
-		String[] cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"*"+factor+"}",
+	public void factorColumn(int numColumn,int other,float factor,String input,String output) throws IOException{
+		String[] cmd;
+		if(numColumn < other){
+			 cmd = new String[] { "awk",
+					"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"*"+factor+",$"+other+"}",
+					input};
+			
+		}else{
+			 cmd = new String[] { "awk",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+other+",$"+numColumn+"*"+factor+"}",
 				input};
+		}
+		
 		CSVWriter writer = new CSVWriter(new FileWriter(
-				output), ',');
+				output), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 

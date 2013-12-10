@@ -1,50 +1,32 @@
 package controller;
 
-
-
-import handler.FolderHandler;
-
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.TestService;
-import service.manager.ServiceManager;
-import entity.Test;
-
 /**
- * Servlet implementation class TestHandlerSevlet
+ * Servlet implementation class ColValueServlet
  */
-@WebServlet("/TestHandler")
-public class TestHandlerSevlet extends HttpServlet {
+@WebServlet("/ColValue")
+public class ColValueServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private TestService testService;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestHandlerSevlet() {
+    public ColValueServlet() {
         super();
-        testService = ServiceManager.INSTANCE.getTestService();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String test = "gc_kkkkk";
-		System.out.println(test.matches("^c_(.*)"));
-		if (test.matches("^c_(.*)")) {
-			System.out.println("MATCH");
-		} else {
-			System.out.println("NOT MATCH");
-		}
-		//String name = f.getFileNameData(t);
-		//System.out.println(name);
-		//f.initDirectory(t);
+		// TODO Auto-generated method stub
 	}
 
 	/**

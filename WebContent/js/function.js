@@ -165,7 +165,7 @@ function factorCol(){
 		$.ajax({
 			url : $('#formFactor').attr('action'),
 			type : $('#formFactor').attr('method'),
-			data : $('#formFactor').serialize(),
+			data : $('#formFactor').serialize()+"&file="+listFile[focus - 1 ],
 			dataType : 'json',
 			success : function(json) {
 				console.log('form factor');
@@ -177,8 +177,10 @@ function factorCol(){
 }
 
 function cutCurve(url,id){
-
-				var nbPlot = 1;
+$('#btnCut').on('click',function(){
+	
+	
+			var nbPlot = 1;
 				var plot1 = 0;
 				var plot2 = 0;
 				$("#graph"+focus)
@@ -206,6 +208,51 @@ function cutCurve(url,id){
 									console.log('NB PLOT = ' + nbPlot);
 								});
 
-			
+});
+	
 }
 
+function coeffDir(){
+	var nbPlot = 1; 
+	var pointAx = null;
+	var pointAy = null;
+	var pointBx = null;
+	var pointBy = null;
+	$('#graph'+focus).on('click',function(){
+		if(nbPlot == 1){
+			 pointAx = tabGraph[focus -1 ].getValue(tabGraph[focus -1 ].getSelection(), 0);
+			 pointAy = tabGraph[focus -1 ].getValue(tabGraph[focus -1 ].getSelection(), 0);
+			 nbPlot = 2;
+		}else{
+			pointBx = tabGraph[focus -1 ].getValue(tabGraph[focus -1 ].getSelection(), 0);
+			pointBy = tabGraph[focus -1 ].getValue(tabGraph[focus -1 ].getSelection(), 0);
+			nbPlot = 1;
+			
+			var coef = (pointBy - pointAy)/(pointBx - pointBy );
+			console.log("Coefficient = "+coef);
+			
+		}
+	});
+	
+	
+	
+	
+    
+	
+}
+
+ function listCol(){
+	 $('#btnFactor').on('click',function(){
+		 console.log('test');
+		 var file = listFile[focus - 1 ];
+		 var tab = file.split('.');
+		 tab = tab[0].split('/');
+		 tab = tab[tab.length -1 ].split('-');
+		 $('.elemList').hide();
+		 $('#elem'+tab[0]).show();
+		 $('#elem'+tab[1]).show();
+		 console.log('A = '+tab);
+	 });
+	 
+	
+ }
