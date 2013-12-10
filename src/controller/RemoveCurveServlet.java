@@ -1,10 +1,6 @@
 package controller;
 
-
-
-import handler.CsvHandler;
-import handler.FolderHandler;
-
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -13,36 +9,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.TestService;
-import service.manager.ServiceManager;
-import entity.Test;
-
 /**
- * Servlet implementation class TestHandlerSevlet
+ * Servlet implementation class RemoveCurveServlet
  */
-@WebServlet("/TestHandler")
-public class TestHandlerSevlet extends HttpServlet {
+@WebServlet("/RemoveCurve")
+public class RemoveCurveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private TestService testService;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TestHandlerSevlet() {
+    public RemoveCurveServlet() {
         super();
-        testService = ServiceManager.INSTANCE.getTestService();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CsvHandler csv = new CsvHandler();
-		int result = csv.nbLigne("/home/max/Documents/data.csv");
-		System.out.println("result "+csv.nbLigne("/home/max/Documents/data.csv"));
-		response.getWriter().write(result);
-		//String name = f.getFileNameData(t);
-		//System.out.println(name);
-		//f.initDirectory(t);
+		String file = request.getParameter("file");
+		File curve = new File(file);
+		boolean delete = curve.delete();
+		response.getWriter().write("{"+delete+"}");
 	}
 
 	/**

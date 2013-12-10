@@ -38,7 +38,7 @@
 			<button type="button" class="btn btn-info" id="btnSelectRow">Submit</button>
 		</form>
 		<script>
-			selectRow();
+			selectRow("${pageContext.request.contextPath}/RemoveCurve");
 		</script>
 
 
@@ -94,7 +94,7 @@
 							<li><a href="#"
 								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
 									Max</a></li>
-							<li><a href="#" id="btnCut" onclick="cutCurve('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });">Cut</a></li>
+							<li><a id="btnCutMode" data-toggle="modal" data-target="#modalCut" >Cut mode</a></li>
 							<li><a id="btnFactor" href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>
 							<li><a href="#"
 								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
@@ -156,9 +156,9 @@
 
 						<ul id="navCurve" class="nav nav-tabs">
 							<c:forEach items="${requestScope.listData }" var="data">
-								<li><a class="ongletCurve" href="#curve${i }"
-									data-toggle="tab" data="${i }">Curve ${i }
-										<button class="close pull-right">&times;</button>
+								<li id="ongletCurve${i }" ><a class="ongletCurve" href="#curve${i }"
+									data-toggle="tab" data="${i }">Curve ${i } <button onclick="deleteCurve('${pageContext.request.contextPath}/RemoveCurve');" class="close">&times;</button>
+										
 								</a></li>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
@@ -210,6 +210,37 @@
 		</div>
 	</div>
 </div>
+
+<!-- MODAL CHOSE CUT MODE -->
+<div class="modal fade" id="modalCut" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Apply Factor</h4>
+				</div>
+				<div class="modal-body">
+					<div class="col-md-offset-3" >
+						<button onclick="cutAfter('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut After</button>
+						<button onclick="cutBefore('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut Before</button>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					
+				</div>
+		
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
 
 <!-- Formulaire pour la mul -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -265,7 +296,7 @@ var focus = 1;
 listCol();
 
 factorCol();
-cutCurve();
+//cutCurve();
 	$('#navCurve a').click(function (e) {
 		  e.preventDefault();
 		  $(this).tab('show');

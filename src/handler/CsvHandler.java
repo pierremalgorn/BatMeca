@@ -9,44 +9,44 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-
 
 public class CsvHandler {
 
 	private String fileInput;
-	
-	
-	public CsvHandler(){
-		
+
+	public CsvHandler() {
+
 	}
-	
-	public CsvHandler(String input){
+
+	public CsvHandler(String input) {
 		fileInput = input;
 
 	}
-	
-	
+
 	/**
-	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un fichier csv
-	 * @param input fichier a lire
+	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un
+	 * fichier csv
+	 * 
+	 * @param input
+	 *            fichier a lire
 	 * */
 	public String readAll(String input) throws IOException {
-		//CSVReader reader = new CSVReader(new FileReader(input),',','"',2);
-		CSVReader reader = new CSVReader(new FileReader(input),',',CSVWriter.NO_QUOTE_CHARACTER);	
+		// CSVReader reader = new CSVReader(new FileReader(input),',','"',2);
+		CSVReader reader = new CSVReader(new FileReader(input), ',',
+				CSVWriter.NO_QUOTE_CHARACTER);
 		StringBuilder sb = new StringBuilder();
 		List<String[]> myEntries = reader.readAll();
 		for (String[] strings : myEntries) {
 			for (String string : strings) {
-				sb.append(string+",");
+				sb.append(string + ",");
 			}
 			sb.append("\n");
-			
+
 		}
 		reader.close();
-		//System.out.println(sb.toString());
+		// System.out.println(sb.toString());
 		return new Gson().toJson(sb.toString());
 	}
 
@@ -55,7 +55,8 @@ public class CsvHandler {
 	 * */
 	public void echantillon(int echant) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"),',',CSVWriter.NO_QUOTE_CHARACTER,2);
+				"/home/max/BatMeca/data.csv"), ',',
+				CSVWriter.NO_QUOTE_CHARACTER, 2);
 		CSVWriter writer = new CSVWriter(new FileWriter(
 				"/home/max/BatMeca/data1.csv"), ',');
 		List<String[]> myEntries = reader.readAll();
@@ -69,44 +70,7 @@ public class CsvHandler {
 	}
 
 	
-	public void testCutCsv(int start, int end) throws IOException {
-		String[] cmd = new String[] { "/usr/bin/cut", "--delimiter=,", "-f3-5",
-				"/home/max/BatMeca/data.csv" };
-		Runtime runtime = Runtime.getRuntime();
 
-		final Process process = runtime.exec(cmd);
-		new Thread() {
-			public void run() {
-				CSVWriter writer = null;
-				try {
-					writer = new CSVWriter(new FileWriter(
-							"/home/max/BatMeca/data1.csv"), ',');
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				try {
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(process.getInputStream()));
-					String line = "";
-					try {
-						while ((line = reader.readLine()) != null) {
-							System.out.println("LINE = " + line);
-							String[] entries = line.split(",");
-							writer.writeNext(entries);
-
-						}
-						writer.close();
-					} finally {
-						reader.close();
-					}
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}.start();
-	}
 	/**
 	 * Permet de faire la moyenne entre deux points
 	 * */
@@ -116,10 +80,14 @@ public class CsvHandler {
 
 	/**
 	 * Lissage des points
+	 * @param input chemin du fichier d'entree
+	 * @param output chemin du fichier de sortie
 	 * */
-	public void lissageOrdre2(String input,String output) throws IOException {
-		CSVReader reader = new CSVReader(new FileReader(input), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
-		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
+	public void lissageOrdre2(String input, String output) throws IOException {
+		CSVReader reader = new CSVReader(new FileReader(input), ',',
+				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
+				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 		List<String[]> myEntries = reader.readAll();
 
 		String[] ligne0 = myEntries.get(0);
@@ -130,7 +98,7 @@ public class CsvHandler {
 			String[] tab = myEntries.get(i);
 
 			for (int j = 0; j < tab.length; j++) {
-				
+
 				float x1 = Float.parseFloat(myEntries.get(i - 1)[j]);
 				float x2 = Float.parseFloat(myEntries.get(i + 1)[j]);
 				tab[j] = Float.toString(this.average(x1, x2));
@@ -145,8 +113,7 @@ public class CsvHandler {
 	}
 
 	/*
-	 * Séparer les colonnes d'un fichier csv 
-	 * pas operationnel
+	 * Séparer les colonnes d'un fichier csv pas operationnel
 	 */
 	public void switchColomn() throws IOException {
 		String[] cmd = new String[] { "awk",
@@ -208,7 +175,8 @@ public class CsvHandler {
 	/**
 	 * Permet de supprimer un interval de point
 	 * */
-	public void deletePortionCsv(String input,int start, int end) throws IOException {
+	public void deletePortionCsv(String input, int start, int end)
+			throws IOException {
 		String[] cmd = new String[] { "/bin/sed", "-i", "-e",
 				start + "," + end + "d", input };
 		Runtime runtime = Runtime.getRuntime();
@@ -216,9 +184,10 @@ public class CsvHandler {
 
 	}
 
-	public Float maxValueColumn(int numColumn,String input) throws NumberFormatException, IOException {
+	public Float maxValueColumn(int numColumn, String input)
+			throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"}",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
 				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
@@ -226,11 +195,11 @@ public class CsvHandler {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
-		
+
 		reader.readLine();
 		Float max = (float) -999999999;
 		while ((line = reader.readLine()) != null) {
-			System.out.println("LINE ="+line);
+			System.out.println("LINE =" + line);
 			float val = Float.parseFloat(line);
 			if (val > max) {
 				max = val;
@@ -239,12 +208,14 @@ public class CsvHandler {
 		} // si besoin est
 		return max;
 	}
+
 	/**
 	 * Calcule du min sur une colonne
 	 * */
-	public Float minValueColumn(int numColumn) throws NumberFormatException, IOException {
+	public Float minValueColumn(int numColumn) throws NumberFormatException,
+			IOException {
 		String[] cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"}",
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
 				this.fileInput };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
@@ -255,31 +226,34 @@ public class CsvHandler {
 
 		Float min = (float) 999999999;
 		while ((line = reader.readLine()) != null) {
-		
+
 			float val = Float.parseFloat(line);
 			if (val < min) {
 				min = val;
 			}
-			
-		} 
+
+		}
 		return min;
 	}
-	
-	public void factorColumn(int numColumn,int other,float factor,String input,String output) throws IOException{
+
+	public void factorColumn(int numColumn, int other, float factor,
+			String input, String output) throws IOException {
 		String[] cmd;
-		if(numColumn < other){
-			 cmd = new String[] { "awk",
-					"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+numColumn+"*"+factor+",$"+other+"}",
-					input};
-			
-		}else{
-			 cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+other+",$"+numColumn+"*"+factor+"}",
-				input};
+		if (numColumn < other) {
+			cmd = new String[] {
+					"awk",
+					"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "*"
+							+ factor + ",$" + other + "}", input };
+
+		} else {
+			cmd = new String[] {
+					"awk",
+					"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + other + ",$"
+							+ numColumn + "*" + factor + "}", input };
 		}
-		
-		CSVWriter writer = new CSVWriter(new FileWriter(
-				output), ',',CSVWriter.NO_QUOTE_CHARACTER,Character.MIN_VALUE);
+
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
+				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
@@ -287,54 +261,89 @@ public class CsvHandler {
 				process.getInputStream()));
 		String line = "";
 
-	
 		while ((line = reader.readLine()) != null) {
-			String[] val =  line.split(",");
+			String[] val = line.split(",");
 			writer.writeNext(val);
-		} 
+		}
 		reader.close();
 		writer.close();
 	}
-	
+
 	/*
 	 * Permet de convertir un fichier .dat en .csv
-	 * */
-	public void datToCsv(String input,String output) throws IOException{
-		String[] cmd = new String[] { "/home/max/BatMeca/BatmecaNewGeneration/script/datToCsv",input,output
-				 };
+	 */
+	public void datToCsv(String input, String output) throws IOException {
+		String[] cmd = new String[] {
+				"/home/max/BatMeca/BatmecaNewGeneration/script/datToCsv",
+				input, output };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 	}
-	
+
 	/**
 	 * Permet de selctionner un axe en fonction d'un autre
-	 * @param input: fichier csv d'entré
-	 * @param output: fichier csv de sortie
-	 * @param x axe en abscisse
-	 * @param y axe en ordonnée
+	 * 
+	 * @param input
+	 *            : fichier csv d'entré
+	 * @param output
+	 *            : fichier csv de sortie
+	 * @param x
+	 *            axe en abscisse
+	 * @param y
+	 *            axe en ordonnée
 	 * */
-	public void selectCurve(String input,String output,int x,int y) throws IOException{
+	public void selectCurve(String input, String output, int x, int y)
+			throws IOException {
 		String[] cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $"+x+",$"+y+"}",
-				input};
+				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + x + ",$" + y + "}",
+				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-		CSVWriter writer = new CSVWriter(new FileWriter(
-				output), ',',CSVWriter.NO_QUOTE_CHARACTER ,Character.MIN_VALUE);
-		
+		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
+				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
 
 		while ((line = reader.readLine()) != null) {
-			String[] val =  line.split(",");
+			String[] val = line.split(",");
 			writer.writeNext(val);
-		} 
+		}
 		reader.close();
 		writer.close();
 	}
 	
-	
-	
+	public void cutAfter(int start,String input) throws IOException{
+		int end = this.nbLigne(input);
+		this.deletePortionCsv(input, start, end);
+	}
 
+	public void cutBefore(int end,String input) throws IOException{
+		int start = 1;
+		this.deletePortionCsv(input, start, end);
+	}
+	
+	public int nbLigne(String input) throws IOException {
+		String[] cmd = new String[] { "sed","-n","-e","$=",input };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				process.getInputStream()));
+		String line = "";
+		int result = 0;
+		while ((line = reader.readLine()) != null) {
+			
+			result = Integer.parseInt(line);
+		}
+	
+		
+		
+		
+		return result;
+	}
+
+	
+	
 }

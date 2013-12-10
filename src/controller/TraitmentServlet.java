@@ -55,10 +55,19 @@ public class TraitmentServlet extends HttpServlet {
 		}
 		String cut = request.getParameter("cut");
 		if( cut!= null){
-			int start = Integer.parseInt(request.getParameter("start"));
-			int end = Integer.parseInt(request.getParameter("end"));
+			String after = request.getParameter("after");
+			String before = request.getParameter("before");
+			//int end = Integer.parseInt(request.getParameter("end"));
 			String file = request.getParameter("file");
-			csv.deletePortionCsv(file, start, end);
+			if(after != null){
+				int start = Integer.parseInt(request.getParameter("start"));
+				csv.cutAfter(start, file);
+			}else if(before != null){
+				int end = Integer.parseInt(request.getParameter("end"));
+				csv.cutBefore(end, file);
+			}
+			
+			//csv.deletePortionCsv(file, start, end);
 			String data = csv.readAll(file);
 			System.out.println("CUT = "+cut);
 			f.addDataHistoryFile("CUT FILE", t);
