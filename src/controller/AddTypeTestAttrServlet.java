@@ -43,14 +43,14 @@ public class AddTypeTestAttrServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//créattion objet associé
 		TypeTestAttribute type = new TypeTestAttribute();
 		type.setName(request.getParameter("inputName"));
 		type.setPattern(request.getParameter("inputPattern"));
+		//enregistrement en base de données
 		typeService.add(type);
 		
-		/*RequestDispatcher rd = null;
-		rd = getServletContext().getRequestDispatcher("/Config");
-		rd.forward(request, response);*/
+		
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Config"));
 	}
 

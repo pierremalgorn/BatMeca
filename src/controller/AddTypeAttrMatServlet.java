@@ -41,14 +41,16 @@ public class AddTypeAttrMatServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		 * Création objet associé 
+		 * */
 		TypeMaterialAttribute type = new TypeMaterialAttribute();
 		type.setName(request.getParameter("inputName"));
 		type.setPattern(request.getParameter("inputPattern"));
+		//enregistrement en base de données
 		typeMatAttrService.add(type);
 		
-		/*RequestDispatcher rd = null;
-		rd = getServletContext().getRequestDispatcher("/Config");
-		rd.forward(request, response);*/
+	
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Config"));
 	}
 

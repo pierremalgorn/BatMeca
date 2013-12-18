@@ -38,7 +38,9 @@ public class IndexTestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		/**
+		 * Récuperation de la liste des essais associés 
+		 * */
 	
 		List<Test> tests;
 		tests = testService.findAll();

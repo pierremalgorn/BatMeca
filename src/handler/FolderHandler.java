@@ -151,6 +151,10 @@ public class FolderHandler {
 		return header;
 	}
 
+	/**
+	 * Permet de parser le header de l'essai
+	 * @param input chemin du fichier à parser
+	 * */
 	public ArrayList<String[]> getheaderColumn(String input) throws IOException {
 		String[] tab = this.parseHeader(input);
 		ArrayList<String[]> list = new ArrayList<String[]>();
@@ -186,6 +190,8 @@ public class FolderHandler {
 	
 	/**
 	 * Permet d'ajouter un information au fichier d'historique d'un essai
+	 * @param data information a rajouter au fichier
+	 * @param test test courant
 	 * */
 	public void addDataHistoryFile(String data,Test test) throws IOException{
 		PrintWriter pr;
@@ -229,7 +235,7 @@ public class FolderHandler {
 	 * Permet de deserializer un fichier Json
 	 * @param input path du fichier à lire
 	 * */
-	public List<String[]> deserializeFileJson(String input) throws IOException{
+	public ArrayList<String[]> deserializeFileJson(String input) throws IOException{
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);

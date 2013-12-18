@@ -52,9 +52,12 @@ public class AddMaterialServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> materials;
+		//Récupération de la liste des materiaux
 		materials = materialService.findAll();
+		//Récupération de la liste des attribuuts d'un matériaux
 		List<TypeMaterialAttribute> listAttr;
 		listAttr = typeMaterialAttributService.findAll();
+		
 		
 		request.setAttribute("mats", materials);
 		request.setAttribute("matAttrs", listAttr);
@@ -67,16 +70,18 @@ public class AddMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Récuperation des champs
 		String name = request.getParameter("inputName");
 		Material mat = new Material();
 		mat.setName(name);
 		String parent = request.getParameter("inputMaterialParent");
+		
 		List<TypeMaterialAttribute> listAttr;
 		listAttr = typeMaterialAttributService.findAll();
 		
 		mat.setMatAttrs(new HashSet<MaterialAttribute>());
 			
-			
+		//Création des attributs du matériel
 		for (TypeMaterialAttribute tMatAttr : listAttr) {
 			MaterialAttribute matAttr = new MaterialAttribute();
 			String nameAttr = request.getParameter("input"+tMatAttr.getName());
@@ -95,6 +100,7 @@ public class AddMaterialServlet extends HttpServlet {
 			mat.setMaterialParent(matParent);
 		}
 		
+		//association du materiel a l'utilisateur courant
 		HttpSession session = request.getSession();
 		mat.setUser((User) session.getAttribute("sessionUser"));
 		

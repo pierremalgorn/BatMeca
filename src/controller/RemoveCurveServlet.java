@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Permet de supprimer un courbe
  * Servlet implementation class RemoveCurveServlet
  */
 @WebServlet("/RemoveCurve")

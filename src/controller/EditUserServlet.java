@@ -54,6 +54,7 @@ public class EditUserServlet extends HttpServlet{
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//Récuêration des elements du formulaire
 		int id = Integer.parseInt(request.getParameter("id"));
 		String name = request.getParameter("name");
 		String firtsname = request.getParameter("firstName");
@@ -63,7 +64,7 @@ public class EditUserServlet extends HttpServlet{
 		String newPassword = request.getParameter("newpassword");
 		String newPasswordConfirm = request.getParameter("newpasswordconfirm");
 		String target = request.getParameter("target");
-		
+		//Création de l'objet associer
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
 		

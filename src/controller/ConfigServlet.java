@@ -37,7 +37,9 @@ public class ConfigServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*
+		 * Recuperation des listes d'attributs
+		 * */
 		List<TypeMaterialAttribute> typesMat = typeMatAttrService.findAll();
 		List<TypeTestAttribute> typesTest = typeTestAttrService.findAll();
 		

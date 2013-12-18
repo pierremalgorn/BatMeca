@@ -43,8 +43,10 @@ public class AddSubMaterialServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//récupération de la liste des materiaux
 		List<Material> materials;
 		materials = materialService.findAll();
+		//récupération de la liste des attributs
 		List<TypeMaterialAttribute> listAttr;
 		listAttr = typeMaterialAttributService.findAll();
 		
@@ -65,6 +67,7 @@ public class AddSubMaterialServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//récuperation des champs du formulaire
 		String name = request.getParameter("inputName");
 		System.out.println("NAME  = " + name);
 		Material mat = new Material();
@@ -73,12 +76,12 @@ public class AddSubMaterialServlet extends HttpServlet {
 
 		Material matParent = materialService.find(Integer.parseInt(parent));
 		mat.setMaterialParent(matParent);
-		
+		//Récuperation de la liste des attribus
 		List<TypeMaterialAttribute> listAttr;
 		listAttr = typeMaterialAttributService.findAll();
 		mat.setMatAttrs(new HashSet<MaterialAttribute>());
 		
-		
+		//Création des attributs du sous matériaux
 		for (TypeMaterialAttribute tMatAttr : listAttr) {
 			MaterialAttribute matAttr = new MaterialAttribute();
 			String nameAttr = request.getParameter("input"+tMatAttr.getName());
@@ -92,6 +95,7 @@ public class AddSubMaterialServlet extends HttpServlet {
 			
 		}
 		
+		//Association du sous matériaux à l'utilisateur courant
 		HttpSession session = request.getSession();
 		mat.setUser((User) session.getAttribute("sessionUser"));
 		materialService.addMaterial(mat);

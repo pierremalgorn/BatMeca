@@ -18,6 +18,7 @@ import service.TestService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet de réaliser des traitements sur une courbe
  * Servlet implementation class TraitmentServlet
  */
 @WebServlet("/Traitment")
@@ -41,7 +42,7 @@ public class TraitmentServlet extends HttpServlet {
 		Test t = testService.find(idTest);
 		CsvHandler csv = new CsvHandler();
 		FolderHandler f = new FolderHandler();
-		
+		//Réalisation du lissage
 		String lisser = request.getParameter("lisser");
 		if(lisser != null ){
 			f.addDataHistoryFile("Lisser Data", t);
@@ -53,6 +54,7 @@ public class TraitmentServlet extends HttpServlet {
 			f.renameFile(f.getPathSave(t)+"/curve/outputLissageTmp.csv", file);
 			response.getWriter().write(data);
 		}
+		//Réalisation d'une coupe de courbe
 		String cut = request.getParameter("cut");
 		if( cut!= null){
 			String after = request.getParameter("after");
@@ -73,7 +75,7 @@ public class TraitmentServlet extends HttpServlet {
 			f.addDataHistoryFile("CUT FILE", t);
 			response.getWriter().write(data);
 		}
-		
+		//Calcule du max d'une colonne
 		String calMax = request.getParameter("calMax");
 		if( calMax!= null){
 			String file = request.getParameter("file");
@@ -82,15 +84,18 @@ public class TraitmentServlet extends HttpServlet {
 			f.addDataHistoryFile("MAX FILE", t);
 			response.getWriter().write(new Gson().toJson(max));
 		}
+		//Multiplication par un facteur
 		String factor = request.getParameter("factor");
 		if( factor!= null){
 			System.out.println("factor = "+factor);
 			f.addDataHistoryFile("factor FILE", t);
 		}
-		
+		/*
+		 * Reset de la courbes
+		 * */
 		String reset = request.getParameter("reset");
 		if(reset != null){
-			csv.datToCsv(f.getPathSave(t)+"/data/"+f.getFileNameData(t), f.getPathSave(t)+"/dataInput.csv");
+			//csv.datToCsv(f.getPathSave(t)+"/data/"+f.getFileNameData(t), f.getPathSave(t)+"/dataInput.csv");
 			String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 			System.out.println("RESET = "+reset);
 			f.addDataHistoryFile("RESET FILE", t);

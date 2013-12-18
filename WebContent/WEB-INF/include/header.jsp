@@ -11,9 +11,14 @@
 	<link rel="stylesheet"	href="${pageContext.request.contextPath}/css/bootstrap-glyphicons.css">
 	<link rel="stylesheet"	href="${pageContext.request.contextPath}/css/style.css">
 	
+	
+	
 	<script	src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 	<script	src="${pageContext.request.contextPath}/js/jqBootstrapValidation.js"></script>
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 </head>
 <body>
 

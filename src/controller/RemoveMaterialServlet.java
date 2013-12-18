@@ -16,6 +16,7 @@ import service.MaterialService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet de supprimer un matériaux
  * Servlet implementation class REmoveMaterialServlet
  */
 @WebServlet("/RemoveMaterial")

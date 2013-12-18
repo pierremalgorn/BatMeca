@@ -32,10 +32,10 @@ public class EditMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Material mat = materialService.find(id);
-		//materialService.editMaterial(mat);
 		request.setAttribute("mat", mat);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 		response.encodeURL("/WEB-INF/editMaterial.jsp"));

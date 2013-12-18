@@ -14,7 +14,9 @@ import service.TypeMaterialAttributService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet de supprimer un type d'attribut matériaux
  * Servlet implementation class RemoveTypeMatAttrServlet
+ * 
  */
 @WebServlet("/RemoveTypeMatAttr")
 public class RemoveTypeMatAttrServlet extends HttpServlet {

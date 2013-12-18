@@ -22,6 +22,7 @@ import service.TestService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet d'afficher un éssai
  * Servlet implementation class ShowTestServlet
  */
 @WebServlet("/ShowTest")
@@ -40,20 +41,19 @@ public class ShowTestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
 		CsvHandler csv = new CsvHandler();	
 		FolderHandler f = new FolderHandler();
 		
-		//String path = f.getPathSave(t);
 		
-		List<String[]> listCol = f.deserializeFileJson(f.getPathSave(t)+"/ColValue.json");
-		System.out.println("nb col "+listCol.size());
+	
+		//Récuperation de l'header
+		ArrayList<String[]> list =  f.deserializeFileJson(f.getPathSave(t)+"/header.json");
+	
 		
-		
-		ArrayList<String[]> list = f.getheaderColumn(f.getPathSave(t)+"/data/"+f.getFileNameData(t));
-		f.saveToJson(list, f.getPathSave(t)+"/header.json");
-		String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
+		//String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
 		
 		//Recuperation des données et du nom des fichiers
 		File[] files = f.listCurve(t);
@@ -69,12 +69,13 @@ public class ShowTestServlet extends HttpServlet {
 		
 		
 		request.setAttribute("colHeader", list);
+		
 		request.setAttribute("files", files);
-		request.setAttribute("data", data);
+		//request.setAttribute("data", data);
 		request.setAttribute("listData", listData);
 		request.setAttribute("test", t);
 		request.setAttribute("listFile", new Gson().toJson(listFile));
-		request.setAttribute("listCol", listCol);
+		//request.setAttribute("listCol", listCol);
 		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				response.encodeURL("/WEB-INF/test.jsp"));

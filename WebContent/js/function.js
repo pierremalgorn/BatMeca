@@ -51,7 +51,7 @@ function cut(url, data) {
 		data : 'cut=true&' + data + "&file=" + listFile[focus - 1],
 		dataType : 'json',
 		success : function(data) {
-
+			console.log(data);
 			tabGraph[focus - 1] = new Dygraph(document.getElementById("graph"
 					+ focus), data, {});
 		},
@@ -115,8 +115,9 @@ function selectRow(url) {
 
 					addOnglet(url, "Curve " + json.nbCurve, json.nbCurve);
 					addContent(json.nbCurve, json.data);
-
+					tabGraph.push(json.nameFile);
 					// refreshCurve(json.data);
+					console.log(tabGraph);
 					console.log("NB Curve = " + json.nbCurve);
 				} else {
 					console.log("Already Exist");
@@ -124,7 +125,7 @@ function selectRow(url) {
 
 			},
 			error : function(error) {
-				console.log(error);
+				console.log("ERROR ");
 			}
 		});
 	});
@@ -210,33 +211,31 @@ function cutCurve(url, id) {
 }
 
 function coeffDir() {
-	var nbPlot = 1;
-	var pointAx = null;
-	var pointAy = null;
-	var pointBx = null;
-	var pointBy = null;
-	$('#graph' + focus).on(
-			'click',
-			function() {
-				if (nbPlot == 1) {
-					pointAx = tabGraph[focus - 1].getValue(tabGraph[focus - 1]
-							.getSelection(), 0);
-					pointAy = tabGraph[focus - 1].getValue(tabGraph[focus - 1]
-							.getSelection(), 0);
-					nbPlot = 2;
-				} else {
-					pointBx = tabGraph[focus - 1].getValue(tabGraph[focus - 1]
-							.getSelection(), 0);
-					pointBy = tabGraph[focus - 1].getValue(tabGraph[focus - 1]
-							.getSelection(), 0);
-					nbPlot = 1;
+	var ax;
+	var ay;
+	var bx;
+	var by;
+	var cpt = 1;
+	$('#graph'+focus).on('click',function(){
+		if(cpt == 1){
+			console.log("point 1");
+			ax = tabGraph[focus-1].getValue(tabGraph[focus-1].getSelection(),0);
+			ay = tabGraph[focus-1].getValue(tabGraph[focus-1].getSelection(),1);
+			cpt++;
+		}else{
+			console.log("point 2");
+			bx = tabGraph[focus-1].getValue(tabGraph[focus-1].getSelection(),0);
+			by = tabGraph[focus-1].getValue(tabGraph[focus-1].getSelection(),1);
+			
+			var coef = (by-ay)/(bx-ax);
+			console.log("COEF = "+coef);
+			$(this).unbind('click');
+		}
+		
 
-					var coef = (pointBy - pointAy) / (pointBx - pointBy);
-					console.log("Coefficient = " + coef);
-
-				}
-			});
-
+		
+	});
+	
 }
 
 function listCol() {
@@ -297,4 +296,27 @@ function cutAfter(url,id) {
 	});
 
 	$('#modalCut').modal('hide');
+}
+
+function saveHeader(){
+	$('#btnSaveHeader').on('click',function(){
+		console.log('data = '+$('#formHeader').serialize());
+	console.log('save header');
+	$.ajax({
+		url:$('#formHeader').attr('action'),
+		type: $('#formHeader').attr('method'),
+		data: $('#formHeader').serialize(),
+		
+		success: function(data){
+			console.log('C est la fete');
+			console.log(data);
+		},
+		error: function(){
+			console.log("ERROR");
+		}
+		
+		
+	});
+	
+	});
 }

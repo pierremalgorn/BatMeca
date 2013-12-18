@@ -47,13 +47,13 @@ public class AddUserServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Création de l'objet associer
 		String name = request.getParameter("name");
 		String firstName = request.getParameter("firstName");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		int idType;
 		String type = request.getParameter("type");
-
 		idType = Integer.parseInt(type);
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(idType);
@@ -65,6 +65,7 @@ public class AddUserServlet extends HttpServlet{
 		user.setPassword(password);
 		user.setType(typeUser);
 		
+		//enregistrement en base de données
 		userService.addUser(user);
 		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
 	}

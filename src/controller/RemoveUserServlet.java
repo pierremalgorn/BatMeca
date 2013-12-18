@@ -16,6 +16,10 @@ import service.UserService;
 import service.TypeUserService;
 import service.manager.ServiceManager;
 
+/*
+ * Permet de supprimer un utilisateur
+ * */
+
 @WebServlet("/RemoveUser")
 public class RemoveUserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;

@@ -19,6 +19,7 @@ import service.TestService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet de selectioner un courbe
  * Servlet implementation class SelectRowServlet
  */
 @WebServlet("/SelectRow")
@@ -37,7 +38,9 @@ public class SelectRowServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("idTest"));
+		/*
+		 * Code de test
+		 * int id = Integer.parseInt(request.getParameter("idTest"));
 		Test test = testService.find(id);
 		FolderHandler f =  new FolderHandler();
 		CsvHandler csv = new CsvHandler();
@@ -46,7 +49,7 @@ public class SelectRowServlet extends HttpServlet {
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
 		System.out.println("nbCurve");
-		
+		*/
 		
 	}
 
@@ -54,7 +57,7 @@ public class SelectRowServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*Récuperation de l'abscisse et de l'ordonnées*/
 		int x = Integer.parseInt(request.getParameter("inputX"));
 		int y = Integer.parseInt(request.getParameter("inputY"));
 		
@@ -63,9 +66,7 @@ public class SelectRowServlet extends HttpServlet {
 		CsvHandler csv = new CsvHandler();
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
-		System.out.println("nbCurve");
-		System.out.println("X = "+x);
-		System.out.println("Y = "+y);
+		//Verification si le tracer n'a pas deja été éffectuer
 		boolean content = false;
 		for (File file : list) {
 			if(file.getName().compareTo(x+"-"+y+".csv") == 0){
@@ -73,10 +74,11 @@ public class SelectRowServlet extends HttpServlet {
 			}
 		}
 		if(content == false){
+			//Création de la courbe
 			csv.selectCurve(f.getPathSave(test)+"/dataInput.csv", f.getPathSave(test)+"/curve/"+x+"-"+y+".csv", x, y);
 			String data = csv.readAll(f.getPathSave(test)+"/curve/"+x+"-"+y+".csv");
 			response.setContentType("application/json");
-			response.getWriter().write("{\"data\":"+data+",\"nbCurve\":"+(nbCurve +1)+"}");
+			response.getWriter().write("{\"data\":"+data+",\"nbCurve\":"+(nbCurve +1)+",\"nameFile\":\""+x+"-"+y+".csv\"}");
 		}else{
 			response.setContentType("application/json");
 			response.getWriter().write("{\"content\":true}");

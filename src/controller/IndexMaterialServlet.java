@@ -41,6 +41,9 @@ public class IndexMaterialServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> list = null;
 		
+		/**
+		 * Récuepration de la liste des materiau
+		 * */
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("sessionUser");
 		if(user.getType().getId() == 1){
@@ -49,7 +52,6 @@ public class IndexMaterialServlet extends HttpServlet {
 			list = materialService.findByUser((User) session.getAttribute("sessionUser"));
 		}
 		
-		//list =  materialService.findAll();
 		 request.setAttribute("materials",list);
 		 System.out.println("TAILLE LIST = "+list.size());
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(

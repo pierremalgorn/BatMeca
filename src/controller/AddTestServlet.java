@@ -6,6 +6,7 @@ import handler.ParserConfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -65,9 +66,10 @@ public class AddTestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//récupération de la liste des attributs du test
 		List<TypeTestAttribute> typesTest;
 		typesTest = typeTestService.findAll();
-
+		
 		request.setAttribute("typesTest", typesTest);
 		request.setAttribute("idMat", request.getParameter("idMat"));
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
@@ -81,6 +83,7 @@ public class AddTestServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		//récupération des champs du formulaires
 		String name = request.getParameter("inputNameTest");
 		List<TypeTestAttribute> typesTest;
 		typesTest = typeTestService.findAll();
@@ -100,17 +103,7 @@ public class AddTestServlet extends HttpServlet {
 		// Ajout des attributs
 
 		test.setTestAttributs(new HashSet<TestAttribute>());
-//		for (TypeTestAttribute typeAttr : typesTest) {
-//			TestAttribute testAttr = new TestAttribute();
-//			String value = request.getParameter("input" + typeAttr.getName());
-//			if (value.compareTo("") != 0) {
-//				testAttr.setValue(value);
-//				testAttr.setTest(test);
-//				testAttr.setTypeTestAttr(typeAttr);
-//				test.addTestAttribute(testAttr);
-//			}
-//
-//		}
+
 
 		HttpSession session = request.getSession();
 		test.setUser((User) session.getAttribute("sessionUser"));
@@ -132,28 +125,35 @@ public class AddTestServlet extends HttpServlet {
 				} else {
 					part.write(savePath + File.separator + "config/" + fileName);
 				}
-				/*
-				 * if(fileName.matches("dat")){ part.write(savePath +
-				 * File.separator + "data/"+fileName); }else
-				 * if(fileName.matches("par")){ part.write(savePath +
-				 * File.separator +"config/"+ fileName); }else{
-				 * System.out.println("ERROR INVALID FILE"); }
-				 */
-
+		
 			}
 
 			// part.write(fileName);
 		}
+		testService.add(test);
 		// Conversion du fichier data en csv
-		csv.datToCsv(f.getPathSave(test) + "/data/" + f.getFileNameData(test),
-				f.getPathSave(test) + "/dataInput.csv");
+		try {
+			csv.datToCsv(f.getPathSave(test) + "/data/" + f.getFileNameData(test),
+					f.getPathSave(test) + "/dataInput.csv",f.getPathSave(test) + "/header.txt");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		 * Parsind du fichier de configuration
+		 * */
 		ParserConfig prconf = new ParserConfig();
 		test = prconf.parseFileConfig(test,
 				f.getPathSave(test) + "/config/" + f.getFileNameConfig(test),
 				typesMat, typesTest);
+		
+		 prconf.parseHeader(f.getPathSave(test) + "/header.txt",f.getPathSave(test) + "/header.json");
 		// Enregistrement en base de données
 
-		testService.add(test);
+		
+		
+		
+		
 		response.sendRedirect(response
 				.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="
 						+ test.getId()));

@@ -21,8 +21,8 @@ import service.manager.ServiceManager;
 @WebServlet("/Material")
 public class MaterialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 MaterialService materialService;
-	 TestService testService;
+	private MaterialService materialService;
+	private TestService testService;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,6 +38,10 @@ public class MaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		/**
+		 * Récupération de la liste des matériaux
+		 * */
 		String id = request.getParameter("idMat");
 		Material mat = null;
 		List<Material> childs = null;

@@ -184,6 +184,9 @@ public class CsvHandler {
 
 	}
 
+	/**
+	 * Permet de calculer le max d'un colonne
+	 * */
 	public Float maxValueColumn(int numColumn, String input)
 			throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
@@ -272,12 +275,13 @@ public class CsvHandler {
 	/*
 	 * Permet de convertir un fichier .dat en .csv
 	 */
-	public void datToCsv(String input, String output) throws IOException {
+	public void datToCsv(String input, String output,String header) throws IOException, InterruptedException {
 		String[] cmd = new String[] {
 				"/home/max/BatMeca/BatmecaNewGeneration/script/datToCsv",
-				input, output };
+				input, output,header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
+		process.waitFor();
 	}
 
 	/**
@@ -314,16 +318,30 @@ public class CsvHandler {
 		writer.close();
 	}
 	
+	/**
+	 * Permet de couper un courbe apres un point
+	 * @param start point de coupure
+	 * @param input chemin du fichier à couper
+	 * */
 	public void cutAfter(int start,String input) throws IOException{
 		int end = this.nbLigne(input);
 		this.deletePortionCsv(input, start, end);
 	}
 
+	/**
+	 * Permet de couper une courbe avant un point
+	 * @param end point de coupure
+	 * @param input: chemin du fichier csv
+	 * */
 	public void cutBefore(int end,String input) throws IOException{
 		int start = 1;
 		this.deletePortionCsv(input, start, end);
 	}
-	
+	/**
+	 * Retourne le nombre de ligne d'un fichier
+	 * @param input : chemin du fichier
+	 * @return nombre deligne present dans le fichier
+	 * */
 	public int nbLigne(String input) throws IOException {
 		String[] cmd = new String[] { "sed","-n","-e","$=",input };
 		Runtime runtime = Runtime.getRuntime();

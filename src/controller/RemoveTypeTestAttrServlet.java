@@ -15,6 +15,7 @@ import entity.TypeMaterialAttribute;
 import entity.TypeTestAttribute;
 
 /**
+ * Permet de supprimer un type d'attribut d'essai
  * Servlet implementation class RemoveTypeTestAttrServlet
  */
 @WebServlet("/RemoveTypeTestAttr")

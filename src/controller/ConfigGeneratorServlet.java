@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Création d'un fichier de configuration 
+ * Non fonctionnelle
  * Servlet implementation class ConfigGeneratorServlet
  */
 @WebServlet("/ConfigGenerator")

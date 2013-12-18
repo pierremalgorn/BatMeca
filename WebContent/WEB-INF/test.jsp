@@ -122,30 +122,37 @@
 						</table>
 					</div>
 					<div class="col-md-10">
-						<form class="form-inline" action="ColValue" method="post" role="form">
+						<form id="formHeader" class="form-inline" action="ColValue" method="post" role="form">
+						
+						<input name="inputId" type="hidden" value="${requestScope.test.id }" >
 							<table class="table">
 								<tr>
 								<th>Column</th>
-								<c:forEach items="${requestScope.listCol }" var="row" >
+								<c:set var="i" value="0" />
+								<c:forEach items="${requestScope.colHeader[0]}" var="row">
 								<td>
-									<div class=""  >
-										<input class="form-control" type="text" value="${row[0]} }" >		
+									<div class="form-group"  >
+										<input name="nameCol${i }" id="" class="form-control" type="text" value="${row} " >		
 									</div>
 									</td>
+									<c:set var="i" value="${i + 1}"></c:set>
 								</c:forEach>
 								</tr>
 								<tr>
-									<th>Unity</th>
-									<c:forEach items="${requestScope.listCol }" var="row" >
+									<th>Unit</th>
+									<c:set var="i" value="0" />
+									<c:forEach items="${requestScope.colHeader[1]}" var="row" >
 									<td>
-									<div class=""  >
-										<input class="form-control" type="text" value="${row[1]} }" >
+									<div class="form-group"  >
+										<input name="unit${i }" class="form-control" type="text" value="${row}" >
 									</div>
 									</td>
+									<c:set var="i" value="${i + 1}"></c:set>
 								</c:forEach>
 								</tr>
 							</table>
-							<button type="submit" class="btn btn-primary pull-right" >Save</button>
+							<input name="nbField" type="hidden" value="${i}" />
+							<button id="btnSaveHeader" type="button" class="btn btn-primary pull-right" >Save</button>
 						</form>
 						<script>
 						
@@ -173,6 +180,9 @@
 									<div id="graph${i }" style="width: 100%; height: 500px;"></div>
 									<script charset="UTF-8">
 									//$(function(tabGraph) {
+										(function() {
+
+
 										var nb = '${i}';
 										var data = '${data[0] }';
 										//console.log(data);
@@ -192,6 +202,8 @@
 									         $("#valPlot1").html(tabGraph[focus -1 ].getSelection());
 									         console.log(tabGraph[focus -1 ].getValue(select, 1));
 										});
+										
+										})()
 									//});
 
 								</script>
@@ -242,7 +254,7 @@
 </div>
 
 
-<!-- Formulaire pour la mul -->
+<!-- Formulaire de multiplication par un facteur -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -288,7 +300,7 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<button class="btn btn-info" onclick="listCol();" >TEST</button>
+
 <script>
 var focus = 1;
 
@@ -309,7 +321,7 @@ factorCol();
 	
 var listFile = ${requestScope.listFile};
 console.log(listFile);
-
+saveHeader();
 
 /*$('#graph'+focus).on('click',function(){
 	var select = tabGraph[focus -1 ].getSelection();

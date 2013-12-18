@@ -15,6 +15,7 @@ import service.UserService;
 import service.manager.ServiceManager;
 
 /**
+ * Permet de loger un utilisateur
  * Servlet implementation class LoginController
  */
 @WebServlet("/Login")
