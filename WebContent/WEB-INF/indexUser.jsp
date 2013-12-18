@@ -38,7 +38,7 @@
 						<td>${user.firstName}</td>
 						<td>${user.email}</td>
 						<td>${user.type.type}</td>
-						<td><a href="EditUser?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
+						<td><a href="EditUserAdmin?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
 						<td><a href="RemoveUser?id=${user.id}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
 					</tr>
 				</c:forEach>

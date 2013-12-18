@@ -31,12 +31,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">BatM&eacute;ca</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}">BatM&eacute;ca</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li id="materials"><a href="IndexMaterial">Materials</a></li>
-            <li id="configgenerator"><a href="ConfigGenerator">Configuration Generator</a></li>
+            <!-- <li id="configgenerator"><a href="ConfigGenerator">Configuration Generator</a></li>-->
             <li><a href="IndexTest" >Tests</a></li>
             <li><a href="Config" >Config</a></li>
           </ul>
