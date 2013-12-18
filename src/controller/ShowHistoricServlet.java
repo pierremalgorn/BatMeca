@@ -11,37 +11,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.Test;
 import service.TestService;
 import service.manager.ServiceManager;
-import entity.Test;
 
 /**
- * Servlet implementation class RemoveTestServlet
+ * Servlet implementation class ShowHistoricServlet
  */
-@WebServlet("/RemoveTest")
-public class RemoveTestServlet extends HttpServlet {
+@WebServlet("/ShowHistoric")
+public class ShowHistoricServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private TestService testService;
+    private TestService testService;   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RemoveTestServlet() {
+    public ShowHistoricServlet() {
         super();
-        testService = ServiceManager.INSTANCE.getTestService();
+       testService = ServiceManager.INSTANCE.getTestService();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		Test t = testService.find(Integer.parseInt(id));
+		int id = Integer.parseInt(request.getParameter("id"));
+		Test test = testService.find(id);
 		ServletContext context = getServletContext();
 		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
-		f.deleteFolder(t);
-		testService.remove(t);
+		String data = f.readHistoric(test);
 		
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Material?idMat="+request.getParameter("idMat")));
+		//request.setAttribute("results", data);
+		response.getWriter().write(data);
 	}
 
 	/**

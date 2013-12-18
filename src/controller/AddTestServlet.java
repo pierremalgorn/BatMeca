@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -93,7 +94,8 @@ public class AddTestServlet extends HttpServlet {
 		 */
 		Material mat = materialService.find(Integer.parseInt(request
 				.getParameter("idMat")));
-		CsvHandler csv = new CsvHandler();
+		ServletContext context  = getServletContext();
+		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
 
 		Test test = new Test();
 		test.setName(name);
@@ -109,7 +111,8 @@ public class AddTestServlet extends HttpServlet {
 		test.setUser((User) session.getAttribute("sessionUser"));
 
 		// Création de repertoire associer
-		FolderHandler f = new FolderHandler();
+	
+		FolderHandler f = new FolderHandler( context.getInitParameter("ressourcePath"));
 		f.initDirectory(test);
 		String savePath = f.getPathSave(test);
 		// Upload des fichiers
@@ -143,7 +146,8 @@ public class AddTestServlet extends HttpServlet {
 		 * Parsind du fichier de configuration
 		 * */
 		ParserConfig prconf = new ParserConfig();
-		test = prconf.parseFileConfig(test,
+		 
+		test = prconf.parseFileConfig(context.getInitParameter("ressourcePath"),test,
 				f.getPathSave(test) + "/config/" + f.getFileNameConfig(test),
 				typesMat, typesTest);
 		

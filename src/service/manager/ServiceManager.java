@@ -19,7 +19,7 @@ import service.impl.TypeUserServiceImpl;
 public enum ServiceManager {
 	INSTANCE;
 	
-
+	
 	private MaterialService materialService;
 	private TypeMaterialAttributService typeMaterialAttributService ;
 	private TestService testService;
@@ -28,6 +28,9 @@ public enum ServiceManager {
 	private TypeTestAttributService typeTestAttributService;
 	
 	
+	/**
+	 * Constructeur de la classe
+	 * */
 	private ServiceManager(){
 		
 		materialService = new MaterialServiceImpl();
@@ -38,30 +41,52 @@ public enum ServiceManager {
 		typeTestAttributService = new TypeTestAttributServiceImpl();
 	}
 	
+	/**
+	 * permet de recuperer le Service material 
+	 * @return MaterialService 
+	 * */
 	public MaterialService getMaterialService(){
 		return materialService;
 	}
 	
 	
-	
+	/**
+	 * Permet de recuperer le service Test
+	 * @return TestService 
+	 * */
 	public TestService getTestService(){
 		return testService;
 	}
 	
+	/**
+	 * Permet de recuperer le service user
+	 * @return UserService
+	 * */
 	public UserService getUserService(){
 		return userService;
 	}
 	
+	/**
+	 * Permet de recuperer le service de type user
+	 * @return TypeUserService
+	 * */
 	public TypeUserService getTypeUserService(){
 		return typeUserService;
 	}
 
 
-
+	/**
+	 * Permet de recuperer le service des types materiel attribut
+	 * @return TypeMaterialAttributService
+	 * */
 	public TypeMaterialAttributService getTypeMaterialAttributService() {
 		return typeMaterialAttributService;
 	}
 
+	/**
+	 * Permet de recuperer le service des types test attribut
+	 * @return TypeMaterialAttributService
+	 * */
 	public TypeTestAttributService getTypeTestAttributService() {
 		return typeTestAttributService;
 	}

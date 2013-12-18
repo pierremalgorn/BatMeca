@@ -14,14 +14,12 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 public class CsvHandler {
 
-	private String fileInput;
+	private String root;
 
-	public CsvHandler() {
-
-	}
+	
 
 	public CsvHandler(String input) {
-		fileInput = input;
+		root = input;
 
 	}
 
@@ -112,89 +110,33 @@ public class CsvHandler {
 
 	}
 
-	/*
-	 * Séparer les colonnes d'un fichier csv pas operationnel
-	 */
-	public void switchColomn() throws IOException {
-		String[] cmd = new String[] { "awk",
-				"BEGIN { FS=\",\"; OFS=\",\"; } {print $1}",
-				"/home/max/BatMeca/data.csv" };
-		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime.exec(cmd);
-		new Thread() {
-			public void run() {
-				try {
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(process.getInputStream()));
-					String line = "";
-					try {
-						Float max = (float) -999999999;
-						while ((line = reader.readLine()) != null) {
-							System.out.println("LINE = " + line);
-							float val = Float.parseFloat(line);
-							if (val > max) {
-								max = val;
-							}
-							// Traitement du flux de sortie de l'application
-							// si besoin est
-						}
-						System.out.println("MAX = " + max);
-					} finally {
-						reader.close();
-					}
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}.start();
-
-		// Consommation de la sortie d'erreur de l'application externe dans
-		// un Thread separe
-		new Thread() {
-			public void run() {
-				try {
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(process.getErrorStream()));
-					String line = "";
-					try {
-						while ((line = reader.readLine()) != null) {
-							// Traitement du flux d'erreur de l'application
-							// si besoin est
-							System.out.println("LINE err= " + line);
-						}
-					} finally {
-						reader.close();
-					}
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}.start();
-	}
-
+	
 	/**
 	 * Permet de supprimer un interval de point
+	 * @throws InterruptedException 
 	 * */
 	public void deletePortionCsv(String input, int start, int end)
-			throws IOException {
+			throws IOException, InterruptedException {
 		String[] cmd = new String[] { "/bin/sed", "-i", "-e",
 				start + "," + end + "d", input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-
+		process.waitFor();
 	}
 
 	/**
 	 * Permet de calculer le max d'un colonne
+	 * @throws InterruptedException 
 	 * */
 	public Float maxValueColumn(int numColumn, String input)
-			throws NumberFormatException, IOException {
+			throws NumberFormatException, IOException, InterruptedException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
 				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-
+		
+		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -214,15 +156,17 @@ public class CsvHandler {
 
 	/**
 	 * Calcule du min sur une colonne
+	 * @throws InterruptedException 
 	 * */
 	public Float minValueColumn(int numColumn) throws NumberFormatException,
-			IOException {
+			IOException, InterruptedException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
-				this.fileInput };
+				this.root };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-
+		
+		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -240,7 +184,7 @@ public class CsvHandler {
 	}
 
 	public void factorColumn(int numColumn, int other, float factor,
-			String input, String output) throws IOException {
+			String input, String output) throws IOException, InterruptedException {
 		String[] cmd;
 		if (numColumn < other) {
 			cmd = new String[] {
@@ -259,7 +203,7 @@ public class CsvHandler {
 				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-
+	
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -277,7 +221,7 @@ public class CsvHandler {
 	 */
 	public void datToCsv(String input, String output,String header) throws IOException, InterruptedException {
 		String[] cmd = new String[] {
-				"/home/max/BatMeca/BatmecaNewGeneration/script/datToCsv",
+				this.root+"/script/datToCsv",
 				input, output,header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
@@ -295,14 +239,16 @@ public class CsvHandler {
 	 *            axe en abscisse
 	 * @param y
 	 *            axe en ordonnée
+	 * @throws InterruptedException 
 	 * */
 	public void selectCurve(String input, String output, int x, int y)
-			throws IOException {
+			throws IOException, InterruptedException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + x + ",$" + y + "}",
 				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
+	
 		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
 				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 
@@ -322,8 +268,9 @@ public class CsvHandler {
 	 * Permet de couper un courbe apres un point
 	 * @param start point de coupure
 	 * @param input chemin du fichier à couper
+	 * @throws InterruptedException 
 	 * */
-	public void cutAfter(int start,String input) throws IOException{
+	public void cutAfter(int start,String input) throws IOException, InterruptedException{
 		int end = this.nbLigne(input);
 		this.deletePortionCsv(input, start, end);
 	}
@@ -332,8 +279,9 @@ public class CsvHandler {
 	 * Permet de couper une courbe avant un point
 	 * @param end point de coupure
 	 * @param input: chemin du fichier csv
+	 * @throws InterruptedException 
 	 * */
-	public void cutBefore(int end,String input) throws IOException{
+	public void cutBefore(int end,String input) throws IOException, InterruptedException{
 		int start = 1;
 		this.deletePortionCsv(input, start, end);
 	}
@@ -341,13 +289,13 @@ public class CsvHandler {
 	 * Retourne le nombre de ligne d'un fichier
 	 * @param input : chemin du fichier
 	 * @return nombre deligne present dans le fichier
+	 * @throws InterruptedException 
 	 * */
-	public int nbLigne(String input) throws IOException {
+	public int nbLigne(String input) throws IOException, InterruptedException {
 		String[] cmd = new String[] { "sed","-n","-e","$=",input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
 		int result = 0;

@@ -43,6 +43,10 @@ public interface UserDao {
 	 * */
 	public boolean editUser(User user);
 
+	/**
+	 * Permet de supprimer un utilisateur
+	 * @param User user: utilisateur à supprimer
+	 * */
 	public void removeUser(User user);
 	
 	

@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 urlPatterns={"/Material",
 		"/IndexMaterial",
 		"/ShowTest",
-		"/Config"}
+		"/Config",
+		 "/IndexTest"}
                 )
 public class LoginFilter implements Filter {
 

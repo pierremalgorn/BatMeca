@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,10 @@ public class ShowTestServlet extends HttpServlet {
 		
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler();	
-		FolderHandler f = new FolderHandler();
+		ServletContext context = getServletContext();
+		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));	
+		
+		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
 		
 		
 	

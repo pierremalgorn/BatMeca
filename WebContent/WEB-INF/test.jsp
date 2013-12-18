@@ -43,8 +43,10 @@
 
 
 		<ul class="nav nav-tabs">
-			<li><a href="#details" data-toggle="tab">Details</a></li>
-			<li><a href="#curve" data-toggle="tab">Curve</a></li>
+			<li><a href="#details" data-toggle="tab" >Details</a></li>
+			<li><a href="#curve" data-toggle="tab" >Curve</a></li>
+			<li><a id="ongletResult" href="#result" data-toggle="tab" >Result</a></li>
+			<li><a id="ongletHist" href="#historic" data-toggle="tab" >Historic</a></li>
 
 		</ul>
 		<div id="test"></div>
@@ -89,37 +91,20 @@
 				<div class="row">
 					<div class="col-md-2">
 						<ul class="nav nav-pills nav-stacked">
-							<li><a href="#"
+							<li><a
 								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Lisser</a></li>
-							<li><a href="#"
+							<li><a
 								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
 									Max</a></li>
 							<li><a id="btnCutMode" data-toggle="modal" data-target="#modalCut" >Cut mode</a></li>
-							<li><a id="btnFactor" href="#" data-toggle="modal" data-target="#myModal">Factor</a></li>
-							<li><a href="#"
+							<li><a id="btnFactor" data-toggle="modal" data-target="#myModal">Factor</a></li>
+							<li><a 
 								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
 
-							<li><a href="#" onclick="coeffDir();" >Coeff dir</a></li>
+							<li><a onclick="coeffDir('${pageContext.request.contextPath}/Traitment','${requestScope.test.id }');" >Coeff dir</a></li>
 						</ul>
 
-						<table>
-
-
-
-
-							<tr>
-								<th>Plot 1:</th>
-								<td id="valPlot1"></td>
-							</tr>
-							<tr>
-								<th>Plot 2:</th>
-								<td id="valPlot2"></td>
-							</tr>
-							<tr>
-								<th>Rm :</th>
-								<td id="valRm"></td>
-							</tr>
-						</table>
+						
 					</div>
 					<div class="col-md-10">
 						<form id="formHeader" class="form-inline" action="ColValue" method="post" role="form">
@@ -219,6 +204,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="tab-pane" id="result" >
+			<pre>
+				<p id="contentResult" > 
+							
+						</p>
+			</pre>
+			
+			</div>
+			<div class="tab-pane" id="historic" >
+			<pre>
+				<p id="contentHistoric" > 
+							
+						</p>
+			</pre>
+			
+			</div>
 		</div>
 	</div>
 </div>
@@ -302,83 +303,40 @@
 <!-- /.modal -->
 
 <script>
+
 var focus = 1;
+var url = '${pageContext.request.contextPath}/ShowResult';
+var urlHist = '${pageContext.request.contextPath}/ShowHistoric';
+var id =${requestScope.test.id } ;
+
+$("#ongletHist").on('click',function(){
+	getResult(url,id);
+});
+$("#ongletResult").on('click',function(){
+	getHistoric(urlHist,id);
+});
+
+
 
 
 listCol();
 
 factorCol();
-//cutCurve();
-	$('#navCurve a').click(function (e) {
-		  e.preventDefault();
-		  $(this).tab('show');
-		});
+
+	
 	$('#navCurve a:first').tab('show') ;// Select first tab
 	$(".ongletCurve").on('click',function(){
 		focus = $(this).attr("data");
-		console.log(focus);
+		tabGraph[focus - 1].resize();
+
 	});
-	
+
+		
+
 var listFile = ${requestScope.listFile};
 console.log(listFile);
 saveHeader();
 
-/*$('#graph'+focus).on('click',function(){
-	var select = tabGraph[focus -1 ].getSelection();
-    //console.log(tabGraph[focus -1 ].getValue(select, 1));
-    //console.log(tabGraph[focus -1 ].getValue(0, 1));
-   /* tabGraph[focus -1 ].ready(function() {
-    	tabGraph[0].setAnnotations([
-        {
-          series: tabGraph[focus -1 ].getLabels()[0],
-          x: tabGraph[focus -1 ].getValue(select, 1),
-          shortText: "X",
-          text: "plot",
-        }
-        ]);*/
-      
-    
-   /* tabGraph[focus -1 ].updateOptions( {
-        annotationClickHandler: function(ann, point, dg, event) {
-         // eventDiv.innerHTML += "click: " + nameAnnotation(ann) + "<br/>";
-       	console.log("simple click");
-        },
-        annotationDblClickHandler: function(ann, point, dg, event) {
-     		console.log('Double click');
-        },
-        annotationMouseOverHandler: function(ann, point, dg, event) {
-          document.getElementById(nameAnnotation(ann)).style.fontWeight = 'bold';
-          saveBg = ann.div.style.backgroundColor;
-          ann.div.style.backgroundColor = '#ddd';
-          console.log("MOUSE OVER");
-        },
-        annotationMouseOutHandler: function(ann, point, dg, event) {
-          document.getElementById(nameAnnotation(ann)).style.fontWeight = 'normal';
-          ann.div.style.backgroundColor = saveBg;
-          console.log("MOUSE OUT");
-        },
-    
-        pointClickCallback: function(event, p) {
-          // Check if the point is already annotated.
-          if (p.annotation) return;
-    
-          // If not, add one.
-          var ann = {
-        		  
-        	          series: tabGraph[focus -1 ].getLabels()[0],
-        	          x: tabGraph[focus -1 ].getValue(select, 1),
-        	          shortText: "X",
-        	          text: "plot",
-        	        };
-          var anns = g.annotations();
-          anns.push(ann);
-          g.setAnnotations(anns);
-    
-         
-        }
-      });
-
-});*/
 
 </script>
 <jsp:include page="include/footer.jsp" />

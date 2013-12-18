@@ -3,7 +3,6 @@ package controller;
 import handler.FolderHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,25 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entity.Test;
 import service.TestService;
 import service.manager.ServiceManager;
 
-import com.google.gson.Gson;
-
-import entity.Test;
-
 /**
- * Permet de créer un courbe en sélectionnant l'abscisse et l'ordonnée
- * Servlet implementation class ColValueServlet
+ * Servlet implementation class ShowResultServlet
  */
-@WebServlet("/ColValue")
-public class ColValueServlet extends HttpServlet {
+@WebServlet("/ShowResult")
+public class ShowResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private TestService testService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ColValueServlet() {
+    public ShowResultServlet() {
         super();
         testService = ServiceManager.INSTANCE.getTestService();
     }
@@ -39,34 +34,21 @@ public class ColValueServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int id = Integer.parseInt(request.getParameter("id"));
+		Test test = testService.find(id);
+		ServletContext context = getServletContext();
+		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		String data = f.readResult(test);
+		
+		//request.setAttribute("results", data);
+		response.getWriter().write(data);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int nbCol = Integer.parseInt(request.getParameter("nbField"));
-		int id = Integer.parseInt(request.getParameter("inputId"));
-		ServletContext context = getServletContext();
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
-		Test test = testService.find(id);
-		ArrayList<String[]> list = new ArrayList<String[]>(); 
-		String[] elem = new String[nbCol];
-		String[] unit = new String[nbCol];
-		for(int i = 0;i < nbCol ; i ++){
-			
-			elem[i] =  request.getParameter("nameCol"+i);
-			unit[i] = request.getParameter("unit"+i);
-			
-		}
-		
-		list.add(elem);
-		list.add(unit);
-		
-		f.saveToJson(list, f.getPathSave(test)+"/header.json");
-		
-		response.getWriter().write(new Gson().toJson(list));
+		// TODO Auto-generated method stub
 	}
 
 }

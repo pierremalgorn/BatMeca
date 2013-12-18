@@ -31,6 +31,9 @@ public enum DaoManager {
 	private TypeMaterialAttributDao typeMaterialAttributDao ;
 	private TypeTestAttributDao typeTestAttributDao;
 
+	/**
+	 * Constructeur de la classe
+	 * */
 	private DaoManager(){
 
 		emf = Persistence.createEntityManagerFactory("epfPU");
@@ -45,35 +48,58 @@ public enum DaoManager {
 	
 
 	
-
+	/**
+	 * Permet de recuperer l'entity Manager
+	 * @return EntityManagerFactory
+	 * */
 	public EntityManager getEntityManager() {
 		return emf.createEntityManager();
 	}
 
-		
+	/**
+	 * Permet de recuperer le MaterialDao
+	 * @return MaterialDao
+	 * */	
 	public MaterialDao getMaterialDao(){
 		return materialDao;
 	}
 	
-	
+	/**
+	 * Permet de recuperer le TestDao
+	 * @return TestDao
+	 * */		
 	public TestDao getTestDao(){
 		return testDao;
 	}
-
+	/**
+	 * Permet de recuperer le UserDao
+	 * @return UserDao
+	 * */	
 	public UserDao getUserDao(){
 		return userDao;
 	}
 	
+	/**
+	 * Permet de recuperer le TypeUserDao
+	 * @return TypeUserDao
+	 * */	
 	public TypeUserDao getTypeUserDao(){
 		return typeUserDao;
 	}
 
 
+	/**
+	 * Permet de recuperer le TypeMaterialAttributDao
+	 * @return TypeMaterialAttributDao
+	 * */	
 	public TypeMaterialAttributDao getTypeMaterialAttributDao() {
 		return typeMaterialAttributDao;
 	}
 
-
+	/**
+	 * Permet de recuperer le TypeTestAttributDao
+	 * @return TypeTestAttributDao
+	 * */	
 	public TypeTestAttributDao getTypeTestAttributDao() {
 		return typeTestAttributDao;
 	}

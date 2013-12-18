@@ -84,11 +84,11 @@ public class EditUserServlet extends HttpServlet{
 
 		ServiceManager.INSTANCE.getUserService().editUser(user);
 
-		if(target.equals("profile")){
+		//if(target.equals("profile")){
 			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/User"));
-		} else {
-			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
-		}
+		//} else {
+			//response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
+		//}
 	}
 
 

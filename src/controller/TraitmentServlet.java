@@ -5,6 +5,7 @@ import handler.FolderHandler;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,14 +41,15 @@ public class TraitmentServlet extends HttpServlet {
 		
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler();
-		FolderHandler f = new FolderHandler();
+		ServletContext context = getServletContext();
+		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
+		
+		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
 		//Réalisation du lissage
 		String lisser = request.getParameter("lisser");
 		if(lisser != null ){
-			f.addDataHistoryFile("Lisser Data", t);
 			String file = request.getParameter("file");
-			
+			f.addDataHistoryFile("Lisser Data;file "+file, t);
 			csv.lissageOrdre2(file, f.getPathSave(t)+"/curve/outputLissageTmp.csv");
 			//csv.lissageOrdre2(f.getPathSave(t)+"/dataInput.csv", f.getPathSave(t)+"/dataOutput.csv");
 			String data = csv.readAll(f.getPathSave(t)+"/curve/outputLissageTmp.csv");
@@ -63,31 +65,47 @@ public class TraitmentServlet extends HttpServlet {
 			String file = request.getParameter("file");
 			if(after != null){
 				int start = Integer.parseInt(request.getParameter("start"));
-				csv.cutAfter(start, file);
+				try {
+					csv.cutAfter(start, file);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				f.addDataHistoryFile("Cut After:"+start+";file "+file, t);
 			}else if(before != null){
 				int end = Integer.parseInt(request.getParameter("end"));
-				csv.cutBefore(end, file);
+				try {
+					csv.cutBefore(end, file);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				f.addDataHistoryFile("Cut Before:"+end+";file "+file+";", t);
 			}
 			
-			//csv.deletePortionCsv(file, start, end);
 			String data = csv.readAll(file);
-			System.out.println("CUT = "+cut);
-			f.addDataHistoryFile("CUT FILE", t);
+			
 			response.getWriter().write(data);
 		}
 		//Calcule du max d'une colonne
 		String calMax = request.getParameter("calMax");
 		if( calMax!= null){
 			String file = request.getParameter("file");
-			float max = csv.maxValueColumn(Integer.parseInt(calMax),file);
-			
-			f.addDataHistoryFile("MAX FILE", t);
+			float max = 0 ;
+			try {
+				max = csv.maxValueColumn(Integer.parseInt(calMax),file);
+			} catch (NumberFormatException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			f.addResult("MAX FILE:"+file+";max="+max+";", t);
+			f.addDataHistoryFile("MAX FILE:"+file+";calMax:"+calMax+";", t);
 			response.getWriter().write(new Gson().toJson(max));
 		}
 		//Multiplication par un facteur
 		String factor = request.getParameter("factor");
 		if( factor!= null){
-			System.out.println("factor = "+factor);
+
 			f.addDataHistoryFile("factor FILE", t);
 		}
 		/*
@@ -102,6 +120,13 @@ public class TraitmentServlet extends HttpServlet {
 			response.getWriter().write(data);
 		}
 		
+		String coef = request.getParameter("coef");
+		if(coef!= null){
+			String file = request.getParameter("file");
+			f.addDataHistoryFile("CALCUL COEFF:FILE "+file, t);
+			f.addResult("COEF="+coef+";File="+file+";", t);
+		}
+		
 	}
 
 	/**
@@ -112,13 +137,10 @@ public class TraitmentServlet extends HttpServlet {
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));
 		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
 		String file = request.getParameter("file");
-		System.out.println("+++++++++++++++++++++++++++++++++");
-		System.out.println("ID TEST = "+idTest);
-		System.out.println("FACTOR = "+factor);
-		System.out.println("NB COLUMN = "+nbColumn);
-		System.out.println("FILE "+file);
-		CsvHandler csv = new CsvHandler();
-		FolderHandler f = new FolderHandler();
+		ServletContext context = getServletContext();
+		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
+		
+		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
 	
@@ -133,10 +155,15 @@ public class TraitmentServlet extends HttpServlet {
 			nbColumn = 2;
 			other =1;
 		}
-		csv.factorColumn(nbColumn, other,factor, file,f.getPathSave(test)+"/curve/factorcurve.csv" );
+		try {
+			csv.factorColumn(nbColumn, other,factor, file,f.getPathSave(test)+"/curve/factorcurve.csv" );
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
-		
+		f.addDataHistoryFile("FACTOR:"+factor+";FILE:"+file+";nbColumn:"+nbColumn, test);
 		String data = csv.readAll(f.getPathSave(test)+"/curve/factorcurve.csv");
 		f.renameFile(f.getPathSave(test)+"/curve/factorcurve.csv", file);
 		response.getWriter().write(data);

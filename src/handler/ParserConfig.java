@@ -25,8 +25,8 @@ import entity.TypeTestAttribute;
 public class ParserConfig {
 	
 	
-	public Test parseFileConfig(Test test,String input,List<TypeMaterialAttribute> listAttrMat,List<TypeTestAttribute> listAttrTest) throws IOException{
-		FolderHandler f = new FolderHandler();
+	public Test parseFileConfig(String root,Test test,String input,List<TypeMaterialAttribute> listAttrMat,List<TypeTestAttribute> listAttrTest) throws IOException{
+		FolderHandler f = new FolderHandler(root);
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);

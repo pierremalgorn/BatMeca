@@ -24,11 +24,10 @@ public class FolderHandler {
 	private static String root;
 	private File file;
 
-	public FolderHandler() {
+	public FolderHandler(String root) {
 		super();
-		root = "/home/max/BatMeca/Ressources";
-		// file = new File(root+"/toto/tutu");
-		// file.mkdirs();
+		this.root = root;
+	
 	}
 
 	public String getRoot() {
@@ -80,6 +79,9 @@ public class FolderHandler {
 		this.makeDir(path + "/curve");
 		File fh = new File(path + "/history/historic");
 		fh.createNewFile();
+		
+		File fr = new File(path+"/result");
+		fr.createNewFile();
 		
 	}
 
@@ -203,6 +205,17 @@ public class FolderHandler {
 	}
 	
 	/**
+	 * Permet d'ajouter un resulat 
+	 * @param data: information a rajouter
+	 * @param test : test courant
+	 * */
+	public void addResult(String data,Test test) throws IOException{
+		PrintWriter pr;
+		pr = new PrintWriter(new BufferedWriter(new FileWriter(this.getPathSave(test)+"/result",true)));
+		pr.println(data);
+		pr.close();
+	}
+	/**
 	 * permet de renommer le fichier de sortie d'un essai
 	 * */
 	public void renameCsvOutput(Test test){
@@ -252,4 +265,31 @@ public class FolderHandler {
 		return list;
 	}
 	
+	public String readResult(Test test) throws IOException{
+		String data = "";
+		
+		InputStream ips = new FileInputStream(this.getPathSave(test)+"/result");
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		String ligne = "";
+		while ((ligne = br.readLine()) != null){
+			data = data+ligne+"<br>";
+		}
+		
+		return new Gson().toJson(data);
+	}
+	
+	public String readHistoric(Test test) throws IOException{
+		String data = "";
+		
+		InputStream ips = new FileInputStream(this.getPathSave(test)+"/history/historic");
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		String ligne = "";
+		while ((ligne = br.readLine()) != null){
+			data = data+ligne+"<br>";
+		}
+		
+		return new Gson().toJson(data);
+	}
 }
