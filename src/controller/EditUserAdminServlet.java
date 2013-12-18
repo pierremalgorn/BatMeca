@@ -43,8 +43,7 @@ public class EditUserAdminServlet extends HttpServlet{
 		request.setAttribute("user", userService.getUser(id));
 		request.setAttribute("types", typeUserService.getTypes());
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/editUser.jsp"));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/editUserAdmin.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -83,7 +82,9 @@ public class EditUserAdminServlet extends HttpServlet{
 
 		ServiceManager.INSTANCE.getUserService().editUser(user);
 
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
+		response.sendRedirect(response.encodeURL("IndexUser"));
+
+		//response.sendRedirect(response.encodeURL("IndexUser"));
 	}
 
 

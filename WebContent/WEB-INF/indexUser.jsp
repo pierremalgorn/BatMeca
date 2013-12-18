@@ -17,6 +17,12 @@
 			The user has been removed successfully!
 		</div>
 	</c:if>
+	<c:if test="${requestScope.event eq 'useredited'}">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			The user has been edited successfully!
+		</div>
+	</c:if>
 	<div class="row" >
 		<table class="table table-striped" >
 			<thead>
