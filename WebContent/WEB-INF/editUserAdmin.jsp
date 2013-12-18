@@ -9,7 +9,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<form class="form-horizontal" action="EditUser" method="POST">
+			<form class="form-horizontal" action="EditUserAdmin" method="POST">
 			
 			<div class="panel-group" id="accordion">
 			  <div class="panel panel-default">
@@ -108,7 +108,7 @@
 				  <label class="control-label" for="Edit"></label>
 				  <div class="controls">
 				    <button type="submit" id="edit" name="Edit" class="btn btn-success">Edit</button>
-				    <a href="/BatmecaNewGeneration/User" class="btn btn-danger">Discard</a>
+				    <a href="IndexUser" class="btn btn-danger">Discard</a>
 				  </div>
 				</div>
 							

@@ -8,49 +8,56 @@
 		<h1 class="page-header">Add user</h1>
 	</div>
 	<div class="row">
-		<form action="addUser" method="POST">
-			<fieldset>
-			
-				<div id="controlName" class="control-group">
-					<label for="name">User name:</label>
-					<div class="controls">
-						<input id="inputName" type="text" name="name" />
-						<span id="helpName" class="help-inline">Required</span>
+		<div class="col-md-4">
+			<form class="form-horizontal" autocomplete="off" action="addUser" method="POST">
+				<fieldset>
+					<div id="controlName" class="control-group" >
+						<label for="name">Last name</label>
+						<div class="controls">
+							<input id="inputName" type="text" name="name" type=text class="form-control" for="name"">
+						</div>
 					</div>
-				</div>
-				<div id="controlIntro" class="control-group">
-					<label for="firstName">Firstname</label>
-					<div class="controls">
-						<input type="text" name="firstName"/>
+		
+					<div id="controlIntro" class="control-group">
+						<label for="firstName">First name</label>
+						<div class="controls">
+							<input type="text" class="form-control" name="firstName" for="firstName">
+						</div>
 					</div>
-				</div>
-				<div id="controlDis" class="control-group">
-					<label for="email">Email :</label>
-					<div class="controls">
-						<input type="text" name="email"/>
+					<div id="controlDis" class="control-group">
+						<label for="email">Email :</label>
+						<div class="controls">
+							<input type="text" name="email" class="form-control" for="email"">
+						</div>
 					</div>
-				</div>
-				<div id="controlMdp" class="control-group">
-					<label class="control-label" for="password">Password</label>
-					<div id="pass-help" class="controls">
-						<input type="password" id="inputPassword" placeholder="Password" name="password">
+					<div id="controlDis" class="control-group">
+						<label for="password">Password :</label>
+						<div class="controls">
+							<input type="password" name="password" class="form-control" for="password">
+						</div>
 					</div>
+					<div class="control-group">
+						<label class="control-label" for="type">Account type</label>
+						<div class="controls">
+							<select id="selectType" class="form-control" name="type">
+								<option class="text-center" value="0">--</option>
+								<c:forEach items="${requestScope.types}" var="type">
+									<option value="${type.id}">${type.type}</option>
+								</c:forEach>
+							</select> 
+						</div>
+					</div>
+					<div class="control-group">
+					  <label class="control-label" for="Edit"></label>
+					  <div class="controls">
+					  	<input type="submit" value="Add" class="btn btn-primary">
+					    <a onClick="history.go(-1);" class="btn btn-default">Back</a>
+					 </div>
 				</div>
-				<label class="control-label" for="type">Type :</label>
-				<div class="controls">
-					<select id="selectType" name="type">
-						<option class="text-center" value="0">--</option>
-						<c:forEach items="${requestScope.types}" var="type">
-							<option value="${type.id}">${type.type}</option>
-						</c:forEach>
-					</select> 
-				</div>
-			
-			</fieldset>
-			<div class="actions">
-				<input type="submit" value="Add" class="btn primary">
-			</div>
-		</form>
+				</fieldset>
+			</form>
+		</div>
 	</div>
+
 </div>
 <jsp:include page="include/footer.jsp" />

@@ -17,6 +17,12 @@
 			The user has been removed successfully!
 		</div>
 	</c:if>
+	<c:if test="${requestScope.event eq 'useredited'}">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			The user has been edited successfully!
+		</div>
+	</c:if>
 	<div class="row" >
 		<table class="table table-striped" >
 			<thead>
@@ -38,7 +44,7 @@
 						<td>${user.firstName}</td>
 						<td>${user.email}</td>
 						<td>${user.type.type}</td>
-						<td><a href="EditUser?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
+						<td><a href="EditUserAdmin?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
 						<td><a href="RemoveUser?id=${user.id}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
 					</tr>
 				</c:forEach>

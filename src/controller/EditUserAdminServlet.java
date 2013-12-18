@@ -15,8 +15,8 @@ import service.UserService;
 import service.TypeUserService;
 import service.manager.ServiceManager;
 
-@WebServlet("/EditUser")
-public class EditUserServlet extends HttpServlet{
+@WebServlet("/EditUserAdmin")
+public class EditUserAdminServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
 	private TypeUserService typeUserService;
@@ -24,7 +24,7 @@ public class EditUserServlet extends HttpServlet{
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public EditUserServlet() {
+	public EditUserAdminServlet() {
 		super();
 		//cr�ation des Services
 		userService = ServiceManager.INSTANCE.getUserService();
@@ -43,8 +43,7 @@ public class EditUserServlet extends HttpServlet{
 		request.setAttribute("user", userService.getUser(id));
 		request.setAttribute("types", typeUserService.getTypes());
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				response.encodeURL("/WEB-INF/editUser.jsp"));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(response.encodeURL("/WEB-INF/editUserAdmin.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -83,13 +82,9 @@ public class EditUserServlet extends HttpServlet{
 
 		ServiceManager.INSTANCE.getUserService().editUser(user);
 
+		response.sendRedirect(response.encodeURL("IndexUser"));
 
-		//if(target.equals("profile")){
-			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/User"));
-		//} else {
-			//response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
-		//}
-
+		//response.sendRedirect(response.encodeURL("IndexUser"));
 	}
 
 
