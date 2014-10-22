@@ -51,7 +51,7 @@ public class AddTypeTestAttrServlet extends HttpServlet {
 		typeService.add(type);
 		
 		
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Config"));
+		response.sendRedirect(response.encodeURL("./Config"));
 	}
 
 }

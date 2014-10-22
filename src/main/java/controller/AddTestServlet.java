@@ -159,7 +159,7 @@ public class AddTestServlet extends HttpServlet {
 		
 		
 		response.sendRedirect(response
-				.encodeURL("/BatmecaNewGeneration/ShowTest?idTest="
+				.encodeURL("./ShowTest?idTest="
 						+ test.getId()));
 	}
 

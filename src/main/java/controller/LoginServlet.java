@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 		if (user != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("sessionUser", user);
-			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+			response.sendRedirect(response.encodeURL("./IndexMaterial"));
 		} else {
 			request.setAttribute("error", "yes");
 			this.doGet(request, response);

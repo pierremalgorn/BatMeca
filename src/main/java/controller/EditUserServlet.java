@@ -85,9 +85,9 @@ public class EditUserServlet extends HttpServlet{
 
 
 		//if(target.equals("profile")){
-			response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/User"));
+			response.sendRedirect(response.encodeURL("./User"));
 		//} else {
-			//response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
+			//response.sendRedirect(response.encodeURL("./IndexUser"));
 		//}
 
 	}

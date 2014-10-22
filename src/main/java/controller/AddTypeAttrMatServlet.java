@@ -51,7 +51,7 @@ public class AddTypeAttrMatServlet extends HttpServlet {
 		typeMatAttrService.add(type);
 		
 	
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Config"));
+		response.sendRedirect(response.encodeURL("./Config"));
 	}
 
 }

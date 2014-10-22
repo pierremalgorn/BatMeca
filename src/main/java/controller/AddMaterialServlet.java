@@ -105,7 +105,7 @@ public class AddMaterialServlet extends HttpServlet {
 		mat.setUser((User) session.getAttribute("sessionUser"));
 		
 		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+		response.sendRedirect(response.encodeURL("./IndexMaterial"));
 	}
 
 }

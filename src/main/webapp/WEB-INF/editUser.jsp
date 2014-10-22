@@ -108,7 +108,7 @@
 				  <label class="control-label" for="Edit"></label>
 				  <div class="controls">
 				    <button type="submit" id="edit" name="Edit" class="btn btn-success">Edit</button>
-				    <a href="/BatmecaNewGeneration/User" class="btn btn-danger">Discard</a>
+				    <a href="./User" class="btn btn-danger">Discard</a>
 				  </div>
 				</div>
 							

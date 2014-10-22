@@ -53,7 +53,7 @@ public class EditMaterialServlet extends HttpServlet {
 		
 		materialService.editMaterial(mat);
 		response.sendRedirect(response
-				.encodeURL("/BatmecaNewGeneration/IndexMaterial"));
+				.encodeURL("./IndexMaterial"));
 	}
 
 }

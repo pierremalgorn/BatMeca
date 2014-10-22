@@ -67,7 +67,7 @@ public class AddUserServlet extends HttpServlet{
 		
 		//enregistrement en base de données
 		userService.addUser(user);
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/IndexUser"));
+		response.sendRedirect(response.encodeURL("./IndexUser"));
 	}
 
 }

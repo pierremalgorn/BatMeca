@@ -41,7 +41,7 @@ public class RemoveTestServlet extends HttpServlet {
 		f.deleteFolder(t);
 		testService.remove(t);
 		
-		response.sendRedirect(response.encodeURL("/BatmecaNewGeneration/Material?idMat="+request.getParameter("idMat")));
+		response.sendRedirect(response.encodeURL("./Material?idMat="+request.getParameter("idMat")));
 	}
 
 	/**

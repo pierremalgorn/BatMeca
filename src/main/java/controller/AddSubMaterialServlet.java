@@ -100,7 +100,7 @@ public class AddSubMaterialServlet extends HttpServlet {
 		mat.setUser((User) session.getAttribute("sessionUser"));
 		materialService.addMaterial(mat);
 		response.sendRedirect(response
-				.encodeURL("/BatmecaNewGeneration/Material?idMat="+mat.getId()));
+				.encodeURL("./Material?idMat="+mat.getId()));
 		
 	}
 
