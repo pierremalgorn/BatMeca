@@ -2,10 +2,10 @@ package service.impl;
 
 import java.util.List;
 
-import entity.TypeUser;
+import service.TypeUserService;
 import dao.TypeUserDao;
 import dao.manager.DaoManager;
-import service.TypeUserService;
+import entity.TypeUser;
 
 public class TypeUserServiceImpl implements TypeUserService{
 	

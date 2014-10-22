@@ -2,10 +2,10 @@ package service.impl;
 
 import java.util.List;
 
+import service.TypeMaterialAttributService;
 import dao.TypeMaterialAttributDao;
 import dao.manager.DaoManager;
 import entity.TypeMaterialAttribute;
-import service.TypeMaterialAttributService;
 
 
 public class TypeMaterialAttributServiceImpl implements TypeMaterialAttributService {

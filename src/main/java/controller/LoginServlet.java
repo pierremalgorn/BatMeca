@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import entity.User;
 import service.UserService;
 import service.manager.ServiceManager;
+import entity.User;
 
 /**
  * Permet de loger un utilisateur

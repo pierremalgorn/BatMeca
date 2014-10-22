@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 
 import dao.TypeMaterialAttributDao;
 import dao.manager.DaoManager;
-import entity.Test;
 import entity.TypeMaterialAttribute;
 
 public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {

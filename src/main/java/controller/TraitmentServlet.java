@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.TestService;
+import service.manager.ServiceManager;
+
 import com.google.gson.Gson;
 
 import entity.Test;
-import service.TestService;
-import service.manager.ServiceManager;
 
 /**
  * Permet de réaliser des traitements sur une courbe

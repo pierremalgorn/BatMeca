@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,11 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.Fetch;
-
-import controller.AddTestServlet;
 
 
 @Entity

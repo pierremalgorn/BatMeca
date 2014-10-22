@@ -2,11 +2,10 @@ package service.impl;
 
 import java.util.List;
 
+import service.TypeTestAttributService;
 import dao.TypeTestAttributDao;
 import dao.manager.DaoManager;
 import entity.TypeTestAttribute;
-import service.TypeTestAttributService;
-import service.manager.ServiceManager;
 
 public class TypeTestAttributServiceImpl implements TypeTestAttributService {
 

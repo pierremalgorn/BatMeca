@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.TypeTestAttributService;
 import service.manager.ServiceManager;
-import entity.TypeMaterialAttribute;
 import entity.TypeTestAttribute;
 
 /**

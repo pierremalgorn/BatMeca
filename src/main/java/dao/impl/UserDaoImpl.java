@@ -7,7 +7,6 @@ import javax.persistence.NoResultException;
 
 import dao.UserDao;
 import dao.manager.DaoManager;
-import entity.Test;
 import entity.User;
 
 public class UserDaoImpl implements UserDao{

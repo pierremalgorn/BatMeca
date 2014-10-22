@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.UserService;
 import service.TypeUserService;
+import service.UserService;
 import service.manager.ServiceManager;
-import entity.User;
 import entity.TypeUser;
+import entity.User;
 
 
 @WebServlet("/addUser")

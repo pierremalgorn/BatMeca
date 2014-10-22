@@ -2,7 +2,6 @@ package service;
 
 import java.util.List;
 
-import entity.Material;
 import entity.User;
 
 public interface UserService {

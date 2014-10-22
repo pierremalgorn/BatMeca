@@ -8,14 +8,14 @@ import dao.MaterialDao;
 import dao.TestDao;
 import dao.TypeMaterialAttributDao;
 import dao.TypeTestAttributDao;
-import dao.UserDao;
 import dao.TypeUserDao;
+import dao.UserDao;
 import dao.impl.MaterialDaoImpl;
 import dao.impl.TestDaoImpl;
 import dao.impl.TypeMaterialAttributDaoImpl;
 import dao.impl.TypeTestAttributDaoImpl;
-import dao.impl.UserDaoImpl;
 import dao.impl.TypeUserDaoImpl;
+import dao.impl.UserDaoImpl;
 
 
 public enum DaoManager {

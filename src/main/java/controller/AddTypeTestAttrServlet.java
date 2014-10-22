@@ -9,11 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.TypeMaterialAttribute;
-import entity.TypeTestAttribute;
-import service.TypeMaterialAttributService;
 import service.TypeTestAttributService;
 import service.manager.ServiceManager;
+import entity.TypeTestAttribute;
 
 /**
  * Servlet implementation class AddTypeTestAttrServlet

@@ -13,11 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import entity.Test;
 import service.TestService;
 import service.manager.ServiceManager;
+import entity.Test;
 
 /**
  * Permet de selectioner un courbe

@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Material;
 import service.MaterialService;
 import service.manager.ServiceManager;
+import entity.Material;
 
 /**
  * Permet de supprimer un matériaux

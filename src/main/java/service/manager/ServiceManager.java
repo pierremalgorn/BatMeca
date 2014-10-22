@@ -1,20 +1,17 @@
 package service.manager;
 
-import java.util.List;
-
-import entity.TypeMaterialAttribute;
 import service.MaterialService;
 import service.TestService;
 import service.TypeMaterialAttributService;
 import service.TypeTestAttributService;
-import service.UserService;
 import service.TypeUserService;
+import service.UserService;
 import service.impl.MaterialServiceImpl;
 import service.impl.TestServiceImpl;
 import service.impl.TypeMaterialAttributServiceImpl;
 import service.impl.TypeTestAttributServiceImpl;
-import service.impl.UserServiceImpl;
 import service.impl.TypeUserServiceImpl;
+import service.impl.UserServiceImpl;
 
 public enum ServiceManager {
 	INSTANCE;

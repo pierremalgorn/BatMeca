@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.TypeMaterialAttribute;
 import service.TypeMaterialAttributService;
 import service.manager.ServiceManager;
+import entity.TypeMaterialAttribute;
 
 /**
  * Permet de supprimer un type d'attribut matériaux

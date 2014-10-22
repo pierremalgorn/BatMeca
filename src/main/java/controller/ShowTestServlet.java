@@ -6,7 +6,6 @@ import handler.FolderHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,11 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.TestService;
+import service.manager.ServiceManager;
+
 import com.google.gson.Gson;
 
 import entity.Test;
-import service.TestService;
-import service.manager.ServiceManager;
 
 /**
  * Permet d'afficher un éssai

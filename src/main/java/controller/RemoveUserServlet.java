@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.Test;
-import entity.TypeUser;
-import entity.User;
-import service.UserService;
 import service.TypeUserService;
+import service.UserService;
 import service.manager.ServiceManager;
+import entity.User;
 
 /*
  * Permet de supprimer un utilisateur
