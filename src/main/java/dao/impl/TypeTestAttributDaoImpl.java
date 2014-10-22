@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
+
 import dao.TypeTestAttributDao;
 import dao.manager.DaoManager;
 import entity.TypeTestAttribute;
 
+@Repository
 public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 
 	@SuppressWarnings("unchecked")

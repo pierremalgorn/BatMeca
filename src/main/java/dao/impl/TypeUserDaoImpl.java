@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
+
 import dao.TypeUserDao;
 import dao.manager.DaoManager;
 import entity.TypeUser;
 
+@Repository
 public class TypeUserDaoImpl implements TypeUserDao{
 	public TypeUserDaoImpl() {
 

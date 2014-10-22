@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
+import org.springframework.stereotype.Repository;
+
 import dao.UserDao;
 import dao.manager.DaoManager;
 import entity.User;
 
+@Repository
 public class UserDaoImpl implements UserDao{
 	
 	public List<User> findAllUsers() {

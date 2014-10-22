@@ -6,15 +6,18 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.MaterialService;
 import service.TypeMaterialAttributService;
-import service.manager.ServiceManager;
 import entity.Material;
 import entity.MaterialAttribute;
 import entity.TypeMaterialAttribute;
@@ -23,24 +26,20 @@ import entity.User;
 /**
  * Servlet implementation class AddSubMaterialServlet
  */
-@WebServlet("/AddSubMaterial")
-public class AddSubMaterialServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/AddSubMaterial")
+public class AddSubMaterialServlet {
+
+	@Autowired
 	private MaterialService materialService;
+	@Autowired
 	private TypeMaterialAttributService typeMaterialAttributService;
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public AddSubMaterialServlet() {
-		super();
-		materialService = ServiceManager.INSTANCE.getMaterialService();
-		typeMaterialAttributService = ServiceManager.INSTANCE.getTypeMaterialAttributService();
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//récupération de la liste des materiaux
@@ -56,7 +55,7 @@ public class AddSubMaterialServlet extends HttpServlet {
 		
 		
 		request.setAttribute("idParent", request.getParameter("idParent"));
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addSubMaterial.jsp"));
 		rd.forward(request, response);
 	}
@@ -65,6 +64,7 @@ public class AddSubMaterialServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//récuperation des champs du formulaire

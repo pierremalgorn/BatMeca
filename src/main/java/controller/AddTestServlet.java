@@ -11,21 +11,24 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.MaterialService;
 import service.TestService;
 import service.TypeMaterialAttributService;
 import service.TypeTestAttributService;
-import service.manager.ServiceManager;
+import controller.util.ServletInitParametersAware;
 import entity.Material;
 import entity.Test;
 import entity.TestAttribute;
@@ -36,34 +39,28 @@ import entity.User;
 /**
  * Servlet implementation class AddTestServlet
  */
-@WebServlet("/AddTest")
+@Controller
+@RequestMapping("/AddTest")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
 maxFileSize = 1024 * 1024 * 10, // 10MB
 maxRequestSize = 1024 * 1024 * 50)
 // 50MB
-public class AddTestServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private TestService testService;
-	private MaterialService materialService;
-	private TypeMaterialAttributService typeMatService;
-	private TypeTestAttributService typeTestService;
+public class AddTestServlet extends ServletInitParametersAware {
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public AddTestServlet() {
-		super();
-		testService = ServiceManager.INSTANCE.getTestService();
-		materialService = ServiceManager.INSTANCE.getMaterialService();
-		typeMatService = ServiceManager.INSTANCE
-				.getTypeMaterialAttributService();
-		typeTestService = ServiceManager.INSTANCE.getTypeTestAttributService();
-	}
+	@Autowired
+	private TestService testService;
+	@Autowired
+	private MaterialService materialService;
+	@Autowired
+	private TypeMaterialAttributService typeMatService;
+	@Autowired
+	private TypeTestAttributService typeTestService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//récupération de la liste des attributs du test
@@ -72,7 +69,7 @@ public class AddTestServlet extends HttpServlet {
 		
 		request.setAttribute("typesTest", typesTest);
 		request.setAttribute("idMat", request.getParameter("idMat"));
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addTest.jsp"));
 		rd.forward(request, response);
 	}
@@ -81,6 +78,7 @@ public class AddTestServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//récupération des champs du formulaires
@@ -93,8 +91,7 @@ public class AddTestServlet extends HttpServlet {
 		 */
 		Material mat = materialService.find(Integer.parseInt(request
 				.getParameter("idMat")));
-		ServletContext context  = getServletContext();
-		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
+		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());
 
 		Test test = new Test();
 		test.setName(name);
@@ -111,7 +108,7 @@ public class AddTestServlet extends HttpServlet {
 
 		// Création de repertoire associer
 	
-		FolderHandler f = new FolderHandler( context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		f.initDirectory(test);
 		String savePath = f.getPathSave(test);
 		// Upload des fichiers
@@ -146,7 +143,7 @@ public class AddTestServlet extends HttpServlet {
 		 * */
 		ParserConfig prconf = new ParserConfig();
 		 
-		test = prconf.parseFileConfig(context.getInitParameter("ressourcePath"),test,
+		test = prconf.parseFileConfig(getRessourcePath(),test,
 				f.getPathSave(test) + "/config/" + f.getFileNameConfig(test),
 				typesMat, typesTest);
 		

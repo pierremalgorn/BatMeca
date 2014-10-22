@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
+
 import dao.TypeMaterialAttributDao;
 import dao.manager.DaoManager;
 import entity.TypeMaterialAttribute;
 
+@Repository
 public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@SuppressWarnings("unchecked")

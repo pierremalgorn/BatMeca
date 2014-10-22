@@ -5,12 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
+import org.springframework.stereotype.Repository;
+
 import dao.TestDao;
 import dao.manager.DaoManager;
 import entity.Material;
 import entity.Test;
 import entity.User;
 
+@Repository
 public class TestDaoImpl implements TestDao {
 
 	@SuppressWarnings("unchecked")

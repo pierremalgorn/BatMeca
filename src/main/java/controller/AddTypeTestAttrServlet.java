@@ -4,35 +4,34 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TypeTestAttributService;
-import service.manager.ServiceManager;
 import entity.TypeTestAttribute;
 
 /**
  * Servlet implementation class AddTypeTestAttrServlet
  */
-@WebServlet("/AddTypeTestAttr")
-public class AddTypeTestAttrServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    private TypeTestAttributService typeService;  
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddTypeTestAttrServlet() {
-        super();
-       typeService = ServiceManager.INSTANCE.getTypeTestAttributService();
-    }
+@Controller
+@RequestMapping("/AddTypeTestAttr")
+public class AddTypeTestAttrServlet {
+
+	@Autowired
+    private TypeTestAttributService typeService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addTypeTestAttr.jsp"));
 		rd.forward(request, response);
 	}
@@ -40,6 +39,7 @@ public class AddTypeTestAttrServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//créattion objet associé
 		TypeTestAttribute type = new TypeTestAttribute();

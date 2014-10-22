@@ -5,39 +5,38 @@ import handler.FolderHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TestService;
-import service.manager.ServiceManager;
 
 import com.google.gson.Gson;
 
+import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
  * Permet de créer un courbe en sélectionnant l'abscisse et l'ordonnée
  * Servlet implementation class ColValueServlet
  */
-@WebServlet("/ColValue")
-public class ColValueServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/ColValue")
+public class ColValueServlet extends ServletInitParametersAware {
+
+	@Autowired
     private TestService testService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ColValueServlet() {
-        super();
-        testService = ServiceManager.INSTANCE.getTestService();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
@@ -45,11 +44,11 @@ public class ColValueServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int nbCol = Integer.parseInt(request.getParameter("nbField"));
 		int id = Integer.parseInt(request.getParameter("inputId"));
-		ServletContext context = getServletContext();
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		Test test = testService.find(id);
 		ArrayList<String[]> list = new ArrayList<String[]>(); 
 		String[] elem = new String[nbCol];

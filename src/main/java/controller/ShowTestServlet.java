@@ -8,47 +8,45 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TestService;
-import service.manager.ServiceManager;
 
 import com.google.gson.Gson;
 
+import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
  * Permet d'afficher un éssai
  * Servlet implementation class ShowTestServlet
  */
-@WebServlet("/ShowTest")
-public class ShowTestServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/ShowTest")
+public class ShowTestServlet extends ServletInitParametersAware {
+
+	@Autowired
     private TestService testService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShowTestServlet() {
-        super();
-        testService = ServiceManager.INSTANCE.getTestService();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
-		ServletContext context = getServletContext();
-		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));	
+		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());	
 		
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		
 		
 	
@@ -80,7 +78,7 @@ public class ShowTestServlet extends HttpServlet {
 		request.setAttribute("listFile", new Gson().toJson(listFile));
 		//request.setAttribute("listCol", listCol);
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/test.jsp"));
 		rd.forward(request, response);
 	}
@@ -88,6 +86,7 @@ public class ShowTestServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

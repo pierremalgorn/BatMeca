@@ -4,40 +4,38 @@ import handler.FolderHandler;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TestService;
-import service.manager.ServiceManager;
+import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
  * Servlet implementation class ShowResultServlet
  */
-@WebServlet("/ShowResult")
-public class ShowResultServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/ShowResult")
+public class ShowResultServlet extends ServletInitParametersAware {
+
+	@Autowired
     private TestService testService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShowResultServlet() {
-        super();
-        testService = ServiceManager.INSTANCE.getTestService();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Test test = testService.find(id);
-		ServletContext context = getServletContext();
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		String data = f.readResult(test);
 		
 		//request.setAttribute("results", data);
@@ -47,6 +45,7 @@ public class ShowResultServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

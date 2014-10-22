@@ -4,41 +4,38 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TypeUserService;
 import service.UserService;
-import service.manager.ServiceManager;
 import entity.TypeUser;
 import entity.User;
 
 
-@WebServlet("/addUser")
-public class AddUserServlet extends HttpServlet{
-	private static final long serialVersionUID = 1L;
-    
+@Controller
+@RequestMapping("/addUser")
+public class AddUserServlet{
+
+    @Autowired
 	private UserService userService;
+    @Autowired
 	private TypeUserService typeUserService;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddUserServlet() {
-        super();
-        userService = ServiceManager.INSTANCE.getUserService();
-        typeUserService = ServiceManager.INSTANCE.getTypeUserService();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("types", typeUserService.getTypes());//envoie de la liste des types
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addUser.jsp"));
 		rd.forward(request, response);
 	}
@@ -46,6 +43,7 @@ public class AddUserServlet extends HttpServlet{
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Création de l'objet associer
 		String name = request.getParameter("name");

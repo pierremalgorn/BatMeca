@@ -2,18 +2,21 @@ package service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import service.MaterialService;
 import dao.MaterialDao;
-import dao.manager.DaoManager;
 import entity.Material;
 import entity.User;
 
+@Service
 public class MaterialServiceImpl implements MaterialService {
 
+	@Autowired
 	private MaterialDao materialDao ;
 	
 	public MaterialServiceImpl(){
-		materialDao = DaoManager.INSTANCE.getMaterialDao();
 	}
 	
 	@Override

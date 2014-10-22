@@ -5,38 +5,35 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.MaterialService;
 import service.TestService;
-import service.manager.ServiceManager;
 import entity.Material;
 
 /**
  * Servlet implementation class MaterialServlet
  */
-@WebServlet("/Material")
-public class MaterialServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/Material")
+public class MaterialServlet {
+
+	@Autowired
 	private MaterialService materialService;
+	@Autowired
 	private TestService testService;
-
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MaterialServlet() {
-        super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        testService = ServiceManager.INSTANCE.getTestService();
-
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/**
@@ -53,7 +50,7 @@ public class MaterialServlet extends HttpServlet {
 		request.setAttribute("childs", childs);
 
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/material.jsp"));
 		rd.forward(request, response);
 	}
@@ -61,6 +58,7 @@ public class MaterialServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

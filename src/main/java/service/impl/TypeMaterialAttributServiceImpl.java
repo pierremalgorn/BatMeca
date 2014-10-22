@@ -2,20 +2,23 @@ package service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import service.TypeMaterialAttributService;
 import dao.TypeMaterialAttributDao;
-import dao.manager.DaoManager;
 import entity.TypeMaterialAttribute;
 
 
+@Service
 public class TypeMaterialAttributServiceImpl implements TypeMaterialAttributService {
+
+	@Autowired
 	private TypeMaterialAttributDao typeMaterialAttributDao;
 	
 	
 
 	public TypeMaterialAttributServiceImpl() {
-		super();
-		this.typeMaterialAttributDao = DaoManager.INSTANCE.getTypeMaterialAttributDao();
 	}
 
 

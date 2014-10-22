@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
+
 import dao.MaterialDao;
 import dao.manager.DaoManager;
 import entity.Material;
 import entity.User;
 
 
+@Repository
 public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")

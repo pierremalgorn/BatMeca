@@ -6,16 +6,19 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.MaterialService;
 import service.TypeMaterialAttributService;
 import service.UserService;
-import service.manager.ServiceManager;
 import entity.Material;
 import entity.MaterialAttribute;
 import entity.TypeMaterialAttribute;
@@ -24,28 +27,21 @@ import entity.User;
 /**
  * Servlet implementation class addMaterialServlet
  */
-@WebServlet("/addMaterial")
-public class AddMaterialServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+@Controller
+@RequestMapping("/addMaterial")
+public class AddMaterialServlet {
+
+   @Autowired
 	private MaterialService materialService;
+   @Autowired
 	private TypeMaterialAttributService typeMaterialAttributService;
+   @Autowired
 	private UserService userService;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AddMaterialServlet() {
-        super();
-        materialService = ServiceManager.INSTANCE.getMaterialService();
-        typeMaterialAttributService = ServiceManager.INSTANCE.getTypeMaterialAttributService();
-        userService = ServiceManager.INSTANCE.getUserService();
-        
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Material> materials;
 		//Récupération de la liste des materiaux
@@ -57,7 +53,7 @@ public class AddMaterialServlet extends HttpServlet {
 		
 		request.setAttribute("mats", materials);
 		request.setAttribute("matAttrs", listAttr);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/addMaterial.jsp"));
 		rd.forward(request, response);
 	}
@@ -65,6 +61,7 @@ public class AddMaterialServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Récuperation des champs
 		String name = request.getParameter("inputName");

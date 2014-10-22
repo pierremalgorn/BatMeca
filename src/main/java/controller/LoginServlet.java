@@ -4,39 +4,35 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.UserService;
-import service.manager.ServiceManager;
 import entity.User;
 
 /**
  * Permet de loger un utilisateur
  * Servlet implementation class LoginController
  */
-@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/Login")
+public class LoginServlet {
 
+	@Autowired
 	private UserService userService;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginServlet() {
-		super();
-		userService = ServiceManager.INSTANCE.getUserService();
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -46,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 			session.removeAttribute("sessionUser");
 		}
 		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/login.jsp"));
 		rd.forward(request, response);
 	}
@@ -55,6 +51,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");

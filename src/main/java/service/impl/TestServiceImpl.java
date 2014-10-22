@@ -2,19 +2,22 @@ package service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import service.TestService;
 import dao.TestDao;
-import dao.manager.DaoManager;
 import entity.Material;
 import entity.Test;
 import entity.User;
 
+@Service
 public class TestServiceImpl implements TestService {
 
+	@Autowired
 	private TestDao testDao;
 	
 	public TestServiceImpl(){
-		testDao = DaoManager.INSTANCE.getTestDao();
 	}
 	
 	@Override

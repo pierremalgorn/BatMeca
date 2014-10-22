@@ -5,47 +5,45 @@ import handler.FolderHandler;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TestService;
-import service.manager.ServiceManager;
 
 import com.google.gson.Gson;
 
+import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
  * Permet de réaliser des traitements sur une courbe
  * Servlet implementation class TraitmentServlet
  */
-@WebServlet("/Traitment")
-public class TraitmentServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/Traitment")
+public class TraitmentServlet extends ServletInitParametersAware {
+
+	@Autowired
     private TestService testService;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TraitmentServlet() {
-        super();
-        testService = ServiceManager.INSTANCE.getTestService();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
-		ServletContext context = getServletContext();
-		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
+		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());
 		
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		//Réalisation du lissage
 		String lisser = request.getParameter("lisser");
 		if(lisser != null ){
@@ -133,15 +131,15 @@ public class TraitmentServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idTest = Integer.parseInt(request.getParameter("inputId"));
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));
 		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
 		String file = request.getParameter("file");
-		ServletContext context = getServletContext();
-		CsvHandler csv = new CsvHandler(context.getInitParameter("root")+"/"+context.getInitParameter("name"));
+		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());
 		
-		FolderHandler f = new FolderHandler(context.getInitParameter("ressourcePath"));
+		FolderHandler f = new FolderHandler(getRessourcePath());
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
 	

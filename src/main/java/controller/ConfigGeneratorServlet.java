@@ -5,33 +5,29 @@ import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Création d'un fichier de configuration 
  * Non fonctionnelle
  * Servlet implementation class ConfigGeneratorServlet
  */
-@WebServlet("/ConfigGenerator")
-public class ConfigGeneratorServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ConfigGeneratorServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+@Controller
+@RequestMapping("/ConfigGenerator")
+public class ConfigGeneratorServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/configGenerator.jsp"));
 		rd.forward(request, response);
 	}
@@ -39,6 +35,7 @@ public class ConfigGeneratorServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String post = request.getParameter("POST");
 		//System.out.println(post);

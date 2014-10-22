@@ -2,18 +2,20 @@ package service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import service.TypeTestAttributService;
 import dao.TypeTestAttributDao;
-import dao.manager.DaoManager;
 import entity.TypeTestAttribute;
 
+@Service
 public class TypeTestAttributServiceImpl implements TypeTestAttributService {
 
+	@Autowired
 	private TypeTestAttributDao typeDao;
 	
 	public TypeTestAttributServiceImpl(){
-		super();
-		typeDao = DaoManager.INSTANCE.getTypeTestAttributDao();
 	}
 	
 	@Override

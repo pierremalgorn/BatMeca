@@ -4,37 +4,34 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import service.TypeUserService;
 import service.UserService;
-import service.manager.ServiceManager;
 import entity.TypeUser;
 import entity.User;
 
-@WebServlet("/EditUser")
-public class EditUserServlet extends HttpServlet{
-	private static final long serialVersionUID = 1L;
-	private UserService userService;
-	private TypeUserService typeUserService;
+@Controller
+@RequestMapping("/EditUser")
+public class EditUserServlet{
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public EditUserServlet() {
-		super();
-		//cr�ation des Services
-		userService = ServiceManager.INSTANCE.getUserService();
-		typeUserService = ServiceManager.INSTANCE.getTypeUserService();
-	}
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private TypeUserService typeUserService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String edit = request.getParameter("id");
@@ -43,7 +40,7 @@ public class EditUserServlet extends HttpServlet{
 		request.setAttribute("user", userService.getUser(id));
 		request.setAttribute("types", typeUserService.getTypes());
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
+		RequestDispatcher rd = request.getRequestDispatcher(
 				response.encodeURL("/WEB-INF/editUser.jsp"));
 		rd.forward(request, response);
 	}
@@ -52,6 +49,7 @@ public class EditUserServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//Récuêration des elements du formulaire
@@ -81,7 +79,7 @@ public class EditUserServlet extends HttpServlet{
 			user.setPassword(user.getPassword());
 		}
 
-		ServiceManager.INSTANCE.getUserService().editUser(user);
+		userService.editUser(user);
 
 
 		//if(target.equals("profile")){
