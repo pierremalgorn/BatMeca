@@ -11,7 +11,7 @@
   </welcome-file-list>
   <context-param>
     <param-name>ressourcePath</param-name>
-    <param-value>/home/max/BatMeca/Ressources</param-value>
+    <param-value>/opt/BatMeca/Ressources</param-value>
   </context-param>
   <context-param>
     <param-name>name</param-name>
@@ -19,7 +19,7 @@
   </context-param>
   <context-param>
     <param-name>root</param-name>
-    <param-value>/home/max/BatMeca</param-value>
+    <param-value>/opt/BatMeca</param-value>
   </context-param>
   <context-param>
     <param-name>
