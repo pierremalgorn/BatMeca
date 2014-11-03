@@ -11,28 +11,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="test_attribute")
+@Table(name = "test_attribute")
 public class TestAttribute {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_test",nullable=true)
+	@JoinColumn(name = "id_test", nullable = true)
 	private Test test;
-	@Column(name="value")
+	@Column(name = "value")
 	private String value;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_type_test_attribute",nullable=true)
+	@JoinColumn(name = "id_type_test_attribute", nullable = true)
 	private TypeTestAttribute typeTestAttr;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_material",nullable=true)
+	@JoinColumn(name = "id_material", nullable = true)
 	private Material material;
-	
-	public TestAttribute(){
-		
+
+	public TestAttribute() {
+
 	}
 
 	public int getId() {
@@ -50,7 +50,7 @@ public class TestAttribute {
 	public void setTest(Test test) {
 		this.test = test;
 	}
-	
+
 	public String getValue() {
 		return value;
 	}

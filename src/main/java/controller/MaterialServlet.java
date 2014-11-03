@@ -31,35 +31,38 @@ public class MaterialServlet {
 	private TestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		/**
 		 * Récupération de la liste des matériaux
 		 * */
 		String id = request.getParameter("idMat");
 		Material mat = null;
 		List<Material> childs = null;
-		
+
 		mat = materialService.find(Integer.parseInt(id));
 		childs = materialService.findByParent(mat);
-		System.out.println("NB child = "+childs.size());
+		System.out.println("NB child = " + childs.size());
 		request.setAttribute("material", mat);
 		request.setAttribute("childs", childs);
 
-		
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/material.jsp"));
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/material.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

@@ -23,48 +23,52 @@ import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
- * Permet de créer un courbe en sélectionnant l'abscisse et l'ordonnée
- * Servlet implementation class ColValueServlet
+ * Permet de créer un courbe en sélectionnant l'abscisse et l'ordonnée Servlet
+ * implementation class ColValueServlet
  */
 @Controller
 @RequestMapping("/ColValue")
 public class ColValueServlet extends ServletInitParametersAware {
 
 	@Autowired
-    private TestService testService;
+	private TestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		int nbCol = Integer.parseInt(request.getParameter("nbField"));
 		int id = Integer.parseInt(request.getParameter("inputId"));
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		Test test = testService.find(id);
-		ArrayList<String[]> list = new ArrayList<String[]>(); 
+		ArrayList<String[]> list = new ArrayList<String[]>();
 		String[] elem = new String[nbCol];
 		String[] unit = new String[nbCol];
-		for(int i = 0;i < nbCol ; i ++){
-			
-			elem[i] =  request.getParameter("nameCol"+i);
-			unit[i] = request.getParameter("unit"+i);
-			
+		for (int i = 0; i < nbCol; i++) {
+
+			elem[i] = request.getParameter("nameCol" + i);
+			unit[i] = request.getParameter("unit" + i);
+
 		}
-		
+
 		list.add(elem);
 		list.add(unit);
-		
-		f.saveToJson(list, f.getPathSave(test)+"/header.json");
-		
+
+		f.saveToJson(list, f.getPathSave(test) + "/header.json");
+
 		response.getWriter().write(new Gson().toJson(list));
 	}
 

@@ -18,12 +18,12 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 	public List<TypeMaterialAttribute> findAll() {
 		EntityManager em = null;
 		List<TypeMaterialAttribute> list = null;
-		
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
-			list =  em.createQuery("Select t From TypeMaterialAttribute t").getResultList();
-		
+
+			list = em.createQuery("Select t From TypeMaterialAttribute t")
+					.getResultList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 				em.close();
 			}
 		}
-		
+
 		return list;
 	}
 
@@ -42,7 +42,6 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 		TypeMaterialAttribute type = null;
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 
 			type = em.find(TypeMaterialAttribute.class, id);
 
@@ -62,7 +61,6 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 
 			em.getTransaction().begin();
 			em.remove(em.contains(type) ? type : em.merge(type));
@@ -87,16 +85,15 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 	@Override
 	public boolean add(TypeMaterialAttribute type) {
 		EntityManager em = null;
-		
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
+
 			em.getTransaction().begin();
 
 			em.persist(type);
 
 			em.getTransaction().commit();
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +102,7 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 				em.close();
 			}
 		}
-		
+
 		return true;
 	}
 

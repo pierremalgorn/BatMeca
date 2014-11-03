@@ -14,19 +14,19 @@ public class TypeTestAttributServiceImpl implements TypeTestAttributService {
 
 	@Autowired
 	private TypeTestAttributDao typeDao;
-	
-	public TypeTestAttributServiceImpl(){
+
+	public TypeTestAttributServiceImpl() {
 	}
-	
+
 	@Override
 	public List<TypeTestAttribute> findAll() {
-		
+
 		return typeDao.findAll();
 	}
 
 	@Override
 	public TypeTestAttribute find(int id) {
-		
+
 		return typeDao.find(id);
 	}
 
@@ -44,7 +44,7 @@ public class TypeTestAttributServiceImpl implements TypeTestAttributService {
 
 	@Override
 	public boolean add(TypeTestAttribute type) {
-		
+
 		return typeDao.add(type);
 	}
 

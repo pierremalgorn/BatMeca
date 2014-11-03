@@ -26,27 +26,31 @@ import entity.Test;
 public class ShowResultServlet extends ServletInitParametersAware {
 
 	@Autowired
-    private TestService testService;
+	private TestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Test test = testService.find(id);
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		String data = f.readResult(test);
-		
-		//request.setAttribute("results", data);
+
+		// request.setAttribute("results", data);
 		response.getWriter().write(data);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

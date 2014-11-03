@@ -21,65 +21,72 @@ import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
- * Permet de selectioner un courbe
- * Servlet implementation class SelectRowServlet
+ * Permet de selectioner un courbe Servlet implementation class SelectRowServlet
  */
 @Controller
 @RequestMapping("/SelectRow")
 public class SelectRowServlet extends ServletInitParametersAware {
 
 	@Autowired
-    private TestService testService;
+	private TestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*Récuperation de l'abscisse et de l'ordonnées*/
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		/* Récuperation de l'abscisse et de l'ordonnées */
 		int x = Integer.parseInt(request.getParameter("inputX"));
 		int y = Integer.parseInt(request.getParameter("inputY"));
 
-		Test test = testService.find(Integer.parseInt(request.getParameter("inputId")));
-		FolderHandler f =  new FolderHandler(getRessourcePath());
-		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());
+		Test test = testService.find(Integer.parseInt(request
+				.getParameter("inputId")));
+		FolderHandler f = new FolderHandler(getRessourcePath());
+		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
-		//Verification si le tracer n'a pas deja été éffectuer
+		// Verification si le tracer n'a pas deja été éffectuer
 		boolean content = false;
 		for (File file : list) {
-			if(file.getName().compareTo(x+"-"+y+".csv") == 0){
+			if (file.getName().compareTo(x + "-" + y + ".csv") == 0) {
 				content = true;
 			}
 		}
-		if(content == false){
-			//Création de la courbe
+		if (content == false) {
+			// Création de la courbe
 			try {
-				csv.selectCurve(f.getPathSave(test)+"/dataInput.csv", f.getPathSave(test)+"/curve/"+x+"-"+y+".csv", x, y);
+				csv.selectCurve(f.getPathSave(test) + "/dataInput.csv",
+						f.getPathSave(test) + "/curve/" + x + "-" + y + ".csv",
+						x, y);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String data = csv.readAll(f.getPathSave(test)+"/curve/"+x+"-"+y+".csv");
+			String data = csv.readAll(f.getPathSave(test) + "/curve/" + x + "-"
+					+ y + ".csv");
 			response.setContentType("application/json");
-			response.getWriter().write("{\"data\":"+data+",\"nbCurve\":"+(nbCurve +1)+",\"nameFile\":\""+x+"-"+y+".csv\"}");
-		}else{
+			response.getWriter().write(
+					"{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)
+							+ ",\"nameFile\":\"" + x + "-" + y + ".csv\"}");
+		} else {
 			response.setContentType("application/json");
 			response.getWriter().write("{\"content\":true}");
 		}
-		
-		//response.getWriter().write((new Gson().toJson(nbCurve)));
-	
-		
-		
+
+		// response.getWriter().write((new Gson().toJson(nbCurve)));
+
 	}
 
 }

@@ -63,14 +63,14 @@ public class AddTestServlet extends ServletInitParametersAware {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//récupération de la liste des attributs du test
+		// récupération de la liste des attributs du test
 		List<TypeTestAttribute> typesTest;
 		typesTest = typeTestService.findAll();
-		
+
 		request.setAttribute("typesTest", typesTest);
 		request.setAttribute("idMat", request.getParameter("idMat"));
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addTest.jsp"));
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/addTest.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -81,7 +81,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//récupération des champs du formulaires
+		// récupération des champs du formulaires
 		String name = request.getParameter("inputNameTest");
 		List<TypeTestAttribute> typesTest;
 		typesTest = typeTestService.findAll();
@@ -91,7 +91,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 		 */
 		Material mat = materialService.find(Integer.parseInt(request
 				.getParameter("idMat")));
-		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());
+		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
 
 		Test test = new Test();
 		test.setName(name);
@@ -102,12 +102,11 @@ public class AddTestServlet extends ServletInitParametersAware {
 
 		test.setTestAttributs(new HashSet<TestAttribute>());
 
-
 		HttpSession session = request.getSession();
 		test.setUser((User) session.getAttribute("sessionUser"));
 
 		// Création de repertoire associer
-	
+
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		f.initDirectory(test);
 		String savePath = f.getPathSave(test);
@@ -124,7 +123,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 				} else {
 					part.write(savePath + File.separator + "config/" + fileName);
 				}
-		
+
 			}
 
 			// part.write(fileName);
@@ -132,31 +131,29 @@ public class AddTestServlet extends ServletInitParametersAware {
 		testService.add(test);
 		// Conversion du fichier data en csv
 		try {
-			csv.datToCsv(f.getPathSave(test) + "/data/" + f.getFileNameData(test),
-					f.getPathSave(test) + "/dataInput.csv",f.getPathSave(test) + "/header.txt");
+			csv.datToCsv(
+					f.getPathSave(test) + "/data/" + f.getFileNameData(test),
+					f.getPathSave(test) + "/dataInput.csv", f.getPathSave(test)
+							+ "/header.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		/*
 		 * Parsind du fichier de configuration
-		 * */
+		 */
 		ParserConfig prconf = new ParserConfig();
-		 
-		test = prconf.parseFileConfig(getRessourcePath(),test,
+
+		test = prconf.parseFileConfig(getRessourcePath(), test,
 				f.getPathSave(test) + "/config/" + f.getFileNameConfig(test),
 				typesMat, typesTest);
-		
-		 prconf.parseHeader(f.getPathSave(test) + "/header.txt",f.getPathSave(test) + "/header.json");
+
+		prconf.parseHeader(f.getPathSave(test) + "/header.txt",
+				f.getPathSave(test) + "/header.json");
 		// Enregistrement en base de données
 
-		
-		
-		
-		
-		response.sendRedirect(response
-				.encodeURL("./ShowTest?idTest="
-						+ test.getId()));
+		response.sendRedirect(response.encodeURL("./ShowTest?idTest="
+				+ test.getId()));
 	}
 
 	/**

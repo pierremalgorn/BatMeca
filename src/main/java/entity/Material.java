@@ -1,6 +1,5 @@
 package entity;
 
-
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,10 +27,10 @@ public class Material {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER,orphanRemoval=true)
+	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Test> tests;
 
-	@OneToMany( mappedBy = "material", fetch = FetchType.EAGER,orphanRemoval=true)
+	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<MaterialAttribute> matAttrs;
 
 	@ManyToOne

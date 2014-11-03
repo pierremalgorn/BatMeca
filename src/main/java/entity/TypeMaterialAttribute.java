@@ -8,47 +8,51 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="type_material_attribute")
+@Table(name = "type_material_attribute")
 public class TypeMaterialAttribute {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
-	
-	@Column (name="pattern")
+
+	@Column(name = "pattern")
 	private String pattern;
+
 	/*
-	private MaterialAttribute matAttr;
-	*/
+	 * private MaterialAttribute matAttr;
+	 */
 	public TypeMaterialAttribute() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/*
-	public MaterialAttribute getMatAttr() {
-		return matAttr;
-	}
-	public void setMatAttr(MaterialAttribute matAttr) {
-		this.matAttr = matAttr;
-	}*/
+	 * public MaterialAttribute getMatAttr() { return matAttr; } public void
+	 * setMatAttr(MaterialAttribute matAttr) { this.matAttr = matAttr; }
+	 */
 	public String getPattern() {
 		return pattern;
 	}
+
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
-	
+
 }

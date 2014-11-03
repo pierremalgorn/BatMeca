@@ -18,8 +18,7 @@ import service.UserService;
 import entity.User;
 
 /**
- * Permet de loger un utilisateur
- * Servlet implementation class LoginController
+ * Permet de loger un utilisateur Servlet implementation class LoginController
  */
 @Controller
 @RequestMapping("/Login")
@@ -36,14 +35,13 @@ public class LoginServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		
-		if(session != null){
+
+		if (session != null) {
 			session.removeAttribute("sessionUser");
 		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/login.jsp"));
+
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/login.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -69,7 +67,6 @@ public class LoginServlet {
 			this.doGet(request, response);
 		}
 
-		
 	}
 
 }

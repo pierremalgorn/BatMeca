@@ -24,36 +24,39 @@ import entity.Material;
 public class EditMaterialServlet {
 
 	@Autowired
-    private MaterialService materialService;
+	private MaterialService materialService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		int id = Integer.parseInt(request.getParameter("id"));
-		
+
 		Material mat = materialService.find(id);
 		request.setAttribute("mat", mat);
-		RequestDispatcher rd = request.getRequestDispatcher(
-		response.encodeURL("/WEB-INF/editMaterial.jsp"));
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/editMaterial.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		
+
 		Material mat = materialService.find(id);
 		mat.setName(request.getParameter("inputName"));
-		
+
 		materialService.editMaterial(mat);
-		response.sendRedirect(response
-				.encodeURL("./IndexMaterial"));
+		response.sendRedirect(response.encodeURL("./IndexMaterial"));
 	}
 
 }

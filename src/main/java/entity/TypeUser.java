@@ -10,20 +10,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table (name="typeuser")
-@NamedQueries({
-	@NamedQuery(name = "findAllTypeUser", query = "Select t From TypeUser t"),
-	
+@Table(name = "typeuser")
+@NamedQueries({ @NamedQuery(name = "findAllTypeUser", query = "Select t From TypeUser t"),
 
 })
 public class TypeUser {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column ( name="type" )
+	@Column(name = "type")
 	private String type;
-	
+
 	public TypeUser() {
 		super();
 	}

@@ -11,11 +11,11 @@ import dao.manager.DaoManager;
 import entity.TypeUser;
 
 @Repository
-public class TypeUserDaoImpl implements TypeUserDao{
+public class TypeUserDaoImpl implements TypeUserDao {
 	public TypeUserDaoImpl() {
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TypeUser> getTypes() {
@@ -38,7 +38,5 @@ public class TypeUserDaoImpl implements TypeUserDao{
 		}
 		return types;
 	}
-
-	
 
 }

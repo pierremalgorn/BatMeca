@@ -26,68 +26,69 @@ import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
- * Permet d'afficher un éssai
- * Servlet implementation class ShowTestServlet
+ * Permet d'afficher un éssai Servlet implementation class ShowTestServlet
  */
 @Controller
 @RequestMapping("/ShowTest")
 public class ShowTestServlet extends ServletInitParametersAware {
 
 	@Autowired
-    private TestService testService;
+	private TestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(getRoot()+"/"+getName());	
-		
+		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+
 		FolderHandler f = new FolderHandler(getRessourcePath());
-		
-		
-	
-		//Récuperation de l'header
-		ArrayList<String[]> list =  f.deserializeFileJson(f.getPathSave(t)+"/header.json");
-	
-		
-		//String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
-		
-		//Recuperation des données et du nom des fichiers
+
+		// Récuperation de l'header
+		ArrayList<String[]> list = f.deserializeFileJson(f.getPathSave(t)
+				+ "/header.json");
+
+		// String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
+
+		// Recuperation des données et du nom des fichiers
 		File[] files = f.listCurve(t);
 		ArrayList<String[]> listData = new ArrayList<String[]>();
 		ArrayList<String> listFile = new ArrayList<String>();
 		for (File file : files) {
-			
-			System.out.println("NAME = "+file.getAbsolutePath());
+
+			System.out.println("NAME = " + file.getAbsolutePath());
 			listFile.add(file.getAbsolutePath());
-			String[] tab = {csv.readAll(file.getAbsolutePath()),file.getAbsolutePath()};
+			String[] tab = { csv.readAll(file.getAbsolutePath()),
+					file.getAbsolutePath() };
 			listData.add(tab);
 		}
-		
-		
+
 		request.setAttribute("colHeader", list);
-		
+
 		request.setAttribute("files", files);
-		//request.setAttribute("data", data);
+		// request.setAttribute("data", data);
 		request.setAttribute("listData", listData);
 		request.setAttribute("test", t);
 		request.setAttribute("listFile", new Gson().toJson(listFile));
-		//request.setAttribute("listCol", listCol);
-		
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/test.jsp"));
+		// request.setAttribute("listCol", listCol);
+
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/test.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

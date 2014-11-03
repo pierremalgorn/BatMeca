@@ -16,10 +16,10 @@ public class TestServiceImpl implements TestService {
 
 	@Autowired
 	private TestDao testDao;
-	
-	public TestServiceImpl(){
+
+	public TestServiceImpl() {
 	}
-	
+
 	@Override
 	public List<Test> findAll() {
 		return testDao.findAll();
@@ -28,7 +28,7 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public void add(Test test) {
 		testDao.add(test);
-		
+
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public void remove(Test test) {
 		testDao.remove(test);
-		
+
 	}
 
 	@Override
@@ -49,10 +49,8 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public List<Test> findByUser(User user) {
-		
+
 		return testDao.findByUser(user);
 	}
-
-	
 
 }

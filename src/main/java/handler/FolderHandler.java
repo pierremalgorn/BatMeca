@@ -25,7 +25,7 @@ public class FolderHandler {
 	public FolderHandler(String root) {
 		super();
 		this.root = root;
-	
+
 	}
 
 	public String getRoot() {
@@ -63,7 +63,9 @@ public class FolderHandler {
 
 	/**
 	 * Permet de creer les repertoires relatif à une essai
-	 * @param test: essai à initialisé
+	 * 
+	 * @param test
+	 *            : essai à initialisé
 	 * */
 	public void initDirectory(Test test) throws IOException {
 
@@ -77,10 +79,10 @@ public class FolderHandler {
 		this.makeDir(path + "/curve");
 		File fh = new File(path + "/history/historic");
 		fh.createNewFile();
-		
-		File fr = new File(path+"/result");
+
+		File fr = new File(path + "/result");
 		fr.createNewFile();
-		
+
 	}
 
 	public File[] getListDir(String path) {
@@ -143,7 +145,7 @@ public class FolderHandler {
 		String[] header = new String[3];
 		int cpt = 0;
 		while (cpt < 3 && (ligne = br.readLine()) != null) {
-			
+
 			header[cpt] = ligne;
 			cpt++;
 		}
@@ -153,14 +155,16 @@ public class FolderHandler {
 
 	/**
 	 * Permet de parser le header de l'essai
-	 * @param input chemin du fichier à parser
+	 * 
+	 * @param input
+	 *            chemin du fichier à parser
 	 * */
 	public ArrayList<String[]> getheaderColumn(String input) throws IOException {
 		String[] tab = this.parseHeader(input);
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (int i = 1; i < tab.length; i++) {
-			
+
 			tab[i] = tab[i].replaceAll("#", "");
 			String[] row = tab[i].split("\t");
 			for (int j = 0; j < row.length; j++) {
@@ -171,11 +175,12 @@ public class FolderHandler {
 			}
 			list.add(row);
 		}
-		
+
 		return list;
 	}
+
 	/**
-	 * Permet de sauver un  liste dans un fichier json
+	 * Permet de sauver un liste dans un fichier json
 	 * */
 	public void saveToJson(ArrayList<String[]> list, String output)
 			throws IOException {
@@ -187,66 +192,83 @@ public class FolderHandler {
 
 		pr.close();
 	}
-	
+
 	/**
 	 * Permet d'ajouter un information au fichier d'historique d'un essai
-	 * @param data information a rajouter au fichier
-	 * @param test test courant
+	 * 
+	 * @param data
+	 *            information a rajouter au fichier
+	 * @param test
+	 *            test courant
 	 * */
-	public void addDataHistoryFile(String data,Test test) throws IOException{
+	public void addDataHistoryFile(String data, Test test) throws IOException {
 		PrintWriter pr;
 
-		pr = new PrintWriter(new BufferedWriter(new FileWriter(this.getPathSave(test)+"/history/historic",true)));
+		pr = new PrintWriter(new BufferedWriter(new FileWriter(
+				this.getPathSave(test) + "/history/historic", true)));
 		pr.println(data);
-		//pr.write(data);
+		// pr.write(data);
 		pr.close();
 	}
-	
+
 	/**
-	 * Permet d'ajouter un resulat 
-	 * @param data: information a rajouter
-	 * @param test : test courant
+	 * Permet d'ajouter un resulat
+	 * 
+	 * @param data
+	 *            : information a rajouter
+	 * @param test
+	 *            : test courant
 	 * */
-	public void addResult(String data,Test test) throws IOException{
+	public void addResult(String data, Test test) throws IOException {
 		PrintWriter pr;
-		pr = new PrintWriter(new BufferedWriter(new FileWriter(this.getPathSave(test)+"/result",true)));
+		pr = new PrintWriter(new BufferedWriter(new FileWriter(
+				this.getPathSave(test) + "/result", true)));
 		pr.println(data);
 		pr.close();
 	}
+
 	/**
 	 * permet de renommer le fichier de sortie d'un essai
 	 * */
-	public void renameCsvOutput(Test test){
-		File file = new File(this.getPathSave(test)+"/dataOutput.csv");
-		file.renameTo(new File(this.getPathSave(test)+"/dataInput.csv"));
+	public void renameCsvOutput(Test test) {
+		File file = new File(this.getPathSave(test) + "/dataOutput.csv");
+		file.renameTo(new File(this.getPathSave(test) + "/dataInput.csv"));
 	}
-	
+
 	/**
 	 * Methode permettant de renvoyer la liste des fichiers de courbes
+	 * 
 	 * @param test
 	 * */
-	public File[] listCurve(Test test){
-		
+	public File[] listCurve(Test test) {
+
 		File file = new File(this.getPathSave(test) + "/curve");
 		File[] files = file.listFiles();
 		Arrays.sort(files);
 		return files;
 	}
+
 	/**
-	 * Methode permettant de renomer un fichier 
-	 * @param input fichier à renommer
-	 * @param output nom de fichier de sortie 
+	 * Methode permettant de renomer un fichier
+	 * 
+	 * @param input
+	 *            fichier à renommer
+	 * @param output
+	 *            nom de fichier de sortie
 	 * */
-	public void renameFile(String input,String output){
+	public void renameFile(String input, String output) {
 		File file = new File(input);
 		file.renameTo(new File(output));
 	}
-	
+
 	/**
 	 * Permet de deserializer un fichier Json
-	 * @param input path du fichier à lire
+	 * 
+	 * @param input
+	 *            path du fichier à lire
 	 * */
-	public ArrayList<String[]> deserializeFileJson(String input) throws IOException{
+	public ArrayList<String[]> deserializeFileJson(String input)
+			throws IOException {
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
@@ -255,39 +277,41 @@ public class FolderHandler {
 		ArrayList<String[]> list = null;
 		while ((ligne = br.readLine()) != null) {
 			System.out.println(ligne);
-		
+
 			list = gson.fromJson(ligne, ArrayList.class);
-			
+
 		}
 		br.close();
 		return list;
 	}
-	
-	public String readResult(Test test) throws IOException{
+
+	public String readResult(Test test) throws IOException {
 		String data = "";
-		
-		InputStream ips = new FileInputStream(this.getPathSave(test)+"/result");
+
+		InputStream ips = new FileInputStream(this.getPathSave(test)
+				+ "/result");
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		String ligne = "";
-		while ((ligne = br.readLine()) != null){
-			data = data+ligne+"<br>";
+		while ((ligne = br.readLine()) != null) {
+			data = data + ligne + "<br>";
 		}
-		
+
 		return new Gson().toJson(data);
 	}
-	
-	public String readHistoric(Test test) throws IOException{
+
+	public String readHistoric(Test test) throws IOException {
 		String data = "";
-		
-		InputStream ips = new FileInputStream(this.getPathSave(test)+"/history/historic");
+
+		InputStream ips = new FileInputStream(this.getPathSave(test)
+				+ "/history/historic");
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		String ligne = "";
-		while ((ligne = br.readLine()) != null){
-			data = data+ligne+"<br>";
+		while ((ligne = br.readLine()) != null) {
+			data = data + ligne + "<br>";
 		}
-		
+
 		return new Gson().toJson(data);
 	}
 }

@@ -22,33 +22,37 @@ import entity.User;
  */
 @Controller
 @RequestMapping("/IndexUser")
-public class IndexUserServlet{
+public class IndexUserServlet {
 
 	@Autowired
 	private UserService userService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		/**
 		 * Récuperation de la liste des utilisateurs
 		 * */
 		List<User> list = null;
-		list =  userService.findAllUsers();
-		 request.setAttribute("users",list);
-		 System.out.println("TAILLE LIST = "+list.size());
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/indexUser.jsp"));
+		list = userService.findAllUsers();
+		request.setAttribute("users", list);
+		System.out.println("TAILLE LIST = " + list.size());
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/indexUser.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

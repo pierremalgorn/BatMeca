@@ -23,7 +23,7 @@ import entity.User;
 
 @Controller
 @RequestMapping("/RemoveUser")
-public class RemoveUserServlet{
+public class RemoveUserServlet {
 
 	@Autowired
 	private UserService userService;
@@ -35,14 +35,15 @@ public class RemoveUserServlet{
 	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		User user = userService.getUser(Integer.parseInt(id));
 		userService.removeUser(user);
 		RequestDispatcher rd = null;
-        rd = request.getRequestDispatcher("/IndexUser");
-        request.setAttribute("event", "userremoved");
-        rd.forward(request, response);
+		rd = request.getRequestDispatcher("/IndexUser");
+		request.setAttribute("event", "userremoved");
+		rd.forward(request, response);
 	}
 
 	/**
@@ -50,9 +51,9 @@ public class RemoveUserServlet{
 	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
+	}
 
 }

@@ -10,15 +10,15 @@ import dao.TypeUserDao;
 import entity.TypeUser;
 
 @Service
-public class TypeUserServiceImpl implements TypeUserService{
+public class TypeUserServiceImpl implements TypeUserService {
 	@Autowired
-TypeUserDao typeUserDao;
-	
-	public TypeUserServiceImpl(){
+	TypeUserDao typeUserDao;
+
+	public TypeUserServiceImpl() {
 	}
-	
-public List<TypeUser> getTypes() {
-		
+
+	public List<TypeUser> getTypes() {
+
 		return typeUserDao.getTypes();
 	}
 }

@@ -20,8 +20,8 @@ import controller.util.ServletInitParametersAware;
 import entity.Material;
 
 /**
- * Permet de supprimer un matériaux
- * Servlet implementation class REmoveMaterialServlet
+ * Permet de supprimer un matériaux Servlet implementation class
+ * REmoveMaterialServlet
  */
 @Controller
 @RequestMapping("/RemoveMaterial")
@@ -44,12 +44,13 @@ public class RemoveMaterialServlet extends ServletInitParametersAware {
 		materialService.remove(mat);
 		RequestDispatcher rd = null;
 		if (request.getParameter("idParent") != null) {
-			rd = request.getRequestDispatcher("/Material?idMat="+request.getParameter("idParent"));
-			
+			rd = request.getRequestDispatcher("/Material?idMat="
+					+ request.getParameter("idParent"));
+
 		} else {
-			
+
 			rd = request.getRequestDispatcher("/IndexMaterial");
-		
+
 		}
 
 		rd.forward(request, response);

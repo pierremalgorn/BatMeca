@@ -13,33 +13,33 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table (name="user")
-@NamedQueries({
-	@NamedQuery(name = "findAllUsers", query = "Select u From User u "),})
-
+@Table(name = "user")
+@NamedQueries({ @NamedQuery(name = "findAllUsers", query = "Select u From User u "), })
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column ( name="name" )
+	@Column(name = "name")
 	private String name;
-	@Column ( name="first_name" )
+	@Column(name = "first_name")
 	private String firstName;
-	@Column ( name="password" )
+	@Column(name = "password")
 	private String password;
-	@Column ( name="email" )
+	@Column(name = "email")
 	private String email;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="type",nullable=true)
+	@JoinColumn(name = "type", nullable = true)
 	private TypeUser type;
-	
-	/*@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_user",nullable=true)
-	private User user;*/
-	/*@OneToMany
-	public List<SubMaterial> subMat;
-	*/
+
+	/*
+	 * @ManyToOne(fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name="id_user",nullable=true) private User user;
+	 */
+	/*
+	 * @OneToMany public List<SubMaterial> subMat;
+	 */
 	public User() {
 		super();
 	}
@@ -91,6 +91,5 @@ public class User {
 	public void setType(TypeUser type) {
 		this.type = type;
 	}
-
 
 }

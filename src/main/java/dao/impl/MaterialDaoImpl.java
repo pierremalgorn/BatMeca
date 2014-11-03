@@ -1,6 +1,5 @@
 package dao.impl;
 
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,12 +11,10 @@ import dao.manager.DaoManager;
 import entity.Material;
 import entity.User;
 
-
 @Repository
 public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")
-	
 	public List<Material> findAll() {
 		EntityManager em = null;
 
@@ -38,7 +35,6 @@ public class MaterialDaoImpl implements MaterialDao {
 		return list;
 	}
 
-	
 	public void addMaterial(Material mat) {
 		EntityManager em = null;
 		try {
@@ -60,36 +56,29 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 
 	@Override
-	
 	public Material find(int id) {
-		 EntityManager em = null;
-		
-		 Material material = null;
-		
-		
-		
-		 try {
-		 em = DaoManager.INSTANCE.getEntityManager();
-		
-		 material = em.find(Material.class, id);
-		
-		
-		
-		
-		 } catch (Exception e) {
-		 e.printStackTrace();
-		 } finally {
-		 if (em != null) {
-		 em.close();
-		 }
-		 }
-		
-		 return material;
-		
+		EntityManager em = null;
+
+		Material material = null;
+
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+
+			material = em.find(Material.class, id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return material;
+
 	}
 
 	@Override
-
 	public void editMaterial(Material mat) {
 		EntityManager em = null;
 		try {
@@ -112,7 +101,6 @@ public class MaterialDaoImpl implements MaterialDao {
 	}
 
 	@Override
-
 	public boolean remove(Material mat) {
 		EntityManager em = null;
 
@@ -131,19 +119,18 @@ public class MaterialDaoImpl implements MaterialDao {
 		}
 		return true;
 	}
-	
-	@SuppressWarnings("unchecked")
 
-	public List<Material> findAllNoParent(){
+	@SuppressWarnings("unchecked")
+	public List<Material> findAllNoParent() {
 		EntityManager em = null;
 		List<Material> materials = null;
-		
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
-			materials =  em.createQuery("Select m From Material m Where m.materialParent IS NULL").getResultList();
-		
+
+			materials = em.createQuery(
+					"Select m From Material m Where m.materialParent IS NULL")
+					.getResultList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,48 +145,46 @@ public class MaterialDaoImpl implements MaterialDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-
 	public List<Material> findByParent(Material parent) {
 		EntityManager em = null;
 		List<Material> materials = null;
-		try{
-			 em = DaoManager.INSTANCE.getEntityManager();
-			 materials = em.createQuery("Select m From Material m Where m.materialParent=:mParent").setParameter("mParent", parent).getResultList();
-		}catch(Exception e){
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			materials = em
+					.createQuery(
+							"Select m From Material m Where m.materialParent=:mParent")
+					.setParameter("mParent", parent).getResultList();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
-		
-		
-		 
+
 		return materials;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-
 	public List<Material> findByUser(User user) {
 		EntityManager em = null;
 		List<Material> materials = null;
-		try{
-			 em = DaoManager.INSTANCE.getEntityManager();
-			 materials = em.createQuery("Select m From Material m Where m.user=:user AND m.materialParent IS NULL").setParameter("user", user).getResultList();
-		}catch(Exception e){
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			materials = em
+					.createQuery(
+							"Select m From Material m Where m.user=:user AND m.materialParent IS NULL")
+					.setParameter("user", user).getResultList();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
-		
-		
-		 
+
 		return materials;
 	}
-
-	
 
 }

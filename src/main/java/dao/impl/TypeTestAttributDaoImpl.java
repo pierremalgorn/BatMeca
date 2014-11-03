@@ -17,13 +17,13 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 	@Override
 	public List<TypeTestAttribute> findAll() {
 		EntityManager em = null;
-		List<TypeTestAttribute> types =null;
-		
+		List<TypeTestAttribute> types = null;
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
-			types =  em.createQuery("Select t From TypeTestAttribute t").getResultList();
-		
+
+			types = em.createQuery("Select t From TypeTestAttribute t")
+					.getResultList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 				em.close();
 			}
 		}
-		
+
 		return types;
 	}
 
@@ -42,7 +42,6 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 		TypeTestAttribute type = null;
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 
 			type = em.find(TypeTestAttribute.class, id);
 
@@ -62,7 +61,6 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 
 			em.getTransaction().begin();
 			em.remove(em.contains(type) ? type : em.merge(type));
@@ -86,17 +84,16 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 
 	@Override
 	public boolean add(TypeTestAttribute type) {
-EntityManager em = null;
-		
+		EntityManager em = null;
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			
+
 			em.getTransaction().begin();
 
 			em.persist(type);
 
 			em.getTransaction().commit();
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,7 +102,7 @@ EntityManager em = null;
 				em.close();
 			}
 		}
-		
+
 		return true;
 	}
 

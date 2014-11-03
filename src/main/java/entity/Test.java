@@ -17,51 +17,54 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table (name="test")
+@Table(name = "test")
 @NamedQueries({
-	@NamedQuery(name = "findAllTest", query = "Select t From Test t"),
-	@NamedQuery(name="findTest",query = "Select t From Test t Where t.id = :id" )
-	
+		@NamedQuery(name = "findAllTest", query = "Select t From Test t"),
+		@NamedQuery(name = "findTest", query = "Select t From Test t Where t.id = :id")
 
 })
 public class Test {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
-	@Column(name="date")
+	@Column(name = "date")
 	private Date date;
 	@ManyToOne
-	@JoinColumn(name="id_material",nullable=true)
+	@JoinColumn(name = "id_material", nullable = true)
 	private Material material;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="test",fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.EAGER)
 	private Set<TestAttribute> testAttributs;
 	@ManyToOne
-	@JoinColumn(name="id_creator",nullable=true)
+	@JoinColumn(name = "id_creator", nullable = true)
 	private User user;
-	
-	public Test(){
-		
+
+	public Test() {
+
 	}
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -74,7 +77,6 @@ public class Test {
 		this.testAttributs = testAttributs;
 	}
 
-
 	public Material getMaterial() {
 		return material;
 	}
@@ -82,12 +84,12 @@ public class Test {
 	public void setMaterial(Material material) {
 		this.material = material;
 		if (!material.getTests().contains(this)) {
-            material.getTests().add(this);
-        }
-		
+			material.getTests().add(this);
+		}
+
 	}
 
-	public void addTestAttribute(TestAttribute testAttr){
+	public void addTestAttribute(TestAttribute testAttr) {
 		this.testAttributs.add(testAttr);
 		if (testAttr.getTest() != null) {
 			testAttr.setTest(this);
@@ -101,6 +103,5 @@ public class Test {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+
 }

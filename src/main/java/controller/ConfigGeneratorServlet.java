@@ -14,39 +14,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Création d'un fichier de configuration 
- * Non fonctionnelle
- * Servlet implementation class ConfigGeneratorServlet
+ * Création d'un fichier de configuration Non fonctionnelle Servlet
+ * implementation class ConfigGeneratorServlet
  */
 @Controller
 @RequestMapping("/ConfigGenerator")
 public class ConfigGeneratorServlet {
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/configGenerator.jsp"));
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/configGenerator.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String post = request.getParameter("POST");
-		//System.out.println(post);
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// String post = request.getParameter("POST");
+		// System.out.println(post);
 		Enumeration<String> params = request.getParameterNames();
-		
+
 		while (params.hasMoreElements()) {
 			String string = (String) params.nextElement();
-			//String val = request.getParameter(string);
-			
-			System.out.println("Name Field = "+string);
-			//System.out.println("Val Filed = "+val);
+			// String val = request.getParameter(string);
+
+			System.out.println("Name Field = " + string);
+			// System.out.println("Val Filed = "+val);
 		}
 		this.doGet(request, response);
 	}

@@ -10,42 +10,39 @@ import dao.UserDao;
 import entity.User;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	@Autowired
-UserDao userDao ;
-	
-	public UserServiceImpl(){
+	UserDao userDao;
+
+	public UserServiceImpl() {
 	}
-	
-	public List<User> findAllUsers(){
+
+	public List<User> findAllUsers() {
 		return userDao.findAllUsers();
 	}
-	
-	public User getUserByLoginMdp(String login,String mdp){
+
+	public User getUserByLoginMdp(String login, String mdp) {
 		return userDao.getUserByLoginMdp(login, mdp);
 	}
-	
-	public boolean addUser(User user){
+
+	public boolean addUser(User user) {
 		return userDao.addUser(user);
 	}
 
-	 public boolean loginExist(String login){
-		 return userDao.loginExist(login);
-	 }
-	 
-	 public User getUser(int id){
-			return userDao.getUser(id);
-		}
-	 
-	 public boolean editUser(User user){
-			return userDao.editUser(user);
-		}
-	 
-	 public void removeUser(User user){
-			userDao.removeUser(user);
-		}
+	public boolean loginExist(String login) {
+		return userDao.loginExist(login);
+	}
 
-	
+	public User getUser(int id) {
+		return userDao.getUser(id);
+	}
 
+	public boolean editUser(User user) {
+		return userDao.editUser(user);
+	}
+
+	public void removeUser(User user) {
+		userDao.removeUser(user);
+	}
 
 }

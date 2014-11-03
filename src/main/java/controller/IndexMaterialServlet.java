@@ -26,39 +26,44 @@ import entity.User;
 @RequestMapping("/IndexMaterial")
 public class IndexMaterialServlet {
 
-    @Autowired
+	@Autowired
 	private MaterialService materialService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		List<Material> list = null;
-		
+
 		/**
 		 * Récuepration de la liste des materiau
 		 * */
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("sessionUser");
-		if(user.getType().getId() == 1){
+		if (user.getType().getId() == 1) {
 			list = materialService.findAllNoParent();
-		}else{
-			list = materialService.findByUser((User) session.getAttribute("sessionUser"));
+		} else {
+			list = materialService.findByUser((User) session
+					.getAttribute("sessionUser"));
 		}
-		
-		 request.setAttribute("materials",list);
-		 System.out.println("TAILLE LIST = "+list.size());
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/indexMaterial.jsp"));
+
+		request.setAttribute("materials", list);
+		System.out.println("TAILLE LIST = " + list.size());
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/indexMaterial.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

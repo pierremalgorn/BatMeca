@@ -24,31 +24,34 @@ import entity.TypeTestAttribute;
 public class AddTypeTestAttrServlet {
 
 	@Autowired
-    private TypeTestAttributService typeService;
+	private TypeTestAttributService typeService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher(
-				response.encodeURL("/WEB-INF/addTypeTestAttr.jsp"));
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/addTypeTestAttr.jsp"));
 		rd.forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//créattion objet associé
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// créattion objet associé
 		TypeTestAttribute type = new TypeTestAttribute();
 		type.setName(request.getParameter("inputName"));
 		type.setPattern(request.getParameter("inputPattern"));
-		//enregistrement en base de données
+		// enregistrement en base de données
 		typeService.add(type);
-		
-		
+
 		response.sendRedirect(response.encodeURL("./Config"));
 	}
 

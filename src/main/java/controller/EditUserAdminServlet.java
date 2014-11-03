@@ -20,7 +20,7 @@ import entity.User;
 
 @Controller
 @RequestMapping("/EditUserAdmin")
-public class EditUserAdminServlet{
+public class EditUserAdminServlet {
 
 	@Autowired
 	private UserService userService;
@@ -40,7 +40,8 @@ public class EditUserAdminServlet{
 		request.setAttribute("user", userService.getUser(id));
 		request.setAttribute("types", typeUserService.getTypes());
 
-		RequestDispatcher rd = request.getRequestDispatcher(response.encodeURL("/WEB-INF/editUserAdmin.jsp"));
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/editUserAdmin.jsp"));
 		rd.forward(request, response);
 	}
 
@@ -51,7 +52,7 @@ public class EditUserAdminServlet{
 	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//Récuêration des elements du formulaire
+		// Récuêration des elements du formulaire
 		int id = Integer.parseInt(request.getParameter("id"));
 		String name = request.getParameter("name");
 		String firtsname = request.getParameter("firstName");
@@ -60,19 +61,18 @@ public class EditUserAdminServlet{
 		String password = request.getParameter("password");
 		String newPassword = request.getParameter("newpassword");
 		String newPasswordConfirm = request.getParameter("newpasswordconfirm");
-		//Création de l'objet associer
+		// Création de l'objet associer
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
-		
+
 		User user = userService.getUser(id);
 		user.setName(name);
 		user.setFirstName(firtsname);
 		user.setEmail(email);
 		user.setType(typeUser);
-		//if user wants to change his password
-		if(!password.equals("") 
-				&& !newPassword.equals("") 
-				&& newPassword.equals(newPasswordConfirm)){
+		// if user wants to change his password
+		if (!password.equals("") && !newPassword.equals("")
+				&& newPassword.equals(newPasswordConfirm)) {
 			user.setPassword(newPassword);
 		} else {
 			user.setPassword(user.getPassword());
@@ -82,8 +82,7 @@ public class EditUserAdminServlet{
 
 		response.sendRedirect(response.encodeURL("IndexUser"));
 
-		//response.sendRedirect(response.encodeURL("IndexUser"));
+		// response.sendRedirect(response.encodeURL("IndexUser"));
 	}
-
 
 }

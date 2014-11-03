@@ -68,9 +68,13 @@ public class TestDaoImpl implements TestDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-			//test = (Test) em.createNamedQuery("findTest").setParameter("id", id).getSingleResult();
-			test = (Test) em.createQuery("Select t From Test t left join t.testAttributs ta Where t.id=:id").setParameter("id", id).getSingleResult();
-			//test = em.find(Test.class, id);
+			// test = (Test) em.createNamedQuery("findTest").setParameter("id",
+			// id).getSingleResult();
+			test = (Test) em
+					.createQuery(
+							"Select t From Test t left join t.testAttributs ta Where t.id=:id")
+					.setParameter("id", id).getSingleResult();
+			// test = em.find(Test.class, id);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,8 +94,7 @@ public class TestDaoImpl implements TestDao {
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
-			
-			
+
 			em.remove(em.contains(test) ? test : em.merge(test));
 			em.getTransaction().commit();
 
@@ -109,23 +112,22 @@ public class TestDaoImpl implements TestDao {
 	@Override
 	public List<Test> findByMaterial(Material mat) {
 		List<Test> tests = null;
-        EntityManager em = null;
+		EntityManager em = null;
 
-        try {
-                em = DaoManager.INSTANCE.getEntityManager();
-           
-                tests = em
-                                .createQuery(
-                                                "Select t From Test t Where t.material = :material")
-                                .setParameter("material", mat.getId())
-                                .getResultList();
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
 
-        } catch (NoResultException e) {
-                // e.printStackTrace();
-        } finally {
-                if (em != null)
-                        em.close();
-        }
+			tests = em
+					.createQuery(
+							"Select t From Test t Where t.material = :material")
+					.setParameter("material", mat.getId()).getResultList();
+
+		} catch (NoResultException e) {
+			// e.printStackTrace();
+		} finally {
+			if (em != null)
+				em.close();
+		}
 		return null;
 	}
 
@@ -134,22 +136,19 @@ public class TestDaoImpl implements TestDao {
 	public List<Test> findByUser(User user) {
 		EntityManager em = null;
 		List<Test> tests = null;
-		try{
-			 em = DaoManager.INSTANCE.getEntityManager();
-			 tests = em.createQuery("Select t From Test t Where t.user=:user").setParameter("user", user.getId()).getResultList();
-		}catch(Exception e){
+		try {
+			em = DaoManager.INSTANCE.getEntityManager();
+			tests = em.createQuery("Select t From Test t Where t.user=:user")
+					.setParameter("user", user.getId()).getResultList();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			if (em != null) {
 				em.close();
 			}
 		}
-		
-		
-		 
+
 		return tests;
 	}
-
-	
 
 }

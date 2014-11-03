@@ -14,30 +14,30 @@ import entity.User;
 public class MaterialServiceImpl implements MaterialService {
 
 	@Autowired
-	private MaterialDao materialDao ;
-	
-	public MaterialServiceImpl(){
+	private MaterialDao materialDao;
+
+	public MaterialServiceImpl() {
 	}
-	
+
 	@Override
 	public List<Material> findAll() {
 		return materialDao.findAll();
 	}
-	
-	public void addMaterial(Material mat){
+
+	public void addMaterial(Material mat) {
 		materialDao.addMaterial(mat);
 	}
 
 	@Override
 	public Material find(int id) {
-		
+
 		return materialDao.find(id);
 	}
 
 	@Override
 	public void editMaterial(Material mat) {
 		materialDao.editMaterial(mat);
-		
+
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Override
 	public List<Material> findByUser(User user) {
-		
+
 		return materialDao.findByUser(user);
 	}
 

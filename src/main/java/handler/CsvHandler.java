@@ -16,8 +16,6 @@ public class CsvHandler {
 
 	private String root;
 
-	
-
 	public CsvHandler(String input) {
 		root = input;
 
@@ -67,8 +65,6 @@ public class CsvHandler {
 		writer.close();
 	}
 
-	
-
 	/**
 	 * Permet de faire la moyenne entre deux points
 	 * */
@@ -78,8 +74,11 @@ public class CsvHandler {
 
 	/**
 	 * Lissage des points
-	 * @param input chemin du fichier d'entree
-	 * @param output chemin du fichier de sortie
+	 * 
+	 * @param input
+	 *            chemin du fichier d'entree
+	 * @param output
+	 *            chemin du fichier de sortie
 	 * */
 	public void lissageOrdre2(String input, String output) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(input), ',',
@@ -110,10 +109,10 @@ public class CsvHandler {
 
 	}
 
-	
 	/**
 	 * Permet de supprimer un interval de point
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 * */
 	public void deletePortionCsv(String input, int start, int end)
 			throws IOException, InterruptedException {
@@ -126,7 +125,8 @@ public class CsvHandler {
 
 	/**
 	 * Permet de calculer le max d'un colonne
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 * */
 	public Float maxValueColumn(int numColumn, String input)
 			throws NumberFormatException, IOException, InterruptedException {
@@ -135,8 +135,7 @@ public class CsvHandler {
 				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-		
-		
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -156,7 +155,8 @@ public class CsvHandler {
 
 	/**
 	 * Calcule du min sur une colonne
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 * */
 	public Float minValueColumn(int numColumn) throws NumberFormatException,
 			IOException, InterruptedException {
@@ -165,8 +165,7 @@ public class CsvHandler {
 				this.root };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-		
-		
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -184,7 +183,8 @@ public class CsvHandler {
 	}
 
 	public void factorColumn(int numColumn, int other, float factor,
-			String input, String output) throws IOException, InterruptedException {
+			String input, String output) throws IOException,
+			InterruptedException {
 		String[] cmd;
 		if (numColumn < other) {
 			cmd = new String[] {
@@ -203,7 +203,7 @@ public class CsvHandler {
 				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-	
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
@@ -219,10 +219,10 @@ public class CsvHandler {
 	/*
 	 * Permet de convertir un fichier .dat en .csv
 	 */
-	public void datToCsv(String input, String output,String header) throws IOException, InterruptedException {
-		String[] cmd = new String[] {
-				this.root+"/script/datToCsv",
-				input, output,header };
+	public void datToCsv(String input, String output, String header)
+			throws IOException, InterruptedException {
+		String[] cmd = new String[] { this.root + "/script/datToCsv", input,
+				output, header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 		process.waitFor();
@@ -239,7 +239,7 @@ public class CsvHandler {
 	 *            axe en abscisse
 	 * @param y
 	 *            axe en ordonnée
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * */
 	public void selectCurve(String input, String output, int x, int y)
 			throws IOException, InterruptedException {
@@ -248,7 +248,7 @@ public class CsvHandler {
 				input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-	
+
 		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
 				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 
@@ -263,53 +263,59 @@ public class CsvHandler {
 		reader.close();
 		writer.close();
 	}
-	
+
 	/**
 	 * Permet de couper un courbe apres un point
-	 * @param start point de coupure
-	 * @param input chemin du fichier à couper
-	 * @throws InterruptedException 
+	 * 
+	 * @param start
+	 *            point de coupure
+	 * @param input
+	 *            chemin du fichier à couper
+	 * @throws InterruptedException
 	 * */
-	public void cutAfter(int start,String input) throws IOException, InterruptedException{
+	public void cutAfter(int start, String input) throws IOException,
+			InterruptedException {
 		int end = this.nbLigne(input);
 		this.deletePortionCsv(input, start, end);
 	}
 
 	/**
 	 * Permet de couper une courbe avant un point
-	 * @param end point de coupure
-	 * @param input: chemin du fichier csv
-	 * @throws InterruptedException 
+	 * 
+	 * @param end
+	 *            point de coupure
+	 * @param input
+	 *            : chemin du fichier csv
+	 * @throws InterruptedException
 	 * */
-	public void cutBefore(int end,String input) throws IOException, InterruptedException{
+	public void cutBefore(int end, String input) throws IOException,
+			InterruptedException {
 		int start = 1;
 		this.deletePortionCsv(input, start, end);
 	}
+
 	/**
 	 * Retourne le nombre de ligne d'un fichier
-	 * @param input : chemin du fichier
+	 * 
+	 * @param input
+	 *            : chemin du fichier
 	 * @return nombre deligne present dans le fichier
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * */
 	public int nbLigne(String input) throws IOException, InterruptedException {
-		String[] cmd = new String[] { "sed","-n","-e","$=",input };
+		String[] cmd = new String[] { "sed", "-n", "-e", "$=", input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
-				BufferedReader reader = new BufferedReader(new InputStreamReader(
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
 		String line = "";
 		int result = 0;
 		while ((line = reader.readLine()) != null) {
-			
+
 			result = Integer.parseInt(line);
 		}
-	
-		
-		
-		
+
 		return result;
 	}
 
-	
-	
 }
