@@ -89,7 +89,6 @@ public class AddMaterialServlet {
 				matAttr.setMaterial(mat);
 				mat.addMaterialAttribute(matAttr);
 			}
-
 		}
 
 		if (parent.compareTo("") != 0) {
@@ -104,5 +103,4 @@ public class AddMaterialServlet {
 		materialService.addMaterial(mat);
 		response.sendRedirect(response.encodeURL("./IndexMaterial"));
 	}
-
 }

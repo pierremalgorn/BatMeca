@@ -21,10 +21,8 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			list = em.createQuery("Select t From TypeMaterialAttribute t")
 					.getResultList();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -40,11 +38,10 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 	public TypeMaterialAttribute find(int id) {
 		EntityManager em = null;
 		TypeMaterialAttribute type = null;
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			type = em.find(TypeMaterialAttribute.class, id);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -52,6 +49,7 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 				em.close();
 			}
 		}
+
 		return type;
 	}
 
@@ -61,11 +59,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			em.getTransaction().begin();
 			em.remove(em.contains(type) ? type : em.merge(type));
 			em.getTransaction().commit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -73,6 +69,7 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 				em.close();
 			}
 		}
+
 		return false;
 	}
 
@@ -88,13 +85,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			em.getTransaction().begin();
-
 			em.persist(type);
-
 			em.getTransaction().commit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -105,5 +98,4 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 		return true;
 	}
-
 }

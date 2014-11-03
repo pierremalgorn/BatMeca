@@ -91,5 +91,4 @@ public class User {
 	public void setType(TypeUser type) {
 		this.type = type;
 	}
-
 }

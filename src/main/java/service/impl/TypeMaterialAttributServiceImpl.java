@@ -26,26 +26,21 @@ public class TypeMaterialAttributServiceImpl implements
 
 	@Override
 	public TypeMaterialAttribute find(int id) {
-
 		return typeMaterialAttributDao.find(id);
 	}
 
 	@Override
 	public boolean remove(TypeMaterialAttribute type) {
-
 		return typeMaterialAttributDao.remove(type);
 	}
 
 	@Override
 	public boolean edit(TypeMaterialAttribute type) {
-
 		return edit(type);
 	}
 
 	@Override
 	public boolean add(TypeMaterialAttribute type) {
-		// TODO Auto-generated method stub
 		return typeMaterialAttributDao.add(type);
 	}
-
 }

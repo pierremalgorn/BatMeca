@@ -21,7 +21,6 @@ public class TypeTestAttribute {
 
 	public TypeTestAttribute() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
@@ -47,5 +46,4 @@ public class TypeTestAttribute {
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
-
 }

@@ -12,5 +12,4 @@ public interface TypeUserDao {
 	 * @return liste des types d'utilisateur
 	 * */
 	List<TypeUser> getTypes();
-
 }

@@ -54,5 +54,4 @@ public interface TestDao {
 	 * @return List<Test> list
 	 * */
 	public List<Test> findByUser(User user);
-
 }

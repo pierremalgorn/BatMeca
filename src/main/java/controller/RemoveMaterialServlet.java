@@ -42,15 +42,13 @@ public class RemoveMaterialServlet extends ServletInitParametersAware {
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		f.cleanMatFolder(mat);
 		materialService.remove(mat);
+
 		RequestDispatcher rd = null;
 		if (request.getParameter("idParent") != null) {
 			rd = request.getRequestDispatcher("/Material?idMat="
 					+ request.getParameter("idParent"));
-
 		} else {
-
 			rd = request.getRequestDispatcher("/IndexMaterial");
-
 		}
 
 		rd.forward(request, response);
@@ -65,5 +63,4 @@ public class RemoveMaterialServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

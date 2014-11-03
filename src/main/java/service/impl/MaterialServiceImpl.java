@@ -30,14 +30,12 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Override
 	public Material find(int id) {
-
 		return materialDao.find(id);
 	}
 
 	@Override
 	public void editMaterial(Material mat) {
 		materialDao.editMaterial(mat);
-
 	}
 
 	@Override
@@ -57,8 +55,6 @@ public class MaterialServiceImpl implements MaterialService {
 
 	@Override
 	public List<Material> findByUser(User user) {
-
 		return materialDao.findByUser(user);
 	}
-
 }

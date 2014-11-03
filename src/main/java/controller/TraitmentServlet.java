@@ -40,7 +40,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
 		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
@@ -72,7 +71,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 				try {
 					csv.cutAfter(start, file);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				f.addDataHistoryFile("Cut After:" + start + ";file " + file, t);
@@ -81,7 +79,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 				try {
 					csv.cutBefore(end, file);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				f.addDataHistoryFile("Cut Before:" + end + ";file " + file
@@ -100,7 +97,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 			try {
 				max = csv.maxValueColumn(Integer.parseInt(calMax), file);
 			} catch (NumberFormatException | InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			f.addResult("MAX FILE:" + file + ";max=" + max + ";", t);
@@ -133,7 +129,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 			f.addDataHistoryFile("CALCUL COEFF:FILE " + file, t);
 			f.addResult("COEF=" + coef + ";File=" + file + ";", t);
 		}
-
 	}
 
 	/**
@@ -168,7 +163,6 @@ public class TraitmentServlet extends ServletInitParametersAware {
 			csv.factorColumn(nbColumn, other, factor, file, f.getPathSave(test)
 					+ "/curve/factorcurve.csv");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -178,7 +172,5 @@ public class TraitmentServlet extends ServletInitParametersAware {
 				+ "/curve/factorcurve.csv");
 		f.renameFile(f.getPathSave(test) + "/curve/factorcurve.csv", file);
 		response.getWriter().write(data);
-
 	}
-
 }

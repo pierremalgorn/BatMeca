@@ -34,10 +34,8 @@ public class AddUserServlet {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("types", typeUserService.getTypes());// envoie de
-																	// la liste
-																	// des types
-
+		// Envoi de la liste des types
+		request.setAttribute("types", typeUserService.getTypes());
 		RequestDispatcher rd = request.getRequestDispatcher(response
 				.encodeURL("/WEB-INF/addUser.jsp"));
 		rd.forward(request, response);
@@ -72,5 +70,4 @@ public class AddUserServlet {
 		userService.addUser(user);
 		response.sendRedirect(response.encodeURL("./IndexUser"));
 	}
-
 }

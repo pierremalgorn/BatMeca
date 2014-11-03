@@ -51,8 +51,6 @@ public class AddTypeTestAttrServlet {
 		type.setPattern(request.getParameter("inputPattern"));
 		// enregistrement en base de données
 		typeService.add(type);
-
 		response.sendRedirect(response.encodeURL("./Config"));
 	}
-
 }

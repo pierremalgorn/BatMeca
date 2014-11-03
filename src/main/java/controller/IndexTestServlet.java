@@ -34,11 +34,9 @@ public class IndexTestServlet {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		/**
+		/*
 		 * Récuperation de la liste des essais associés
-		 * */
-
+		 */
 		List<Test> tests;
 		tests = testService.findAll();
 
@@ -58,5 +56,4 @@ public class IndexTestServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

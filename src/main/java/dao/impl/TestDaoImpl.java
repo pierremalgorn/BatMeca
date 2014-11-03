@@ -20,12 +20,10 @@ public class TestDaoImpl implements TestDao {
 	@Override
 	public List<Test> findAll() {
 		EntityManager em = null;
-
 		List<Test> list = null;
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			list = em.createNamedQuery("findAllTest").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,20 +34,15 @@ public class TestDaoImpl implements TestDao {
 		}
 
 		return list;
-
 	}
 
 	@Override
 	public void add(Test test) {
 		EntityManager em = null;
 		try {
-
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			em.getTransaction().begin();
-
 			em.persist(test);
-
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,7 +51,6 @@ public class TestDaoImpl implements TestDao {
 				em.close();
 			}
 		}
-
 	}
 
 	@Override
@@ -90,14 +82,11 @@ public class TestDaoImpl implements TestDao {
 	@Override
 	public void remove(Test test) {
 		EntityManager em = null;
-
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
-
 			em.remove(em.contains(test) ? test : em.merge(test));
 			em.getTransaction().commit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -105,7 +94,6 @@ public class TestDaoImpl implements TestDao {
 				em.close();
 			}
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -116,12 +104,10 @@ public class TestDaoImpl implements TestDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			tests = em
 					.createQuery(
 							"Select t From Test t Where t.material = :material")
 					.setParameter("material", mat.getId()).getResultList();
-
 		} catch (NoResultException e) {
 			// e.printStackTrace();
 		} finally {
@@ -129,7 +115,7 @@ public class TestDaoImpl implements TestDao {
 				em.close();
 			}
 		}
-		return null;
+		return null; // FIXME return null?
 	}
 
 	@SuppressWarnings("unchecked")
@@ -137,6 +123,7 @@ public class TestDaoImpl implements TestDao {
 	public List<Test> findByUser(User user) {
 		EntityManager em = null;
 		List<Test> tests = null;
+
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			tests = em.createQuery("Select t From Test t Where t.user=:user")
@@ -151,5 +138,4 @@ public class TestDaoImpl implements TestDao {
 
 		return tests;
 	}
-
 }

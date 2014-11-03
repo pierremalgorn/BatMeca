@@ -19,5 +19,4 @@ public interface UserService {
 	abstract boolean editUser(User user);
 
 	abstract void removeUser(User user);
-
 }

@@ -33,5 +33,4 @@ public class UserServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

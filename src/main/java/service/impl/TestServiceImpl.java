@@ -28,7 +28,6 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public void add(Test test) {
 		testDao.add(test);
-
 	}
 
 	@Override
@@ -39,7 +38,6 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public void remove(Test test) {
 		testDao.remove(test);
-
 	}
 
 	@Override
@@ -49,8 +47,6 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public List<Test> findByUser(User user) {
-
 		return testDao.findByUser(user);
 	}
-
 }

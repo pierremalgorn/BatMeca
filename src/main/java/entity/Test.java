@@ -42,7 +42,6 @@ public class Test {
 	private User user;
 
 	public Test() {
-
 	}
 
 	public int getId() {
@@ -86,7 +85,6 @@ public class Test {
 		if (!material.getTests().contains(this)) {
 			material.getTests().add(this);
 		}
-
 	}
 
 	public void addTestAttribute(TestAttribute testAttr) {
@@ -103,5 +101,4 @@ public class Test {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 }

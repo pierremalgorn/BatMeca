@@ -18,7 +18,6 @@ public class TypeUserServiceImpl implements TypeUserService {
 	}
 
 	public List<TypeUser> getTypes() {
-
 		return typeUserDao.getTypes();
 	}
 }

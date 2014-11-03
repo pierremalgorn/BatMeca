@@ -69,5 +69,4 @@ public interface UserDao {
 	 *            user: utilisateur à supprimer
 	 * */
 	public void removeUser(User user);
-
 }

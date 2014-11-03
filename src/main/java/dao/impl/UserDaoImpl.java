@@ -48,7 +48,6 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			user = (User) em
 					.createQuery(
 							"Select u From User u Where u.email= :email And u.password = :mdp")
@@ -71,13 +70,10 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			user = (User) em
 					.createQuery("Select u From User u Where u.login= :login")
 					.setParameter("login", login)
-
 					.getSingleResult();
-
 		} catch (NoResultException e) {
 			// e.printStackTrace();
 		} finally {
@@ -86,26 +82,17 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 
-		if (user == null) {
-			return false;
-		} else {
-			return true;
-		}
-
+		return user != null;
 	}
 
 	@Override
 	public boolean addUser(User user) {
-
 		EntityManager em = null;
+
 		try {
-
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			em.getTransaction().begin();
-
 			em.persist(user);
-
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,7 +121,6 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			user = (User) em
 					.createQuery("Select u From User u Where u.id= :id")
 					.setParameter("id", id).getSingleResult();
@@ -152,13 +138,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void removeUser(User user) {
 		EntityManager em = null;
-
 		try {
 			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.remove(em.contains(user) ? user : em.merge(user));
 			em.getTransaction().commit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -166,21 +150,16 @@ public class UserDaoImpl implements UserDao {
 				em.close();
 			}
 		}
-
 	}
 
 	@Override
 	public boolean editUser(User user) {
-
 		EntityManager em = null;
+
 		try {
-
 			em = DaoManager.INSTANCE.getEntityManager();
-
 			em.getTransaction().begin();
-
 			em.merge(user);
-
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,5 +171,4 @@ public class UserDaoImpl implements UserDao {
 
 		return true;
 	}
-
 }

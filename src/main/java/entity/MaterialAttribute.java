@@ -29,7 +29,6 @@ public class MaterialAttribute {
 
 	public MaterialAttribute() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
@@ -63,5 +62,4 @@ public class MaterialAttribute {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-
 }

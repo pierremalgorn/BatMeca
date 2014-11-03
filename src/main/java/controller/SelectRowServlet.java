@@ -37,7 +37,6 @@ public class SelectRowServlet extends ServletInitParametersAware {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 	}
 
 	/**
@@ -86,7 +85,5 @@ public class SelectRowServlet extends ServletInitParametersAware {
 		}
 
 		// response.getWriter().write((new Gson().toJson(nbCurve)));
-
 	}
-
 }

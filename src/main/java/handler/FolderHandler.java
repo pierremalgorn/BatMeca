@@ -25,7 +25,6 @@ public class FolderHandler {
 	public FolderHandler(String root) {
 		super();
 		this.root = root;
-
 	}
 
 	public String getRoot() {
@@ -55,7 +54,6 @@ public class FolderHandler {
 	 * Permet de supprimer le dossier de sauvegarde d'un test
 	 * */
 	public void deleteFolder(Test test) throws IOException {
-
 		String[] cmd = new String[] { "rm", "-r", this.getPathSave(test) };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
@@ -68,7 +66,6 @@ public class FolderHandler {
 	 *            : essai à initialisé
 	 * */
 	public void initDirectory(Test test) throws IOException {
-
 		String path = this.getPathSave(test);
 
 		File f = new File(path);
@@ -82,7 +79,6 @@ public class FolderHandler {
 
 		File fr = new File(path + "/result");
 		fr.createNewFile();
-
 	}
 
 	public File[] getListDir(String path) {
@@ -124,7 +120,6 @@ public class FolderHandler {
 	 * Marche pas bien
 	 */
 	public void cleanMatFolder(Material mat) throws IOException {
-
 		this.cleanAllTestDir(mat);
 		if (mat.getMaterialParent() != null) {
 			while (mat.getMaterialParent() != null) {
@@ -133,11 +128,9 @@ public class FolderHandler {
 			}
 			cleanAllTestDir(mat);
 		}
-
 	}
 
 	public String[] parseHeader(String input) throws IOException {
-
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
@@ -171,7 +164,6 @@ public class FolderHandler {
 				if (j == 0) {
 					row[j] = row[j].replaceAll(" ", "");
 				}
-
 			}
 			list.add(row);
 		}
@@ -185,11 +177,8 @@ public class FolderHandler {
 	public void saveToJson(ArrayList<String[]> list, String output)
 			throws IOException {
 		PrintWriter pr;
-
 		pr = new PrintWriter(new BufferedWriter(new FileWriter(output)));
-
 		pr.println(new Gson().toJson(list));
-
 		pr.close();
 	}
 
@@ -203,7 +192,6 @@ public class FolderHandler {
 	 * */
 	public void addDataHistoryFile(String data, Test test) throws IOException {
 		PrintWriter pr;
-
 		pr = new PrintWriter(new BufferedWriter(new FileWriter(
 				this.getPathSave(test) + "/history/historic", true)));
 		pr.println(data);
@@ -241,7 +229,6 @@ public class FolderHandler {
 	 * @param test
 	 * */
 	public File[] listCurve(Test test) {
-
 		File file = new File(this.getPathSave(test) + "/curve");
 		File[] files = file.listFiles();
 		Arrays.sort(files);
@@ -277,9 +264,7 @@ public class FolderHandler {
 		ArrayList<String[]> list = null;
 		while ((ligne = br.readLine()) != null) {
 			System.out.println(ligne);
-
 			list = gson.fromJson(ligne, ArrayList.class);
-
 		}
 		br.close();
 		return list;

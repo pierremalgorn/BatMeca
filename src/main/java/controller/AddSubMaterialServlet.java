@@ -99,7 +99,5 @@ public class AddSubMaterialServlet {
 		materialService.addMaterial(mat);
 		response.sendRedirect(response.encodeURL("./Material?idMat="
 				+ mat.getId()));
-
 	}
-
 }

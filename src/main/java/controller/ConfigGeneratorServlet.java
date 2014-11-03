@@ -53,5 +53,4 @@ public class ConfigGeneratorServlet {
 		}
 		this.doGet(request, response);
 	}
-
 }

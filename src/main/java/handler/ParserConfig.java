@@ -36,13 +36,11 @@ public class ParserConfig {
 			System.out.println(ligne);
 			MaterialAttribute matAttr = this.getAttributMat(ligne, listAttrMat);
 			if (ligne.matches("^c_(.*)")) {
-
 				// listCol.add(ligne.split("\t"));
 				// list.add(row);
 			} else if (matAttr != null) {
 				matAttr.setMaterial(test.getMaterial());
 				test.getMaterial().addMaterialAttribute(matAttr);
-
 			} else {
 				TestAttribute testAttr = this.getAttributTest(ligne,
 						listAttrTest);
@@ -52,7 +50,6 @@ public class ParserConfig {
 
 				}
 			}
-
 		}
 		//
 		// for (String[] elem : listCol) {
@@ -84,16 +81,14 @@ public class ParserConfig {
 		String[] attr = ligne.split("\t");
 
 		// if(listAttrMat.contains(attr[0])){
-
 		for (TypeMaterialAttribute type : listAttrMat) {
 			if (type.getPattern().compareTo(attr[0]) == 0) {
 				matAttr = new MaterialAttribute();
 				matAttr.setTypeMatAttr(type);
 				matAttr.setValue(attr[1]);
-
 			}
-			// }
 		}
+		// }
 		return matAttr;
 	}
 
@@ -109,7 +104,6 @@ public class ParserConfig {
 				matAttr.setValue(attr[1]);
 			}
 		}
-
 		return matAttr;
 	}
 
@@ -124,16 +118,11 @@ public class ParserConfig {
 			list.add(ligne.split(","));
 
 		}
-
 		br.close();
 
 		PrintWriter pr;
-
 		pr = new PrintWriter(new BufferedWriter(new FileWriter(output)));
-
 		pr.println(new Gson().toJson(list));
-
 		pr.close();
 	}
-
 }

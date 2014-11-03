@@ -57,19 +57,16 @@ public class ColValueServlet extends ServletInitParametersAware {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		String[] elem = new String[nbCol];
 		String[] unit = new String[nbCol];
-		for (int i = 0; i < nbCol; i++) {
 
+		for (int i = 0; i < nbCol; i++) {
 			elem[i] = request.getParameter("nameCol" + i);
 			unit[i] = request.getParameter("unit" + i);
-
 		}
 
 		list.add(elem);
 		list.add(unit);
 
 		f.saveToJson(list, f.getPathSave(test) + "/header.json");
-
 		response.getWriter().write(new Gson().toJson(list));
 	}
-
 }

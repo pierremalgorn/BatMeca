@@ -58,5 +58,4 @@ public class EditMaterialServlet {
 		materialService.editMaterial(mat);
 		response.sendRedirect(response.encodeURL("./IndexMaterial"));
 	}
-
 }

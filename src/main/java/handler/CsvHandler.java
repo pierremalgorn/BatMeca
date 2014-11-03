@@ -18,7 +18,6 @@ public class CsvHandler {
 
 	public CsvHandler(String input) {
 		root = input;
-
 	}
 
 	/**
@@ -39,7 +38,6 @@ public class CsvHandler {
 				sb.append(string + ",");
 			}
 			sb.append("\n");
-
 		}
 		reader.close();
 		// System.out.println(sb.toString());
@@ -59,7 +57,6 @@ public class CsvHandler {
 		for (int i = 0; i < myEntries.size(); i = i + echant) {
 			// System.out.println("i = "+i);
 			writer.writeNext(myEntries.get(i));
-
 		}
 		reader.close();
 		writer.close();
@@ -69,7 +66,7 @@ public class CsvHandler {
 	 * Permet de faire la moyenne entre deux points
 	 * */
 	public float average(float f1, float f2) {
-		return (f1 + f2) / 2;
+		return (f1 + f2) / 2.0f;
 	}
 
 	/**
@@ -93,13 +90,10 @@ public class CsvHandler {
 		writer.writeNext(ligne1);
 		for (int i = 2; i < myEntries.size() - 1; i++) {
 			String[] tab = myEntries.get(i);
-
 			for (int j = 0; j < tab.length; j++) {
-
 				float x1 = Float.parseFloat(myEntries.get(i - 1)[j]);
 				float x2 = Float.parseFloat(myEntries.get(i + 1)[j]);
 				tab[j] = Float.toString(this.average(x1, x2));
-
 			}
 			writer.writeNext(tab);
 		}
@@ -148,8 +142,8 @@ public class CsvHandler {
 			if (val > max) {
 				max = val;
 			}
-			// Traitement du flux de sortie de l'application
-		} // si besoin est
+			// Traitement du flux de sortie de l'application si besoin est
+		}
 		return max;
 	}
 
@@ -172,12 +166,10 @@ public class CsvHandler {
 
 		Float min = (float) 999999999;
 		while ((line = reader.readLine()) != null) {
-
 			float val = Float.parseFloat(line);
 			if (val < min) {
 				min = val;
 			}
-
 		}
 		return min;
 	}
@@ -191,7 +183,6 @@ public class CsvHandler {
 					"awk",
 					"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "*"
 							+ factor + ",$" + other + "}", input };
-
 		} else {
 			cmd = new String[] {
 					"awk",
@@ -314,8 +305,6 @@ public class CsvHandler {
 
 			result = Integer.parseInt(line);
 		}
-
 		return result;
 	}
-
 }

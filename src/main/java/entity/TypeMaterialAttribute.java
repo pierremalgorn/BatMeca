@@ -15,16 +15,12 @@ public class TypeMaterialAttribute {
 	private int id;
 	@Column(name = "name")
 	private String name;
-
 	@Column(name = "pattern")
 	private String pattern;
+	// private MaterialAttribute matAttr;
 
-	/*
-	 * private MaterialAttribute matAttr;
-	 */
 	public TypeMaterialAttribute() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
@@ -43,10 +39,9 @@ public class TypeMaterialAttribute {
 		this.name = name;
 	}
 
-	/*
-	 * public MaterialAttribute getMatAttr() { return matAttr; } public void
-	 * setMatAttr(MaterialAttribute matAttr) { this.matAttr = matAttr; }
-	 */
+	// public MaterialAttribute getMatAttr() { return matAttr; }
+	// public void setMatAttr(MaterialAttribute matAttr) { this.matAttr = matAttr; }
+
 	public String getPattern() {
 		return pattern;
 	}
@@ -54,5 +49,4 @@ public class TypeMaterialAttribute {
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
-
 }

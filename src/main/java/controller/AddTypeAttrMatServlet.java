@@ -53,8 +53,6 @@ public class AddTypeAttrMatServlet {
 		type.setPattern(request.getParameter("inputPattern"));
 		// enregistrement en base de données
 		typeMatAttrService.add(type);
-
 		response.sendRedirect(response.encodeURL("./Config"));
 	}
-
 }

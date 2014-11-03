@@ -66,7 +66,5 @@ public class LoginServlet {
 			request.setAttribute("error", "yes");
 			this.doGet(request, response);
 		}
-
 	}
-
 }

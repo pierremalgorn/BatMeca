@@ -79,10 +79,7 @@ public class EditUserAdminServlet {
 		}
 
 		userService.editUser(user);
-
 		response.sendRedirect(response.encodeURL("IndexUser"));
-
 		// response.sendRedirect(response.encodeURL("IndexUser"));
 	}
-
 }

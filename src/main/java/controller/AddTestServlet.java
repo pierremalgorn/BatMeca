@@ -123,9 +123,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 				} else {
 					part.write(savePath + File.separator + "config/" + fileName);
 				}
-
 			}
-
 			// part.write(fileName);
 		}
 		testService.add(test);
@@ -169,5 +167,4 @@ public class AddTestServlet extends ServletInitParametersAware {
 		}
 		return "";
 	}
-
 }

@@ -12,16 +12,14 @@ import entity.TypeUser;
 
 @Repository
 public class TypeUserDaoImpl implements TypeUserDao {
-	public TypeUserDaoImpl() {
 
+	public TypeUserDaoImpl() {
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TypeUser> getTypes() {
-
 		EntityManager em = null;
-
 		List<TypeUser> types = null;
 
 		try {
@@ -36,7 +34,7 @@ public class TypeUserDaoImpl implements TypeUserDao {
 				em.close();
 			}
 		}
+
 		return types;
 	}
-
 }

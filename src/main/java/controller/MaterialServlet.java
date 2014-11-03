@@ -37,10 +37,9 @@ public class MaterialServlet {
 	@RequestMapping(method = RequestMethod.GET)
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		/**
+		/*
 		 * Récupération de la liste des matériaux
-		 * */
+		 */
 		String id = request.getParameter("idMat");
 		Material mat = null;
 		List<Material> childs = null;
@@ -65,5 +64,4 @@ public class MaterialServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

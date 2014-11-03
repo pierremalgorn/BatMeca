@@ -6,5 +6,4 @@ import entity.TypeUser;
 
 public interface TypeUserService {
 	abstract List<TypeUser> getTypes();
-
 }

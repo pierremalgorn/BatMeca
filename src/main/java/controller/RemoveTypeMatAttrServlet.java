@@ -53,5 +53,4 @@ public class RemoveTypeMatAttrServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
 }

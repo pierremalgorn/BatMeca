@@ -32,7 +32,6 @@ public class TestAttribute {
 	private Material material;
 
 	public TestAttribute() {
-
 	}
 
 	public int getId() {
@@ -74,5 +73,4 @@ public class TestAttribute {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-
 }

@@ -85,7 +85,5 @@ public class EditUserServlet {
 		// } else {
 		// response.sendRedirect(response.encodeURL("./IndexUser"));
 		// }
-
 	}
-
 }

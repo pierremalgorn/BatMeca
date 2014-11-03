@@ -72,5 +72,4 @@ public interface MaterialDao {
 	 * @return List<Material> list
 	 * */
 	public List<Material> findByUser(User user);
-
 }
