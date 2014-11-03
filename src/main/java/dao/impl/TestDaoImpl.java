@@ -125,8 +125,9 @@ public class TestDaoImpl implements TestDao {
 		} catch (NoResultException e) {
 			// e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return null;
 	}

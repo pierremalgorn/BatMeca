@@ -110,8 +110,9 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return true;
@@ -184,8 +185,9 @@ public class UserDaoImpl implements UserDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return true;
