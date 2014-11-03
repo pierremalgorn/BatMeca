@@ -32,8 +32,9 @@ public class TypeUserDaoImpl implements TypeUserDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return types;
 	}

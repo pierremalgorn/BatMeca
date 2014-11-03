@@ -28,8 +28,9 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return types;
@@ -48,8 +49,9 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return type;
 	}
@@ -69,8 +71,9 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return false;
 	}
@@ -98,8 +101,9 @@ EntityManager em = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return true;

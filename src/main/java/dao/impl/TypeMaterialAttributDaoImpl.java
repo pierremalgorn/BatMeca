@@ -28,8 +28,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return list;
@@ -48,8 +49,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return type;
 	}
@@ -69,8 +71,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return false;
 	}
@@ -98,8 +101,9 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return true;

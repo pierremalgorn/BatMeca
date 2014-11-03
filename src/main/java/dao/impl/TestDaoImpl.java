@@ -30,8 +30,9 @@ public class TestDaoImpl implements TestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return list;
@@ -53,8 +54,9 @@ public class TestDaoImpl implements TestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 	}
@@ -73,8 +75,9 @@ public class TestDaoImpl implements TestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return test;
@@ -95,8 +98,9 @@ public class TestDaoImpl implements TestDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 	}
@@ -136,8 +140,9 @@ public class TestDaoImpl implements TestDao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		

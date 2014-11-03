@@ -24,8 +24,9 @@ public class UserDaoImpl implements UserDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return users;
@@ -51,8 +52,9 @@ public class UserDaoImpl implements UserDao{
 		}catch (NoResultException e) {
 			//e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return user;
@@ -73,8 +75,9 @@ public class UserDaoImpl implements UserDao{
 		}catch (NoResultException e) {
 			//e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		if(user == null){
@@ -127,8 +130,9 @@ public class UserDaoImpl implements UserDao{
 		}catch (NoResultException e) {
 			//e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		return user;
@@ -147,8 +151,9 @@ public class UserDaoImpl implements UserDao{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 	}

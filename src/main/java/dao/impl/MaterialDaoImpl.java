@@ -30,8 +30,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return list;
@@ -52,8 +53,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 	}
 
@@ -77,8 +79,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		 } catch (Exception e) {
 		 e.printStackTrace();
 		 } finally {
-		 if (em != null)
+		 if (em != null) {
 		 em.close();
+		 }
 		 }
 		
 		 return material;
@@ -101,8 +104,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 	}
@@ -121,8 +125,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		return true;
 	}
@@ -143,8 +148,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 
 		return materials;
@@ -162,8 +168,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		
@@ -183,8 +190,9 @@ public class MaterialDaoImpl implements MaterialDao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			if (em != null)
+			if (em != null) {
 				em.close();
+			}
 		}
 		
 		
