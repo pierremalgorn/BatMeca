@@ -24,7 +24,7 @@ public class FolderHandler {
 
 	public FolderHandler(String root) {
 		super();
-		this.root = root;
+		FolderHandler.root = root;
 	}
 
 	public String getRoot() {
@@ -32,7 +32,7 @@ public class FolderHandler {
 	}
 
 	public void setRoot(String root) {
-		this.root = root;
+		FolderHandler.root = root;
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class FolderHandler {
 	 * Permet de recuperer les chemin de sauvegarde du Test
 	 * */
 	public String getPathSave(Test test) {
-		return this.root + "/" + test.getName();
+		return FolderHandler.root + "/" + test.getName();
 	}
 
 	/**
@@ -281,6 +281,7 @@ public class FolderHandler {
 		while ((ligne = br.readLine()) != null) {
 			data = data + ligne + "<br>";
 		}
+		br.close();
 
 		return new Gson().toJson(data);
 	}
@@ -296,6 +297,7 @@ public class FolderHandler {
 		while ((ligne = br.readLine()) != null) {
 			data = data + ligne + "<br>";
 		}
+		br.close();
 
 		return new Gson().toJson(data);
 	}
