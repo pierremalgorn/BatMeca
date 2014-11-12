@@ -10,8 +10,8 @@
 
 	<mvc:annotation-driven />
 	<!-- Spring webmvc scan ces packages, les classes sont ajoutées au contexte -->
-	<context:component-scan base-package="controller" />
-	<context:component-scan base-package="service" />
+	<context:component-scan base-package="fr.epf.batmeca.controller" />
+	<context:component-scan base-package="fr.epf.batmeca.service" />
 
 	<!-- Les fichiers qui pourront être rendus depuis les controllers -->
 	<bean
