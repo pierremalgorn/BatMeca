@@ -91,7 +91,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 		 */
 		Material mat = materialService.find(Integer.parseInt(request
 				.getParameter("idMat")));
-		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
 
 		Test test = new Test();
 		test.setName(name);
@@ -118,10 +118,12 @@ public class AddTestServlet extends ServletInitParametersAware {
 
 			if (fileName.compareTo("") != 0) {
 				if (cpt == 0) {
-					part.write(savePath + File.separator + "data/" + fileName);
+					part.write(savePath + File.separator + "data"
+							+ File.separator + fileName);
 					cpt++;
 				} else {
-					part.write(savePath + File.separator + "config/" + fileName);
+					part.write(savePath + File.separator + "config"
+							+ File.separator + fileName);
 				}
 			}
 			// part.write(fileName);
@@ -129,10 +131,10 @@ public class AddTestServlet extends ServletInitParametersAware {
 		testService.add(test);
 		// Conversion du fichier data en csv
 		try {
-			csv.datToCsv(
-					f.getPathSave(test) + "/data/" + f.getFileNameData(test),
-					f.getPathSave(test) + "/dataInput.csv", f.getPathSave(test)
-							+ "/header.txt");
+			csv.datToCsv(f.getPathSave(test) + File.separator + "data"
+					+ File.separator + f.getFileNameData(test),
+					f.getPathSave(test) + File.separator + "dataInput.csv",
+					f.getPathSave(test) + File.separator + "header.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,11 +145,12 @@ public class AddTestServlet extends ServletInitParametersAware {
 		ParserConfig prconf = new ParserConfig();
 
 		test = prconf.parseFileConfig(getRessourcePath(), test,
-				f.getPathSave(test) + "/config/" + f.getFileNameConfig(test),
-				typesMat, typesTest);
+				f.getPathSave(test) + File.separator + "config"
+						+ File.separator + f.getFileNameConfig(test), typesMat,
+				typesTest);
 
-		prconf.parseHeader(f.getPathSave(test) + "/header.txt",
-				f.getPathSave(test) + "/header.json");
+		prconf.parseHeader(f.getPathSave(test) + File.separator + "header.txt",
+				f.getPathSave(test) + File.separator + "header.json");
 		// Enregistrement en base de données
 
 		response.sendRedirect(response.encodeURL("./ShowTest?idTest="

@@ -53,7 +53,7 @@ public class SelectRowServlet extends ServletInitParametersAware {
 		Test test = testService.find(Integer.parseInt(request
 				.getParameter("inputId")));
 		FolderHandler f = new FolderHandler(getRessourcePath());
-		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
 		// Verification si le tracer n'a pas deja été éffectuer
@@ -66,15 +66,15 @@ public class SelectRowServlet extends ServletInitParametersAware {
 		if (content == false) {
 			// Création de la courbe
 			try {
-				csv.selectCurve(f.getPathSave(test) + "/dataInput.csv",
-						f.getPathSave(test) + "/curve/" + x + "-" + y + ".csv",
-						x, y);
+				csv.selectCurve(f.getPathSave(test) + File.separator
+						+ "dataInput.csv", f.getPathSave(test) + File.separator
+						+ "curve" + File.separator + x + "-" + y + ".csv", x, y);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String data = csv.readAll(f.getPathSave(test) + "/curve/" + x + "-"
-					+ y + ".csv");
+			String data = csv.readAll(f.getPathSave(test) + File.separator
+					+ "curve" + File.separator + x + "-" + y + ".csv");
 			response.setContentType("application/json");
 			response.getWriter().write(
 					"{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)

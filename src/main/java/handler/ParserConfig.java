@@ -2,6 +2,7 @@ package handler;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -60,12 +61,13 @@ public class ParserConfig {
 		// }
 
 		br.close();
-		// File file = new File(f.getPathSave(test)+"/ColValue.json");
+		// File file = new
+		// File(f.getPathSave(test)+File.separator+"ColValue.json");
 
 		PrintWriter pr;
 
 		// pr = new PrintWriter(new BufferedWriter(new
-		// FileWriter(f.getFileNameData(test)+"/ColValue.json")));
+		// FileWriter(f.getFileNameData(test)+File.separator+"ColValue.json")));
 		// pr = new PrintWriter(file);
 		//
 		// pr.println(new Gson().toJson(list));

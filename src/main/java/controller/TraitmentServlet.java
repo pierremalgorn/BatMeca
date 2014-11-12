@@ -3,6 +3,7 @@ package controller;
 import handler.CsvHandler;
 import handler.FolderHandler;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -42,7 +43,7 @@ public class TraitmentServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
 
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		// Réalisation du lissage
@@ -50,13 +51,14 @@ public class TraitmentServlet extends ServletInitParametersAware {
 		if (lisser != null) {
 			String file = request.getParameter("file");
 			f.addDataHistoryFile("Lisser Data;file " + file, t);
-			csv.lissageOrdre2(file, f.getPathSave(t)
-					+ "/curve/outputLissageTmp.csv");
-			// csv.lissageOrdre2(f.getPathSave(t)+"/dataInput.csv",
-			// f.getPathSave(t)+"/dataOutput.csv");
-			String data = csv.readAll(f.getPathSave(t)
-					+ "/curve/outputLissageTmp.csv");
-			f.renameFile(f.getPathSave(t) + "/curve/outputLissageTmp.csv", file);
+			csv.lissageOrdre2(file, f.getPathSave(t) + File.separator + "curve"
+					+ File.separator + "outputLissageTmp.csv");
+			// csv.lissageOrdre2(f.getPathSave(t)+File.separator+"dataInput.csv",
+			// f.getPathSave(t)+File.separator+"dataOutput.csv");
+			String data = csv.readAll(f.getPathSave(t) + File.separator
+					+ "curve" + File.separator + "outputLissageTmp.csv");
+			f.renameFile(f.getPathSave(t) + File.separator + "curve"
+					+ File.separator + "outputLissageTmp.csv", file);
 			response.getWriter().write(data);
 		}
 		// Réalisation d'une coupe de courbe
@@ -115,9 +117,10 @@ public class TraitmentServlet extends ServletInitParametersAware {
 		 */
 		String reset = request.getParameter("reset");
 		if (reset != null) {
-			// csv.datToCsv(f.getPathSave(t)+"/data/"+f.getFileNameData(t),
-			// f.getPathSave(t)+"/dataInput.csv");
-			String data = csv.readAll(f.getPathSave(t) + "/dataInput.csv");
+			// csv.datToCsv(f.getPathSave(t)+File.separator+"data"+File.separator+f.getFileNameData(t),
+			// f.getPathSave(t)+File.separator+"dataInput.csv");
+			String data = csv.readAll(f.getPathSave(t) + File.separator
+					+ "dataInput.csv");
 			System.out.println("RESET = " + reset);
 			f.addDataHistoryFile("RESET FILE", t);
 			response.getWriter().write(data);
@@ -142,7 +145,7 @@ public class TraitmentServlet extends ServletInitParametersAware {
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));
 		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
 		String file = request.getParameter("file");
-		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
 
 		FolderHandler f = new FolderHandler(getRessourcePath());
 		Test test = testService.find(idTest);
@@ -161,16 +164,18 @@ public class TraitmentServlet extends ServletInitParametersAware {
 		}
 		try {
 			csv.factorColumn(nbColumn, other, factor, file, f.getPathSave(test)
-					+ "/curve/factorcurve.csv");
+					+ File.separator + "curve" + File.separator
+					+ "factorcurve.csv");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 		f.addDataHistoryFile("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
-		String data = csv.readAll(f.getPathSave(test)
-				+ "/curve/factorcurve.csv");
-		f.renameFile(f.getPathSave(test) + "/curve/factorcurve.csv", file);
+		String data = csv.readAll(f.getPathSave(test) + File.separator
+				+ "curve" + File.separator + "factorcurve.csv");
+		f.renameFile(f.getPathSave(test) + File.separator + "curve"
+				+ File.separator + "factorcurve.csv", file);
 		response.getWriter().write(data);
 	}
 }

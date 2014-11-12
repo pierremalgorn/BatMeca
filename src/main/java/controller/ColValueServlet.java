@@ -2,6 +2,7 @@ package controller;
 
 import handler.FolderHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -66,7 +67,7 @@ public class ColValueServlet extends ServletInitParametersAware {
 		list.add(elem);
 		list.add(unit);
 
-		f.saveToJson(list, f.getPathSave(test) + "/header.json");
+		f.saveToJson(list, f.getPathSave(test) + File.separator + "header.json");
 		response.getWriter().write(new Gson().toJson(list));
 	}
 }

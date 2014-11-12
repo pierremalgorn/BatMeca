@@ -47,7 +47,7 @@ public class FolderHandler {
 	 * Permet de recuperer les chemin de sauvegarde du Test
 	 * */
 	public String getPathSave(Test test) {
-		return FolderHandler.root + "/" + test.getName();
+		return FolderHandler.root + File.separator + test.getName();
 	}
 
 	/**
@@ -70,14 +70,15 @@ public class FolderHandler {
 
 		File f = new File(path);
 		f.mkdirs();
-		this.makeDir(path + "/config");
-		this.makeDir(path + "/data");
-		this.makeDir(path + "/history");
-		this.makeDir(path + "/curve");
-		File fh = new File(path + "/history/historic");
+		this.makeDir(path + File.separator + "config");
+		this.makeDir(path + File.separator + "data");
+		this.makeDir(path + File.separator + "history");
+		this.makeDir(path + File.separator + "curve");
+		File fh = new File(path + File.separator + "history" + File.separator
+				+ "historic");
 		fh.createNewFile();
 
-		File fr = new File(path + "/result");
+		File fr = new File(path + File.separator + "result");
 		fr.createNewFile();
 	}
 
@@ -87,7 +88,7 @@ public class FolderHandler {
 	}
 
 	public String getFileNameData(Test t) {
-		File file = new File(this.getPathSave(t) + "/data");
+		File file = new File(this.getPathSave(t) + File.separator + "data");
 		File[] files = file.listFiles();
 
 		/*
@@ -99,7 +100,7 @@ public class FolderHandler {
 	}
 
 	public String getFileNameConfig(Test t) {
-		File file = new File(this.getPathSave(t) + "/config");
+		File file = new File(this.getPathSave(t) + File.separator + "config");
 		File[] files = file.listFiles();
 
 		/*
@@ -193,7 +194,8 @@ public class FolderHandler {
 	public void addDataHistoryFile(String data, Test test) throws IOException {
 		PrintWriter pr;
 		pr = new PrintWriter(new BufferedWriter(new FileWriter(
-				this.getPathSave(test) + "/history/historic", true)));
+				this.getPathSave(test) + File.separator + "history"
+						+ File.separator + "historic", true)));
 		pr.println(data);
 		// pr.write(data);
 		pr.close();
@@ -210,7 +212,7 @@ public class FolderHandler {
 	public void addResult(String data, Test test) throws IOException {
 		PrintWriter pr;
 		pr = new PrintWriter(new BufferedWriter(new FileWriter(
-				this.getPathSave(test) + "/result", true)));
+				this.getPathSave(test) + File.separator + "result", true)));
 		pr.println(data);
 		pr.close();
 	}
@@ -219,8 +221,10 @@ public class FolderHandler {
 	 * permet de renommer le fichier de sortie d'un essai
 	 * */
 	public void renameCsvOutput(Test test) {
-		File file = new File(this.getPathSave(test) + "/dataOutput.csv");
-		file.renameTo(new File(this.getPathSave(test) + "/dataInput.csv"));
+		File file = new File(this.getPathSave(test) + File.separator
+				+ "dataOutput.csv");
+		file.renameTo(new File(this.getPathSave(test) + File.separator
+				+ "dataInput.csv"));
 	}
 
 	/**
@@ -229,7 +233,7 @@ public class FolderHandler {
 	 * @param test
 	 * */
 	public File[] listCurve(Test test) {
-		File file = new File(this.getPathSave(test) + "/curve");
+		File file = new File(this.getPathSave(test) + File.separator + "curve");
 		File[] files = file.listFiles();
 		Arrays.sort(files);
 		return files;
@@ -274,7 +278,7 @@ public class FolderHandler {
 		String data = "";
 
 		InputStream ips = new FileInputStream(this.getPathSave(test)
-				+ "/result");
+				+ File.separator + "result");
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		String ligne = "";
@@ -290,7 +294,7 @@ public class FolderHandler {
 		String data = "";
 
 		InputStream ips = new FileInputStream(this.getPathSave(test)
-				+ "/history/historic");
+				+ File.separator + "history" + File.separator + "historic");
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		String ligne = "";

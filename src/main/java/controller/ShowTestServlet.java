@@ -45,15 +45,16 @@ public class ShowTestServlet extends ServletInitParametersAware {
 
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(getRoot() + "/" + getName());
+		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
 
 		FolderHandler f = new FolderHandler(getRessourcePath());
 
 		// Récuperation de l'header
 		ArrayList<String[]> list = f.deserializeFileJson(f.getPathSave(t)
-				+ "/header.json");
+				+ File.separator + "header.json");
 
-		// String data = csv.readAll(f.getPathSave(t)+"/dataInput.csv");
+		// String data =
+		// csv.readAll(f.getPathSave(t)+File.separator+"dataInput.csv");
 
 		// Recuperation des données et du nom des fichiers
 		File[] files = f.listCurve(t);

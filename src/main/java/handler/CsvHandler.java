@@ -1,6 +1,7 @@
 package handler;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,10 +50,10 @@ public class CsvHandler {
 	 * */
 	public void echantillon(int echant) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
-				"/home/max/BatMeca/data.csv"), ',',
-				CSVWriter.NO_QUOTE_CHARACTER, 2);
+				"/home/max/BatMeca/data.csv"), ',', /* FIXME hardcoded link */
+		CSVWriter.NO_QUOTE_CHARACTER, 2);
 		CSVWriter writer = new CSVWriter(new FileWriter(
-				"/home/max/BatMeca/data1.csv"), ',');
+				"/home/max/BatMeca/data1.csv"), ','); /* FIXME hardcoded link */
 		List<String[]> myEntries = reader.readAll();
 		for (int i = 0; i < myEntries.size(); i = i + echant) {
 			// System.out.println("i = "+i);
@@ -110,6 +111,7 @@ public class CsvHandler {
 	 * */
 	public void deletePortionCsv(String input, int start, int end)
 			throws IOException, InterruptedException {
+		/* FIXME hardcoded link */
 		String[] cmd = new String[] { "/bin/sed", "-i", "-e",
 				start + "," + end + "d", input };
 		Runtime runtime = Runtime.getRuntime();
@@ -212,8 +214,9 @@ public class CsvHandler {
 	 */
 	public void datToCsv(String input, String output, String header)
 			throws IOException, InterruptedException {
-		String[] cmd = new String[] { this.root + "/script/datToCsv", input,
-				output, header };
+		String[] cmd = new String[] {
+				this.root + File.separator + "script" + File.separator
+						+ "datToCsv", input, output, header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 		process.waitFor();
