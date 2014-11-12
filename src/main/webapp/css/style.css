@@ -38,6 +38,14 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.navbar {
+.navbar-inverse {
    border-radius: 0px;
+   background-image: linear-gradient(to bottom,#0072c6 0,#0072c6 100%);
+   border-color: #0072c6;
+}
+.navbar-inverse .navbar-brand {
+	color: #333333;
+}
+.navbar-inverse .navbar-nav>li>a {
+	color: #333333;
 }
