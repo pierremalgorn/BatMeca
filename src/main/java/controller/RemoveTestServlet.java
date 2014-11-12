@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
-import controller.util.ServletInitParametersAware;
+import service.impl.ValueService;
 import entity.Test;
 
 /**
@@ -23,8 +23,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/RemoveTest")
-public class RemoveTestServlet extends ServletInitParametersAware {
+public class RemoveTestServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -37,7 +39,7 @@ public class RemoveTestServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		Test t = testService.find(Integer.parseInt(id));
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		f.deleteFolder(t);
 		testService.remove(t);
 

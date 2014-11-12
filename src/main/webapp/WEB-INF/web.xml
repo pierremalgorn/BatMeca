@@ -10,18 +10,6 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <context-param>
-    <param-name>ressourcePath</param-name>
-    <param-value>/opt/BatMeca/Ressources</param-value>
-  </context-param>
-  <context-param>
-    <param-name>name</param-name>
-    <param-value>BatmecaNewGeneration</param-value>
-  </context-param>
-  <context-param>
-    <param-name>root</param-name>
-    <param-value>/opt/BatMeca</param-value>
-  </context-param>
-  <context-param>
     <param-name>
         javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
     </param-name>

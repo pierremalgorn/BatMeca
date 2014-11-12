@@ -11,6 +11,7 @@
 	<mvc:annotation-driven />
 	<!-- Spring webmvc scan ces packages, les classes sont ajoutées au contexte -->
 	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="service" />
 
 	<!-- Les fichiers qui pourront être rendus depuis les controllers -->
 	<bean
@@ -22,5 +23,7 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
+
+	<context:property-placeholder location="classpath:value.properties" />
 
 </beans>

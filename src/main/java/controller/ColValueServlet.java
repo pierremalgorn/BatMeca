@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
+import service.impl.ValueService;
 
 import com.google.gson.Gson;
 
-import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
@@ -29,8 +29,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/ColValue")
-public class ColValueServlet extends ServletInitParametersAware {
+public class ColValueServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -53,7 +55,7 @@ public class ColValueServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		int nbCol = Integer.parseInt(request.getParameter("nbField"));
 		int id = Integer.parseInt(request.getParameter("inputId"));
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		Test test = testService.find(id);
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		String[] elem = new String[nbCol];

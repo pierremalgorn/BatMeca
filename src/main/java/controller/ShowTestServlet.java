@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
+import service.impl.ValueService;
 
 import com.google.gson.Gson;
 
-import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
@@ -30,8 +30,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/ShowTest")
-public class ShowTestServlet extends ServletInitParametersAware {
+public class ShowTestServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -45,9 +47,10 @@ public class ShowTestServlet extends ServletInitParametersAware {
 
 		int idTest = Integer.parseInt(request.getParameter("idTest"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
+		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
+				+ valueService.getName());
 
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 
 		// Récuperation de l'header
 		ArrayList<String[]> list = f.deserializeFileJson(f.getPathSave(t)

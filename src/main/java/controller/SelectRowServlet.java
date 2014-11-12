@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
-import controller.util.ServletInitParametersAware;
+import service.impl.ValueService;
 import entity.Test;
 
 /**
@@ -25,8 +25,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/SelectRow")
-public class SelectRowServlet extends ServletInitParametersAware {
+public class SelectRowServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -52,8 +54,9 @@ public class SelectRowServlet extends ServletInitParametersAware {
 
 		Test test = testService.find(Integer.parseInt(request
 				.getParameter("inputId")));
-		FolderHandler f = new FolderHandler(getRessourcePath());
-		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
+				+ valueService.getName());
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
 		// Verification si le tracer n'a pas deja été éffectuer

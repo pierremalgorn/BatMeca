@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
-import controller.util.ServletInitParametersAware;
+import service.impl.ValueService;
 import entity.Test;
 
 /**
@@ -23,8 +23,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/ShowHistoric")
-public class ShowHistoricServlet extends ServletInitParametersAware {
+public class ShowHistoricServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -37,7 +39,7 @@ public class ShowHistoricServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Test test = testService.find(id);
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		String data = f.readHistoric(test);
 
 		// request.setAttribute("results", data);

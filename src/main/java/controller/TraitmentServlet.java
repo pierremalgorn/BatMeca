@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.TestService;
+import service.impl.ValueService;
 
 import com.google.gson.Gson;
 
-import controller.util.ServletInitParametersAware;
 import entity.Test;
 
 /**
@@ -29,8 +29,10 @@ import entity.Test;
  */
 @Controller
 @RequestMapping("/Traitment")
-public class TraitmentServlet extends ServletInitParametersAware {
+public class TraitmentServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 
@@ -43,9 +45,10 @@ public class TraitmentServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
+		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
+				+ valueService.getName());
 
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		// Réalisation du lissage
 		String lisser = request.getParameter("lisser");
 		if (lisser != null) {
@@ -145,9 +148,10 @@ public class TraitmentServlet extends ServletInitParametersAware {
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));
 		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
 		String file = request.getParameter("file");
-		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
+		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
+				+ valueService.getName());
 
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
 

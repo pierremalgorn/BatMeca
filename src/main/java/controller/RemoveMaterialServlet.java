@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.MaterialService;
-import controller.util.ServletInitParametersAware;
+import service.impl.ValueService;
 import entity.Material;
 
 /**
@@ -25,8 +25,10 @@ import entity.Material;
  */
 @Controller
 @RequestMapping("/RemoveMaterial")
-public class RemoveMaterialServlet extends ServletInitParametersAware {
+public class RemoveMaterialServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private MaterialService materialService;
 
@@ -39,7 +41,7 @@ public class RemoveMaterialServlet extends ServletInitParametersAware {
 			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("idMat"));
 		Material mat = materialService.find(id);
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		f.cleanMatFolder(mat);
 		materialService.remove(mat);
 

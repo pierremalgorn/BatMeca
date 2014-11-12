@@ -28,7 +28,7 @@ import service.MaterialService;
 import service.TestService;
 import service.TypeMaterialAttributService;
 import service.TypeTestAttributService;
-import controller.util.ServletInitParametersAware;
+import service.impl.ValueService;
 import entity.Material;
 import entity.Test;
 import entity.TestAttribute;
@@ -45,8 +45,10 @@ import entity.User;
 maxFileSize = 1024 * 1024 * 10, // 10MB
 maxRequestSize = 1024 * 1024 * 50)
 // 50MB
-public class AddTestServlet extends ServletInitParametersAware {
+public class AddTestServlet {
 
+	@Autowired
+	private ValueService valueService;
 	@Autowired
 	private TestService testService;
 	@Autowired
@@ -91,7 +93,8 @@ public class AddTestServlet extends ServletInitParametersAware {
 		 */
 		Material mat = materialService.find(Integer.parseInt(request
 				.getParameter("idMat")));
-		CsvHandler csv = new CsvHandler(getRoot() + File.separator + getName());
+		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
+				+ valueService.getName());
 
 		Test test = new Test();
 		test.setName(name);
@@ -107,7 +110,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 
 		// Création de repertoire associer
 
-		FolderHandler f = new FolderHandler(getRessourcePath());
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		f.initDirectory(test);
 		String savePath = f.getPathSave(test);
 		// Upload des fichiers
@@ -144,7 +147,7 @@ public class AddTestServlet extends ServletInitParametersAware {
 		 */
 		ParserConfig prconf = new ParserConfig();
 
-		test = prconf.parseFileConfig(getRessourcePath(), test,
+		test = prconf.parseFileConfig(valueService.getResourcePath(), test,
 				f.getPathSave(test) + File.separator + "config"
 						+ File.separator + f.getFileNameConfig(test), typesMat,
 				typesTest);
