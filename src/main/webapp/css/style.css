@@ -1,7 +1,7 @@
 body {
 /*   padding-top: 40px; */
 /*   padding-bottom: 40px; */
-/*  background-color: #eee; */
+  background-color: #eee;
 }
 
 .form-signin {
@@ -40,12 +40,14 @@ body {
 }
 .navbar-inverse {
    border-radius: 0px;
-   background-image: linear-gradient(to bottom,#0072c6 0,#0072c6 100%);
-   border-color: #0072c6;
 }
 .navbar-inverse .navbar-brand {
-	color: #333333;
+  color: #ccc;
 }
-.navbar-inverse .navbar-nav>li>a {
-	color: #333333;
+.navbar-inverse .navbar-nav > li > a.logout {
+  color: #d77;
+}
+.navbar-inverse .navbar-nav > li > a.logout:active,
+.navbar-inverse .navbar-nav > li > a.logout:hover {
+  color: #fff;
 }
