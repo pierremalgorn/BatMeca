@@ -14,6 +14,7 @@ import fr.epf.batmeca.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
+	@Override
 	public List<User> findAllUsers() {
 		EntityManager em = null;
 
@@ -35,13 +36,14 @@ public class UserDaoImpl implements UserDao {
 	/**
 	 * Methode permettant de r�cuperer un Utilisateur en fonction de son login
 	 * et son mot de passe
-	 * 
+	 *
 	 * @param String
 	 *            login Login Utilisateur
 	 * @param String
 	 *            mdp mot de passe utilisateur
-	 * 
+	 *
 	 * */
+	@Override
 	public User getUserByLoginMdp(String login, String mdp) {
 		User user = null;
 		EntityManager em = null;
@@ -64,6 +66,7 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
 	public boolean loginExist(String login) {
 		User user = null;
 		EntityManager em = null;
@@ -108,13 +111,14 @@ public class UserDaoImpl implements UserDao {
 	/**
 	 * Methode permettant de r�cuperer un Utilisateur en fonction de son login
 	 * et son mot de passe
-	 * 
+	 *
 	 * @param String
 	 *            login Login Utilisateur
 	 * @param String
 	 *            mdp mot de passe utilisateur
-	 * 
+	 *
 	 * */
+	@Override
 	public User getUser(int id) {
 		User user = null;
 		EntityManager em = null;

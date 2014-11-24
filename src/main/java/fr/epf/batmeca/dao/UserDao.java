@@ -7,7 +7,7 @@ import fr.epf.batmeca.entity.User;
 public interface UserDao {
 	/**
 	 * Methode permettant de renvoyer la liste de tout les utilisateur
-	 * 
+	 *
 	 * @return liste des utilisateur
 	 * */
 	public List<User> findAllUsers();
@@ -15,7 +15,7 @@ public interface UserDao {
 	/**
 	 * Permet de renvoyer un utilisateur en fonction de son login et son mot de
 	 * passe
-	 * 
+	 *
 	 * @param String
 	 *            login Login de l'utilisateur
 	 * @param String
@@ -26,7 +26,7 @@ public interface UserDao {
 
 	/**
 	 * Methode permettant d'ajouter un utilisateur
-	 * 
+	 *
 	 * @param user
 	 *            utilisateur a ajouter
 	 * @return true si l'utilisateur � bien �t� ajouter false sinon
@@ -35,7 +35,7 @@ public interface UserDao {
 
 	/**
 	 * Methode permettant de savoir si un login existe
-	 * 
+	 *
 	 * @param String
 	 *            login
 	 * @return true si le login existe false sinon
@@ -44,7 +44,7 @@ public interface UserDao {
 
 	/**
 	 * Permet de renvoyer un utilisateur en fonction de son id
-	 * 
+	 *
 	 * @param String
 	 *            login Login de l'utilisateur
 	 * @param String
@@ -55,7 +55,7 @@ public interface UserDao {
 
 	/**
 	 * Methode permettant de modifier un utilisateur
-	 * 
+	 *
 	 * @param user
 	 *            utilisateur � modifier
 	 * @return true si l'utilisateur � bien �t� modifi� false sinon
@@ -64,7 +64,7 @@ public interface UserDao {
 
 	/**
 	 * Permet de supprimer un utilisateur
-	 * 
+	 *
 	 * @param User
 	 *            user: utilisateur à supprimer
 	 * */

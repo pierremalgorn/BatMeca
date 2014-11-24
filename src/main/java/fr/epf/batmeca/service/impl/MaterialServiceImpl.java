@@ -24,6 +24,7 @@ public class MaterialServiceImpl implements MaterialService {
 		return materialDao.findAll();
 	}
 
+	@Override
 	public void addMaterial(Material mat) {
 		materialDao.addMaterial(mat);
 	}

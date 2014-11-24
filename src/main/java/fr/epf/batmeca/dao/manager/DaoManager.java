@@ -19,7 +19,7 @@ public enum DaoManager {
 
 	/**
 	 * Permet de recuperer l'entity Manager
-	 * 
+	 *
 	 * @return EntityManagerFactory
 	 * */
 	public EntityManager getEntityManager() {

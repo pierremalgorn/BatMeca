@@ -24,7 +24,7 @@ public class CsvHandler {
 	/**
 	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un
 	 * fichier csv
-	 * 
+	 *
 	 * @param input
 	 *            fichier a lire
 	 * */
@@ -72,7 +72,7 @@ public class CsvHandler {
 
 	/**
 	 * Lissage des points
-	 * 
+	 *
 	 * @param input
 	 *            chemin du fichier d'entree
 	 * @param output
@@ -106,7 +106,7 @@ public class CsvHandler {
 
 	/**
 	 * Permet de supprimer un interval de point
-	 * 
+	 *
 	 * @throws InterruptedException
 	 * */
 	public void deletePortionCsv(String input, int start, int end)
@@ -121,7 +121,7 @@ public class CsvHandler {
 
 	/**
 	 * Permet de calculer le max d'un colonne
-	 * 
+	 *
 	 * @throws InterruptedException
 	 * */
 	public Float maxValueColumn(int numColumn, String input)
@@ -151,7 +151,7 @@ public class CsvHandler {
 
 	/**
 	 * Calcule du min sur une colonne
-	 * 
+	 *
 	 * @throws InterruptedException
 	 * */
 	public Float minValueColumn(int numColumn) throws NumberFormatException,
@@ -224,7 +224,7 @@ public class CsvHandler {
 
 	/**
 	 * Permet de selctionner un axe en fonction d'un autre
-	 * 
+	 *
 	 * @param input
 	 *            : fichier csv d'entré
 	 * @param output
@@ -260,7 +260,7 @@ public class CsvHandler {
 
 	/**
 	 * Permet de couper un courbe apres un point
-	 * 
+	 *
 	 * @param start
 	 *            point de coupure
 	 * @param input
@@ -275,7 +275,7 @@ public class CsvHandler {
 
 	/**
 	 * Permet de couper une courbe avant un point
-	 * 
+	 *
 	 * @param end
 	 *            point de coupure
 	 * @param input
@@ -290,7 +290,7 @@ public class CsvHandler {
 
 	/**
 	 * Retourne le nombre de ligne d'un fichier
-	 * 
+	 *
 	 * @param input
 	 *            : chemin du fichier
 	 * @return nombre deligne present dans le fichier

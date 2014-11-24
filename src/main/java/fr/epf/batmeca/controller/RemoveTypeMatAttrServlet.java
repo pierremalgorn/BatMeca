@@ -19,7 +19,7 @@ import fr.epf.batmeca.service.TypeMaterialAttributService;
 /**
  * Permet de supprimer un type d'attribut matériaux Servlet implementation class
  * RemoveTypeMatAttrServlet
- * 
+ *
  */
 @Controller
 @RequestMapping("/RemoveTypeMatAttr")

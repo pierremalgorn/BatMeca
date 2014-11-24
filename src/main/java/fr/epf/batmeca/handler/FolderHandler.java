@@ -61,7 +61,7 @@ public class FolderHandler {
 
 	/**
 	 * Permet de creer les repertoires relatif à une essai
-	 * 
+	 *
 	 * @param test
 	 *            : essai à initialisé
 	 * */
@@ -149,7 +149,7 @@ public class FolderHandler {
 
 	/**
 	 * Permet de parser le header de l'essai
-	 * 
+	 *
 	 * @param input
 	 *            chemin du fichier à parser
 	 * */
@@ -185,7 +185,7 @@ public class FolderHandler {
 
 	/**
 	 * Permet d'ajouter un information au fichier d'historique d'un essai
-	 * 
+	 *
 	 * @param data
 	 *            information a rajouter au fichier
 	 * @param test
@@ -203,7 +203,7 @@ public class FolderHandler {
 
 	/**
 	 * Permet d'ajouter un resulat
-	 * 
+	 *
 	 * @param data
 	 *            : information a rajouter
 	 * @param test
@@ -229,7 +229,7 @@ public class FolderHandler {
 
 	/**
 	 * Methode permettant de renvoyer la liste des fichiers de courbes
-	 * 
+	 *
 	 * @param test
 	 * */
 	public File[] listCurve(Test test) {
@@ -241,7 +241,7 @@ public class FolderHandler {
 
 	/**
 	 * Methode permettant de renomer un fichier
-	 * 
+	 *
 	 * @param input
 	 *            fichier à renommer
 	 * @param output
@@ -254,7 +254,7 @@ public class FolderHandler {
 
 	/**
 	 * Permet de deserializer un fichier Json
-	 * 
+	 *
 	 * @param input
 	 *            path du fichier à lire
 	 * */

@@ -17,30 +17,37 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl() {
 	}
 
+	@Override
 	public List<User> findAllUsers() {
 		return userDao.findAllUsers();
 	}
 
+	@Override
 	public User getUserByLoginMdp(String login, String mdp) {
 		return userDao.getUserByLoginMdp(login, mdp);
 	}
 
+	@Override
 	public boolean addUser(User user) {
 		return userDao.addUser(user);
 	}
 
+	@Override
 	public boolean loginExist(String login) {
 		return userDao.loginExist(login);
 	}
 
+	@Override
 	public User getUser(int id) {
 		return userDao.getUser(id);
 	}
 
+	@Override
 	public boolean editUser(User user) {
 		return userDao.editUser(user);
 	}
 
+	@Override
 	public void removeUser(User user) {
 		userDao.removeUser(user);
 	}

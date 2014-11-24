@@ -26,12 +26,14 @@ public class LoginFilter implements Filter {
 	/**
 	 * @see Filter#destroy()
 	 */
+	@Override
 	public void destroy() {
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		/* Cast des objets request et response */
@@ -57,6 +59,7 @@ public class LoginFilter implements Filter {
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
+	@Override
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
 }

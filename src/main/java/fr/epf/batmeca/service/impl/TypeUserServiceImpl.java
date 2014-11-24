@@ -17,6 +17,7 @@ public class TypeUserServiceImpl implements TypeUserService {
 	public TypeUserServiceImpl() {
 	}
 
+	@Override
 	public List<TypeUser> getTypes() {
 		return typeUserDao.getTypes();
 	}

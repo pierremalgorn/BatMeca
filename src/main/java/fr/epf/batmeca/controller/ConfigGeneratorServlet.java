@@ -45,7 +45,7 @@ public class ConfigGeneratorServlet {
 		Enumeration<String> params = request.getParameterNames();
 
 		while (params.hasMoreElements()) {
-			String string = (String) params.nextElement();
+			String string = params.nextElement();
 			// String val = request.getParameter(string);
 
 			System.out.println("Name Field = " + string);

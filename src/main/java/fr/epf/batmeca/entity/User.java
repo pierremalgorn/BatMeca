@@ -34,7 +34,7 @@ public class User {
 
 	/*
 	 * @ManyToOne(fetch = FetchType.EAGER)
-	 * 
+	 *
 	 * @JoinColumn(name="id_user",nullable=true) private User user;
 	 */
 	/*

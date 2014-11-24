@@ -14,6 +14,7 @@ import fr.epf.batmeca.entity.User;
 @Repository
 public class MaterialDaoImpl implements MaterialDao {
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Material> findAll() {
 		EntityManager em = null;
@@ -33,6 +34,7 @@ public class MaterialDaoImpl implements MaterialDao {
 		return list;
 	}
 
+	@Override
 	public void addMaterial(Material mat) {
 		EntityManager em = null;
 		try {
@@ -105,6 +107,7 @@ public class MaterialDaoImpl implements MaterialDao {
 		return true;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Material> findAllNoParent() {
 		EntityManager em = null;
