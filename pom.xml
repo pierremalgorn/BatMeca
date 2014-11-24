@@ -20,21 +20,7 @@
 		<spring.version>4.1.1.RELEASE</spring.version>
 		<junit.version>3.8.1</junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.language>java</sonar.language>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 	</properties>
-
-	<profiles>
-		<profile>
-			<id>js</id>
-			<properties>
-				<source.dir>src/main/webapp/js</source.dir>
-				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-				<sonar.language>js</sonar.language>
-				<sonar.branch>javascript</sonar.branch>
-			</properties>
-		</profile>
-	</profiles>
 
 	<dependencies>
 		<dependency>
