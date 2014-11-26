@@ -9,9 +9,11 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<mvc:annotation-driven />
+
 	<!-- Spring webmvc scan ces packages, les classes sont ajoutées au contexte -->
-	<context:component-scan base-package="fr.epf.batmeca.controller" />
+	<context:component-scan base-package="fr.epf.batmeca.dao" />
 	<context:component-scan base-package="fr.epf.batmeca.service" />
+	<context:component-scan base-package="fr.epf.batmeca.controller" />
 
 	<!-- Les fichiers qui pourront être rendus depuis les controllers -->
 	<bean

@@ -3,32 +3,31 @@ package fr.epf.batmeca.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.epf.batmeca.dao.TypeMaterialAttributDao;
-import fr.epf.batmeca.dao.manager.DaoManager;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 
 @Repository
+@Transactional
 public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
+
+	@PersistenceContext
+	private EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TypeMaterialAttribute> findAll() {
-		EntityManager em = null;
 		List<TypeMaterialAttribute> list = null;
 
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			list = em.createQuery("Select t From TypeMaterialAttribute t")
 					.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return list;
@@ -36,18 +35,12 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@Override
 	public TypeMaterialAttribute find(int id) {
-		EntityManager em = null;
 		TypeMaterialAttribute type = null;
 
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			type = em.find(TypeMaterialAttribute.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return type;
@@ -55,19 +48,12 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@Override
 	public boolean remove(TypeMaterialAttribute type) {
-		EntityManager em = null;
-
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.remove(em.contains(type) ? type : em.merge(type));
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return false;
@@ -81,19 +67,12 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@Override
 	public boolean add(TypeMaterialAttribute type) {
-		EntityManager em = null;
-
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.persist(type);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return true;

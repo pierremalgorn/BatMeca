@@ -4,30 +4,29 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.epf.batmeca.dao.UserDao;
-import fr.epf.batmeca.dao.manager.DaoManager;
 import fr.epf.batmeca.entity.User;
 
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao {
+
+	@PersistenceContext
+	private EntityManager em;
 
 	@Override
 	public List<User> findAllUsers() {
-		EntityManager em = null;
-
 		List<User> users = null;
+
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			users = em.createNamedQuery("findAllUsers").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return users;
@@ -46,10 +45,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUserByLoginMdp(String login, String mdp) {
 		User user = null;
-		EntityManager em = null;
 
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			user = (User) em
 					.createQuery(
 							"Select u From User u Where u.email= :email And u.password = :mdp")
@@ -57,10 +54,6 @@ public class UserDaoImpl implements UserDao {
 					.getSingleResult();
 		} catch (NoResultException e) {
 			// e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return user;
@@ -69,20 +62,14 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean loginExist(String login) {
 		User user = null;
-		EntityManager em = null;
 
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			user = (User) em
 					.createQuery("Select u From User u Where u.login= :login")
 					.setParameter("login", login)
 					.getSingleResult();
 		} catch (NoResultException e) {
 			// e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return user != null;
@@ -90,19 +77,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean addUser(User user) {
-		EntityManager em = null;
-
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.persist(user);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return true;
@@ -121,19 +101,13 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User getUser(int id) {
 		User user = null;
-		EntityManager em = null;
 
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			user = (User) em
 					.createQuery("Select u From User u Where u.id= :id")
 					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			// e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return user;
@@ -141,36 +115,23 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void removeUser(User user) {
-		EntityManager em = null;
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.remove(em.contains(user) ? user : em.merge(user));
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 	}
 
 	@Override
 	public boolean editUser(User user) {
-		EntityManager em = null;
-
 		try {
-			em = DaoManager.INSTANCE.getEntityManager();
 			em.getTransaction().begin();
 			em.merge(user);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			if (em != null) {
-				em.close();
-			}
 		}
 
 		return true;
