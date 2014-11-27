@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Test;
-import fr.epf.batmeca.service.TestService;
+import fr.epf.batmeca.service.ITestService;
 
 /**
  * Servlet implementation class IndexTestServlet
@@ -25,7 +25,7 @@ import fr.epf.batmeca.service.TestService;
 public class IndexTestServlet {
 
 	@Autowired
-	private TestService testService;
+	private ITestService testService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

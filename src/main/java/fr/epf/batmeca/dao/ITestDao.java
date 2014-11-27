@@ -6,7 +6,7 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.User;
 
-public interface TestDao {
+public interface ITestDao {
 	/**
 	 * Permet d'obtenir la liste de tout les essais
 	 *

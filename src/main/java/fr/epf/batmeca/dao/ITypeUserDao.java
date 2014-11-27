@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.epf.batmeca.entity.TypeUser;
 
-public interface TypeUserDao {
+public interface ITypeUserDao {
 
 	/**
 	 * Methode permettant de recuperer le liste des types

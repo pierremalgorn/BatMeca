@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.UserService;
+import fr.epf.batmeca.service.IUserService;
 
 /**
  * Servlet implementation class IndexUser
@@ -25,7 +25,7 @@ import fr.epf.batmeca.service.UserService;
 public class IndexUserServlet {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
 
 /**
  * Servlet implementation class AddTypeAttrMat
@@ -24,7 +24,7 @@ import fr.epf.batmeca.service.TypeMaterialAttributService;
 public class AddTypeAttrMatServlet {
 
 	@Autowired
-	private TypeMaterialAttributService typeMatAttrService;
+	private ITypeMaterialAttributService typeMatAttrService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

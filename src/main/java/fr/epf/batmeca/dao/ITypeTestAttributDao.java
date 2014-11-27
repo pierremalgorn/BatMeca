@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.epf.batmeca.entity.TypeTestAttribute;
 
-public interface TypeTestAttributDao {
+public interface ITypeTestAttributDao {
 	/**
 	 * Permet de recuperer l'ensemble de type
 	 *

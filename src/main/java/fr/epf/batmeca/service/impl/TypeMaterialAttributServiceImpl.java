@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.epf.batmeca.dao.TypeMaterialAttributDao;
+import fr.epf.batmeca.dao.ITypeMaterialAttributDao;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
 
 @Service
 public class TypeMaterialAttributServiceImpl implements
-		TypeMaterialAttributService {
+		ITypeMaterialAttributService {
 
 	@Autowired
-	private TypeMaterialAttributDao typeMaterialAttributDao;
+	private ITypeMaterialAttributDao typeMaterialAttributDao;
 
 	@Override
 	@Transactional(readOnly = true)

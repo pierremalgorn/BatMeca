@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
-import fr.epf.batmeca.service.TestService;
-import fr.epf.batmeca.service.impl.ValueService;
+import fr.epf.batmeca.service.ITestService;
+import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
  * Permet d'afficher un éssai Servlet implementation class ShowTestServlet
@@ -31,9 +31,9 @@ import fr.epf.batmeca.service.impl.ValueService;
 public class ShowTestServlet {
 
 	@Autowired
-	private ValueService valueService;
+	private ValueServiceImpl valueService;
 	@Autowired
-	private TestService testService;
+	private ITestService testService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

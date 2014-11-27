@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
 
 /**
  * Permet de supprimer un type d'attribut matériaux Servlet implementation class
@@ -26,7 +26,7 @@ import fr.epf.batmeca.service.TypeMaterialAttributService;
 public class RemoveTypeMatAttrServlet {
 
 	@Autowired
-	private TypeMaterialAttributService typeService;
+	private ITypeMaterialAttributService typeService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

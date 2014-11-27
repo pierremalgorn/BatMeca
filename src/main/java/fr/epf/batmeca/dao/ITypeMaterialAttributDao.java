@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 
-public interface TypeMaterialAttributDao {
+public interface ITypeMaterialAttributDao {
 	/**
 	 * Permet de recuperer l'ensemble de type
 	 *

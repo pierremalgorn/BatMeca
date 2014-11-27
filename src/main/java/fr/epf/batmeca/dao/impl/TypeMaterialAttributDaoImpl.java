@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.TypeMaterialAttributDao;
+import fr.epf.batmeca.dao.ITypeMaterialAttributDao;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 
 @Repository
-public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
+public class TypeMaterialAttributDaoImpl implements ITypeMaterialAttributDao {
 
 	@PersistenceContext
 	private EntityManager em;

@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.TypeTestAttributDao;
+import fr.epf.batmeca.dao.ITypeTestAttributDao;
 import fr.epf.batmeca.entity.TypeTestAttribute;
 
 @Repository
-public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
+public class TypeTestAttributDaoImpl implements ITypeTestAttributDao {
 
 	@PersistenceContext
 	private EntityManager em;

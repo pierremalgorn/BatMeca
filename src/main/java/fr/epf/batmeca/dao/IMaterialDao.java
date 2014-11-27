@@ -5,7 +5,7 @@ import java.util.List;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.User;
 
-public interface MaterialDao {
+public interface IMaterialDao {
 
 	/**
 	 * Permet de recuperer la list de tous les materiaux

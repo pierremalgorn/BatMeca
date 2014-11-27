@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.epf.batmeca.dao.TypeTestAttributDao;
+import fr.epf.batmeca.dao.ITypeTestAttributDao;
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.service.TypeTestAttributService;
+import fr.epf.batmeca.service.ITypeTestAttributService;
 
 @Service
-public class TypeTestAttributServiceImpl implements TypeTestAttributService {
+public class TypeTestAttributServiceImpl implements ITypeTestAttributService {
 
 	@Autowired
-	private TypeTestAttributDao typeDao;
+	private ITypeTestAttributDao typeDao;
 
 	@Override
 	@Transactional(readOnly = true)

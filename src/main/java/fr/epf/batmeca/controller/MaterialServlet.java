@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Material;
-import fr.epf.batmeca.service.MaterialService;
-import fr.epf.batmeca.service.TestService;
+import fr.epf.batmeca.service.IMaterialService;
+import fr.epf.batmeca.service.ITestService;
 
 /**
  * Servlet implementation class MaterialServlet
@@ -26,9 +26,9 @@ import fr.epf.batmeca.service.TestService;
 public class MaterialServlet {
 
 	@Autowired
-	private MaterialService materialService;
+	private IMaterialService materialService;
 	@Autowired
-	private TestService testService;
+	private ITestService testService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

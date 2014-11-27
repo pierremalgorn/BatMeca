@@ -3,18 +3,17 @@ package fr.epf.batmeca.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.TestDao;
+import fr.epf.batmeca.dao.ITestDao;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.User;
 
 @Repository
-public class TestDaoImpl implements TestDao {
+public class TestDaoImpl implements ITestDao {
 
 	@PersistenceContext
 	private EntityManager em;

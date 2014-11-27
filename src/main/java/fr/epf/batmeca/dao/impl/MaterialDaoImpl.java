@@ -7,12 +7,12 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.MaterialDao;
+import fr.epf.batmeca.dao.IMaterialDao;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.User;
 
 @Repository
-public class MaterialDaoImpl implements MaterialDao {
+public class MaterialDaoImpl implements IMaterialDao {
 
 	@PersistenceContext
 	private EntityManager em;

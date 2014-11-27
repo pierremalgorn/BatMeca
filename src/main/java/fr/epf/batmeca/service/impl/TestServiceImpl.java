@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.epf.batmeca.dao.TestDao;
+import fr.epf.batmeca.dao.ITestDao;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.TestService;
+import fr.epf.batmeca.service.ITestService;
 
 @Service
-public class TestServiceImpl implements TestService {
+public class TestServiceImpl implements ITestService {
 
 	@Autowired
-	private TestDao testDao;
+	private ITestDao testDao;
 
 	@Override
 	@Transactional(readOnly = true)

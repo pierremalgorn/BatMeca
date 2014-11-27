@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.TypeUserDao;
+import fr.epf.batmeca.dao.ITypeUserDao;
 import fr.epf.batmeca.entity.TypeUser;
 
 @Repository
-public class TypeUserDaoImpl implements TypeUserDao {
+public class TypeUserDaoImpl implements ITypeUserDao {
 
 	@PersistenceContext
 	private EntityManager em;

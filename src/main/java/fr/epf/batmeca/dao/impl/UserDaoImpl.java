@@ -3,16 +3,15 @@ package fr.epf.batmeca.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
-import fr.epf.batmeca.dao.UserDao;
+import fr.epf.batmeca.dao.IUserDao;
 import fr.epf.batmeca.entity.User;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements IUserDao {
 
 	@PersistenceContext
 	private EntityManager em;

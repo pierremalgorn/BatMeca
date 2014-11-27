@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.epf.batmeca.entity.User;
 
-public interface UserDao {
+public interface IUserDao {
 	/**
 	 * Methode permettant de renvoyer la liste de tout les utilisateur
 	 *

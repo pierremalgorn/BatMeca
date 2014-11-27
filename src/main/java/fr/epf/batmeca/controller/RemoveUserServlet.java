@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.TypeUserService;
-import fr.epf.batmeca.service.UserService;
+import fr.epf.batmeca.service.ITypeUserService;
+import fr.epf.batmeca.service.IUserService;
 
 /*
  * Permet de supprimer un utilisateur
@@ -26,9 +26,9 @@ import fr.epf.batmeca.service.UserService;
 public class RemoveUserServlet {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private TypeUserService typeUserService;
+	private ITypeUserService typeUserService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

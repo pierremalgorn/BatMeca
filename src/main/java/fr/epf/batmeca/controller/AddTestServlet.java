@@ -29,11 +29,11 @@ import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.handler.ParserConfig;
-import fr.epf.batmeca.service.MaterialService;
-import fr.epf.batmeca.service.TestService;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
-import fr.epf.batmeca.service.TypeTestAttributService;
-import fr.epf.batmeca.service.impl.ValueService;
+import fr.epf.batmeca.service.IMaterialService;
+import fr.epf.batmeca.service.ITestService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
+import fr.epf.batmeca.service.ITypeTestAttributService;
+import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
  * Servlet implementation class AddTestServlet
@@ -47,15 +47,15 @@ maxRequestSize = 1024 * 1024 * 50)
 public class AddTestServlet {
 
 	@Autowired
-	private ValueService valueService;
+	private ValueServiceImpl valueService;
 	@Autowired
-	private TestService testService;
+	private ITestService testService;
 	@Autowired
-	private MaterialService materialService;
+	private IMaterialService materialService;
 	@Autowired
-	private TypeMaterialAttributService typeMatService;
+	private ITypeMaterialAttributService typeMatService;
 	@Autowired
-	private TypeTestAttributService typeTestService;
+	private ITypeTestAttributService typeTestService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.epf.batmeca.dao.UserDao;
+import fr.epf.batmeca.dao.IUserDao;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.UserService;
+import fr.epf.batmeca.service.IUserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	UserDao userDao;
+	IUserDao userDao;
 
 	@Override
 	@Transactional(readOnly = true)

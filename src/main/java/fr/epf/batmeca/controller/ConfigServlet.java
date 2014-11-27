@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
-import fr.epf.batmeca.service.TypeTestAttributService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
+import fr.epf.batmeca.service.ITypeTestAttributService;
 
 /**
  * Servlet implementation class ConfigServlet
@@ -27,9 +27,9 @@ import fr.epf.batmeca.service.TypeTestAttributService;
 public class ConfigServlet {
 
 	@Autowired
-	private TypeMaterialAttributService typeMatAttrService;
+	private ITypeMaterialAttributService typeMatAttrService;
 	@Autowired
-	private TypeTestAttributService typeTestAttrService;
+	private ITypeTestAttributService typeTestAttrService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

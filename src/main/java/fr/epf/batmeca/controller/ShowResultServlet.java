@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.FolderHandler;
-import fr.epf.batmeca.service.TestService;
-import fr.epf.batmeca.service.impl.ValueService;
+import fr.epf.batmeca.service.ITestService;
+import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
  * Servlet implementation class ShowResultServlet
@@ -25,9 +25,9 @@ import fr.epf.batmeca.service.impl.ValueService;
 public class ShowResultServlet {
 
 	@Autowired
-	private ValueService valueService;
+	private ValueServiceImpl valueService;
 	@Autowired
-	private TestService testService;
+	private ITestService testService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

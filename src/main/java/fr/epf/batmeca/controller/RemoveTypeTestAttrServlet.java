@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.service.TypeTestAttributService;
+import fr.epf.batmeca.service.ITypeTestAttributService;
 
 /**
  * Permet de supprimer un type d'attribut d'essai Servlet implementation class
@@ -25,7 +25,7 @@ import fr.epf.batmeca.service.TypeTestAttributService;
 public class RemoveTypeTestAttrServlet {
 
 	@Autowired
-	private TypeTestAttributService typeService;
+	private ITypeTestAttributService typeService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

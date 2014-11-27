@@ -20,9 +20,9 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.MaterialAttribute;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.MaterialService;
-import fr.epf.batmeca.service.TypeMaterialAttributService;
-import fr.epf.batmeca.service.UserService;
+import fr.epf.batmeca.service.IMaterialService;
+import fr.epf.batmeca.service.ITypeMaterialAttributService;
+import fr.epf.batmeca.service.IUserService;
 
 /**
  * Servlet implementation class addMaterialServlet
@@ -32,11 +32,11 @@ import fr.epf.batmeca.service.UserService;
 public class AddMaterialServlet {
 
 	@Autowired
-	private MaterialService materialService;
+	private IMaterialService materialService;
 	@Autowired
-	private TypeMaterialAttributService typeMaterialAttributService;
+	private ITypeMaterialAttributService typeMaterialAttributService;
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

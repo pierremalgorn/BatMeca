@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.handler.FolderHandler;
-import fr.epf.batmeca.service.MaterialService;
-import fr.epf.batmeca.service.impl.ValueService;
+import fr.epf.batmeca.service.IMaterialService;
+import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
  * Permet de supprimer un matériaux Servlet implementation class
@@ -27,9 +27,9 @@ import fr.epf.batmeca.service.impl.ValueService;
 public class RemoveMaterialServlet {
 
 	@Autowired
-	private ValueService valueService;
+	private ValueServiceImpl valueService;
 	@Autowired
-	private MaterialService materialService;
+	private IMaterialService materialService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.MaterialService;
+import fr.epf.batmeca.service.IMaterialService;
 
 /**
  * Servlet implementation class IndexMaterial
@@ -27,7 +27,7 @@ import fr.epf.batmeca.service.MaterialService;
 public class IndexMaterialServlet {
 
 	@Autowired
-	private MaterialService materialService;
+	private IMaterialService materialService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

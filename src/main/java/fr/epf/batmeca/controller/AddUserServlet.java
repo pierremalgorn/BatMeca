@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeUser;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.service.TypeUserService;
-import fr.epf.batmeca.service.UserService;
+import fr.epf.batmeca.service.ITypeUserService;
+import fr.epf.batmeca.service.IUserService;
 
 @Controller
 @RequestMapping("/addUser")
 public class AddUserServlet {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private TypeUserService typeUserService;
+	private ITypeUserService typeUserService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.service.TypeTestAttributService;
+import fr.epf.batmeca.service.ITypeTestAttributService;
 
 /**
  * Servlet implementation class AddTypeTestAttrServlet
@@ -24,7 +24,7 @@ import fr.epf.batmeca.service.TypeTestAttributService;
 public class AddTypeTestAttrServlet {
 
 	@Autowired
-	private TypeTestAttributService typeService;
+	private ITypeTestAttributService typeService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
