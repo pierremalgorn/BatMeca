@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import fr.epf.batmeca.dao.TypeTestAttributDao;
 import fr.epf.batmeca.entity.TypeTestAttribute;
 
 @Repository
-@Transactional
 public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 
 	@PersistenceContext
@@ -23,12 +21,8 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 	public List<TypeTestAttribute> findAll() {
 		List<TypeTestAttribute> types = null;
 
-		try {
-			types = em.createQuery("Select t From TypeTestAttribute t")
-					.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		types = em.createQuery("Select t From TypeTestAttribute t")
+				.getResultList();
 
 		return types;
 	}
@@ -37,24 +31,14 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 	public TypeTestAttribute find(int id) {
 		TypeTestAttribute type = null;
 
-		try {
-			type = em.find(TypeTestAttribute.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		type = em.find(TypeTestAttribute.class, id);
 
 		return type;
 	}
 
 	@Override
 	public boolean remove(TypeTestAttribute type) {
-		try {
-			em.getTransaction().begin();
-			em.remove(em.contains(type) ? type : em.merge(type));
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.remove(em.contains(type) ? type : em.merge(type));
 
 		return false;
 	}
@@ -67,13 +51,7 @@ public class TypeTestAttributDaoImpl implements TypeTestAttributDao {
 
 	@Override
 	public boolean add(TypeTestAttribute type) {
-		try {
-			em.getTransaction().begin();
-			em.persist(type);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.persist(type);
 
 		return true;
 	}

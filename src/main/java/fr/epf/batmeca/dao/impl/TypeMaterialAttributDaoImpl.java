@@ -6,13 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import fr.epf.batmeca.dao.TypeMaterialAttributDao;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 
 @Repository
-@Transactional
 public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@PersistenceContext
@@ -23,12 +21,8 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 	public List<TypeMaterialAttribute> findAll() {
 		List<TypeMaterialAttribute> list = null;
 
-		try {
-			list = em.createQuery("Select t From TypeMaterialAttribute t")
-					.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		list = em.createQuery("Select t From TypeMaterialAttribute t")
+				.getResultList();
 
 		return list;
 	}
@@ -37,24 +31,14 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 	public TypeMaterialAttribute find(int id) {
 		TypeMaterialAttribute type = null;
 
-		try {
-			type = em.find(TypeMaterialAttribute.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		type = em.find(TypeMaterialAttribute.class, id);
 
 		return type;
 	}
 
 	@Override
 	public boolean remove(TypeMaterialAttribute type) {
-		try {
-			em.getTransaction().begin();
-			em.remove(em.contains(type) ? type : em.merge(type));
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.remove(em.contains(type) ? type : em.merge(type));
 
 		return false;
 	}
@@ -67,14 +51,7 @@ public class TypeMaterialAttributDaoImpl implements TypeMaterialAttributDao {
 
 	@Override
 	public boolean add(TypeMaterialAttribute type) {
-		try {
-			em.getTransaction().begin();
-			em.persist(type);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		em.persist(type);
 		return true;
 	}
 }

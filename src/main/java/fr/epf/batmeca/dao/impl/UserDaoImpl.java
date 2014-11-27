@@ -7,13 +7,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import fr.epf.batmeca.dao.UserDao;
 import fr.epf.batmeca.entity.User;
 
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
 
 	@PersistenceContext
@@ -23,11 +21,7 @@ public class UserDaoImpl implements UserDao {
 	public List<User> findAllUsers() {
 		List<User> users = null;
 
-		try {
-			users = em.createNamedQuery("findAllUsers").getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		users = em.createNamedQuery("findAllUsers").getResultList();
 
 		return users;
 	}
@@ -46,15 +40,14 @@ public class UserDaoImpl implements UserDao {
 	public User getUserByLoginMdp(String login, String mdp) {
 		User user = null;
 
-		try {
-			user = (User) em
-					.createQuery(
-							"Select u From User u Where u.email= :email And u.password = :mdp")
-					.setParameter("email", login).setParameter("mdp", mdp)
-					.getSingleResult();
-		} catch (NoResultException e) {
-			// e.printStackTrace();
-		}
+		user = (User) em
+				.createQuery(
+						"Select u From User u Where u.email= :email And u.password = :mdp")
+				.setParameter("email", login).setParameter("mdp", mdp)
+				.getSingleResult();
+		// } catch (NoResultException e) {
+		// e.printStackTrace();
+		// }
 
 		return user;
 	}
@@ -63,27 +56,19 @@ public class UserDaoImpl implements UserDao {
 	public boolean loginExist(String login) {
 		User user = null;
 
-		try {
-			user = (User) em
-					.createQuery("Select u From User u Where u.login= :login")
-					.setParameter("login", login)
-					.getSingleResult();
-		} catch (NoResultException e) {
-			// e.printStackTrace();
-		}
+		user = (User) em
+				.createQuery("Select u From User u Where u.login= :login")
+				.setParameter("login", login).getSingleResult();
+		// } catch (NoResultException e) {
+		// e.printStackTrace();
+		// }
 
 		return user != null;
 	}
 
 	@Override
 	public boolean addUser(User user) {
-		try {
-			em.getTransaction().begin();
-			em.persist(user);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.persist(user);
 
 		return true;
 	}
@@ -102,37 +87,23 @@ public class UserDaoImpl implements UserDao {
 	public User getUser(int id) {
 		User user = null;
 
-		try {
-			user = (User) em
-					.createQuery("Select u From User u Where u.id= :id")
-					.setParameter("id", id).getSingleResult();
-		} catch (NoResultException e) {
-			// e.printStackTrace();
-		}
+		user = (User) em.createQuery("Select u From User u Where u.id= :id")
+				.setParameter("id", id).getSingleResult();
+		// } catch (NoResultException e) {
+		// e.printStackTrace();
+		// }
 
 		return user;
 	}
 
 	@Override
 	public void removeUser(User user) {
-		try {
-			em.getTransaction().begin();
-			em.remove(em.contains(user) ? user : em.merge(user));
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.remove(em.contains(user) ? user : em.merge(user));
 	}
 
 	@Override
 	public boolean editUser(User user) {
-		try {
-			em.getTransaction().begin();
-			em.merge(user);
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		em.merge(user);
 
 		return true;
 	}
