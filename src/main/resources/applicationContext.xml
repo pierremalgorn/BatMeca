@@ -61,4 +61,6 @@
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+
+	<bean id="userService" class="fr.epf.batmeca.service.impl.UserServiceImpl" />
 </beans>

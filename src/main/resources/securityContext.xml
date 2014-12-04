@@ -17,10 +17,9 @@
 	</http>
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider>
-			<user-service>
-				<user name="admin@admin.com" password="meca" authorities="ROLE_USER" />
-			</user-service>
+		<authentication-provider user-service-ref="userService">
+			<!-- Using "bcrypt" or "md5" instead of "plaintext" would be better. -->
+			<password-encoder hash="plaintext" />
 		</authentication-provider>
 	</authentication-manager>
 

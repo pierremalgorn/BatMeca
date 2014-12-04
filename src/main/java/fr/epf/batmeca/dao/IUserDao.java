@@ -13,8 +13,7 @@ public interface IUserDao {
 	public List<User> findAllUsers();
 
 	/**
-	 * Permet de renvoyer un utilisateur en fonction de son login et son mot de
-	 * passe
+	 * Permet de renvoyer un utilisateur en fonction de son login
 	 *
 	 * @param String
 	 *            login Login de l'utilisateur
@@ -22,7 +21,7 @@ public interface IUserDao {
 	 *            mdp mot de passe de l'utilisateur
 	 * @retun user
 	 * */
-	public User getUserByLoginMdp(String login, String mdp);
+	public User getUserByLogin(String login);
 
 	/**
 	 * Methode permettant d'ajouter un utilisateur
@@ -32,15 +31,6 @@ public interface IUserDao {
 	 * @return true si l'utilisateur � bien �t� ajouter false sinon
 	 * */
 	public boolean addUser(User user);
-
-	/**
-	 * Methode permettant de savoir si un login existe
-	 *
-	 * @param String
-	 *            login
-	 * @return true si le login existe false sinon
-	 * */
-	public boolean loginExist(String login);
 
 	/**
 	 * Permet de renvoyer un utilisateur en fonction de son id

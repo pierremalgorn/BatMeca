@@ -18,51 +18,15 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public List<User> findAllUsers() {
-		List<User> users = null;
-
-		users = em.createNamedQuery("findAllUsers").getResultList();
-
-		return users;
-	}
-
-	/**
-	 * Methode permettant de r�cuperer un Utilisateur en fonction de son login
-	 * et son mot de passe
-	 *
-	 * @param String
-	 *            login Login Utilisateur
-	 * @param String
-	 *            mdp mot de passe utilisateur
-	 *
-	 * */
-	@Override
-	public User getUserByLoginMdp(String login, String mdp) {
-		User user = null;
-
-		user = (User) em
-				.createQuery(
-						"Select u From User u Where u.email= :email And u.password = :mdp")
-				.setParameter("email", login).setParameter("mdp", mdp)
-				.getSingleResult();
-		// } catch (NoResultException e) {
-		// e.printStackTrace();
-		// }
-
-		return user;
+		return em.createNamedQuery("findAllUsers").getResultList();
 	}
 
 	@Override
-	public boolean loginExist(String login) {
-		User user = null;
-
-		user = (User) em
-				.createQuery("Select u From User u Where u.login= :login")
-				.setParameter("login", login).getSingleResult();
-		// } catch (NoResultException e) {
-		// e.printStackTrace();
-		// }
-
-		return user != null;
+	public User getUserByLogin(String login) {
+		// FIXME use "Select u From User u Where u.login= :login" instead?
+		return (User) em
+				.createQuery("Select u From User u Where u.email= :email")
+				.setParameter("email", login).getSingleResult();
 	}
 
 	@Override
@@ -72,27 +36,10 @@ public class UserDaoImpl implements IUserDao {
 		return true;
 	}
 
-	/**
-	 * Methode permettant de r�cuperer un Utilisateur en fonction de son login
-	 * et son mot de passe
-	 *
-	 * @param String
-	 *            login Login Utilisateur
-	 * @param String
-	 *            mdp mot de passe utilisateur
-	 *
-	 * */
 	@Override
 	public User getUser(int id) {
-		User user = null;
-
-		user = (User) em.createQuery("Select u From User u Where u.id= :id")
+		return (User) em.createQuery("Select u From User u Where u.id= :id")
 				.setParameter("id", id).getSingleResult();
-		// } catch (NoResultException e) {
-		// e.printStackTrace();
-		// }
-
-		return user;
 	}
 
 	@Override
