@@ -55,9 +55,4 @@ public class LoginServlet {
 		return "login";
 //		return "redirect:/list"; XXX
 	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(ModelMap model) {
-		return "logout";
-	}
 }

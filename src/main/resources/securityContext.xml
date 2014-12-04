@@ -8,12 +8,15 @@
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/Login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
-		<intercept-url pattern="/js/**" access="permitAll" />
 		<intercept-url pattern="/css/**" access="permitAll" />
+		<intercept-url pattern="/fonts/**" access="permitAll" />
+		<intercept-url pattern="/imgs/**" access="permitAll" />
+		<intercept-url pattern="/js/**" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+
 		<form-login login-page="/Login" authentication-failure-url="/Login?error"
 			default-target-url="/" />
-		<logout logout-success-url="/logout" />
+		<logout logout-success-url="/Login?logout" />
 	</http>
 
 	<authentication-manager alias="authenticationManager">

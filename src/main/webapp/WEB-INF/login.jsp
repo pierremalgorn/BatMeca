@@ -13,6 +13,16 @@
 				<p>Wrong email/password combination.</p>
 			</div>
 		</c:if>
+		<c:if test="${param['logout'] != null}">
+			<%
+				session.invalidate();
+			%>
+			<div class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">&times;</button>
+				<p>You are now logged out!</p>
+			</div>
+		</c:if>
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<div class="control-group">
 			<div class="controls">

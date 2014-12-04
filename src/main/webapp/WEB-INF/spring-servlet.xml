@@ -27,6 +27,7 @@
 
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+	<mvc:resources mapping="/imgs/**" location="/imgs/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
 
 	<context:property-placeholder location="classpath:value.properties" />
