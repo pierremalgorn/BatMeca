@@ -19,6 +19,7 @@
 		<mysql.version>5.1.33</mysql.version>
 		<spring.version>4.1.1.RELEASE</spring.version>
 		<spring-jpa.version>1.7.1.RELEASE</spring-jpa.version>
+		<spring-security.version>3.2.5.RELEASE</spring-security.version>
 		<junit.version>3.8.1</junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -90,6 +91,21 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring-jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

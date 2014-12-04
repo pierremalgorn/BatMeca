@@ -42,7 +42,7 @@
 						</c:if></li>
 				<c:if test="${sessionScope.sessionUser != null}">
 					<li><a href="User" >Profile</a></li>
-					<li><a href="Login" class="logout" >Sign out</a></li>
+					<li><a href="<c:url value="/j_spring_security_logout" />" class="logout" >Sign out</a></li>
 				</c:if>
 			</ul>
 		</div><!-- /.nav-collapse -->

@@ -13,26 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName = "LoginFilter", urlPatterns = { "/Material",
-		"/IndexMaterial", "/ShowTest", "/Config", "/IndexTest" })
+//@WebFilter(filterName = "LoginFilter")
 public class LoginFilter implements Filter {
 
-	/**
-	 * Default constructor.
-	 */
-	public LoginFilter() {
-	}
-
-	/**
-	 * @see Filter#destroy()
-	 */
 	@Override
-	public void destroy() {
+	public void init(FilterConfig fConfig) throws ServletException {
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
@@ -56,10 +43,7 @@ public class LoginFilter implements Filter {
 		}
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
 	@Override
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void destroy() {
 	}
 }

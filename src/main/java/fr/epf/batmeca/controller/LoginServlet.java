@@ -1,70 +1,63 @@
 package fr.epf.batmeca.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.service.IUserService;
 
 /**
- * Permet de loger un utilisateur Servlet implementation class LoginController
+ * Handle user session
  */
 @Controller
-@RequestMapping("/Login")
 public class LoginServlet {
 
 	@Autowired
 	private IUserService userService;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+//	@RequestMapping(method = RequestMethod.GET)
+//	protected ModelAndView doGet() {
+//		return new ModelAndView("login");
+////		HttpSession session = request.getSession();
+////
+////		if (session != null) {
+////			session.removeAttribute("sessionUser"); TODO disconnect user
+////		}
+////
+////		RequestDispatcher rd = request.getRequestDispatcher(response
+////				.encodeURL("/WEB-INF/login.jsp"));
+////		rd.forward(request, response);
+//	}
 
-		if (session != null) {
-			session.removeAttribute("sessionUser");
-		}
+//	@RequestMapping(method = RequestMethod.POST)
+//	protected ModelAndView doPost(@RequestParam String login, @RequestParam String password) {
+//		User user = userService.getUserByLoginMdp(login, password);
+//		ModelAndView view = new ModelAndView();
+//
+//		if (user != null) {
+////			HttpSession session = request.getSession();
+////			session.setAttribute("sessionUser", user);
+////			response.sendRedirect(response.encodeURL("./IndexMaterial"));
+//			view.addObject("sessionUser", user);
+//			view.setViewName("IndexMaterial");
+//		} else {
+//			view.addObject("error", "yes");
+//			view.setViewName("login");
+//		}
+//
+//		return view;
+	// }
 
-		RequestDispatcher rd = request.getRequestDispatcher(response
-				.encodeURL("/WEB-INF/login.jsp"));
-		rd.forward(request, response);
+	@RequestMapping(value = "/Login", method = RequestMethod.GET)
+	public String login(ModelMap model) {
+		return "login";
+//		return "redirect:/list"; XXX
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String mdp = request.getParameter("password");
-
-		User user = null;
-		user = userService.getUserByLoginMdp(login, mdp);
-
-		if (user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("sessionUser", user);
-			response.sendRedirect(response.encodeURL("./IndexMaterial"));
-		} else {
-			request.setAttribute("error", "yes");
-			this.doGet(request, response);
-		}
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model) {
+		return "logout";
 	}
 }
