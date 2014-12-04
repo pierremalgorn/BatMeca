@@ -59,6 +59,12 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public User getUser(String username) {
+		return userDao.getUserByLogin(username);
+	}
+
+	@Override
 	@Transactional
 	public boolean editUser(User user) {
 		return userDao.editUser(user);
