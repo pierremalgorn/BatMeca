@@ -23,7 +23,7 @@ import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.IUserService;
-import fr.epf.batmeca.service.impl.ValueServiceImpl;
+import fr.epf.batmeca.service.IValueService;
 
 @Controller
 public class MaterialController {
@@ -37,7 +37,7 @@ public class MaterialController {
 	@Autowired
 	private IUserService userService;
 	@Autowired
-	private ValueServiceImpl valueService;
+	private IValueService valueService;
 
 	@RequestMapping(value = "/Material", method = RequestMethod.GET)
 	protected String materialGet(@RequestParam("idMat") String id,

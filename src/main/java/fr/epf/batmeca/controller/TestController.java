@@ -34,13 +34,13 @@ import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.ITypeTestAttributService;
 import fr.epf.batmeca.service.IUserService;
-import fr.epf.batmeca.service.impl.ValueServiceImpl;
+import fr.epf.batmeca.service.IValueService;
 
 @Controller
 public class TestController {
 
 	@Autowired
-	private ValueServiceImpl valueService;
+	private IValueService valueService;
 	@Autowired
 	private IUserService userService;
 	@Autowired

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.impl.ValueServiceImpl;
+import fr.epf.batmeca.service.IValueService;
 
 @RestController
 public class ShowController {
 
 	@Autowired
-	private ValueServiceImpl valueService;
+	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 

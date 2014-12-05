@@ -15,7 +15,7 @@ import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.impl.ValueServiceImpl;
+import fr.epf.batmeca.service.IValueService;
 
 /**
  * Permet de réaliser des traitements sur une courbe
@@ -24,7 +24,7 @@ import fr.epf.batmeca.service.impl.ValueServiceImpl;
 public class TraitmentController {
 
 	@Autowired
-	private ValueServiceImpl valueService;
+	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 

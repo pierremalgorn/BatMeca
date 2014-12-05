@@ -16,13 +16,13 @@ import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.impl.ValueServiceImpl;
+import fr.epf.batmeca.service.IValueService;
 
 @RestController
 public class CurveController {
 
 	@Autowired
-	private ValueServiceImpl valueService;
+	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 
