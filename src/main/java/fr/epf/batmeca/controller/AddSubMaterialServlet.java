@@ -1,6 +1,7 @@
 package fr.epf.batmeca.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,7 @@ import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
+import fr.epf.batmeca.service.IUserService;
 
 /**
  * Servlet implementation class AddSubMaterialServlet
@@ -30,6 +31,8 @@ import fr.epf.batmeca.service.ITypeMaterialAttributService;
 @RequestMapping("/AddSubMaterial")
 public class AddSubMaterialServlet {
 
+	@Autowired
+	private IUserService userService;
 	@Autowired
 	private IMaterialService materialService;
 	@Autowired
@@ -64,7 +67,7 @@ public class AddSubMaterialServlet {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, Principal principal) throws ServletException, IOException {
 		// récuperation des champs du formulaire
 		String name = request.getParameter("inputName");
 		System.out.println("NAME  = " + name);
@@ -94,9 +97,10 @@ public class AddSubMaterialServlet {
 		}
 
 		// Association du sous matériaux à l'utilisateur courant
-		HttpSession session = request.getSession();
-		mat.setUser((User) session.getAttribute("sessionUser"));
+		User user = userService.getUser(principal.getName());
+		mat.setUser(user);
 		materialService.addMaterial(mat);
+
 		response.sendRedirect(response.encodeURL("./Material?idMat="
 				+ mat.getId()));
 	}

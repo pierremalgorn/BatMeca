@@ -1,23 +1,24 @@
 package fr.epf.batmeca.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.service.IMaterialService;
+import fr.epf.batmeca.service.IUserService;
 
 /**
  * Servlet implementation class IndexMaterial
@@ -28,33 +29,26 @@ public class IndexMaterialServlet {
 
 	@Autowired
 	private IMaterialService materialService;
+	@Autowired
+	private IUserService userService;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected String doGet(ModelMap model, Principal principal) {
 		List<Material> list = null;
 
-		/**
-		 * Récuepration de la liste des materiau
-		 * */
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("sessionUser");
+		User user = userService.getUser(principal.getName());
 		if (user.getType().getId() == 1) {
 			list = materialService.findAllNoParent();
 		} else {
-			list = materialService.findByUser((User) session
-					.getAttribute("sessionUser"));
+			list = materialService.findByUser(user);
 		}
 
-		request.setAttribute("materials", list);
-		System.out.println("TAILLE LIST = " + list.size());
-		RequestDispatcher rd = request.getRequestDispatcher(response
-				.encodeURL("/WEB-INF/indexMaterial.jsp"));
-		rd.forward(request, response);
+		model.addAttribute("materials", list);
+		return "indexMaterial";
 	}
 
 	/**

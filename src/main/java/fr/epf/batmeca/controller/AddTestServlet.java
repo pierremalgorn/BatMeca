@@ -2,6 +2,7 @@ package fr.epf.batmeca.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +13,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.ITypeTestAttributService;
+import fr.epf.batmeca.service.IUserService;
 import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
@@ -48,6 +49,8 @@ public class AddTestServlet {
 
 	@Autowired
 	private ValueServiceImpl valueService;
+	@Autowired
+	private IUserService userService;
 	@Autowired
 	private ITestService testService;
 	@Autowired
@@ -81,7 +84,7 @@ public class AddTestServlet {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, Principal principal) throws ServletException, IOException {
 		// récupération des champs du formulaires
 		String name = request.getParameter("inputNameTest");
 		List<TypeTestAttribute> typesTest;
@@ -104,8 +107,8 @@ public class AddTestServlet {
 
 		test.setTestAttributs(new HashSet<TestAttribute>());
 
-		HttpSession session = request.getSession();
-		test.setUser((User) session.getAttribute("sessionUser"));
+		User user = userService.getUser(principal.getName());
+		test.setUser(user);
 
 		// Création de repertoire associer
 

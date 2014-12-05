@@ -1,6 +1,7 @@
 package fr.epf.batmeca.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,12 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.MaterialAttribute;
@@ -64,13 +65,12 @@ public class AddMaterialServlet {
 	 *      response)
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected String doPost(@RequestParam(value = "inputName") String name,
+			@RequestParam(value = "inputMaterialParent") String parent,
+			HttpServletRequest request, Principal principal) {
 		// Récuperation des champs
-		String name = request.getParameter("inputName");
 		Material mat = new Material();
 		mat.setName(name);
-		String parent = request.getParameter("inputMaterialParent");
 
 		List<TypeMaterialAttribute> listAttr;
 		listAttr = typeMaterialAttributService.findAll();
@@ -80,8 +80,7 @@ public class AddMaterialServlet {
 		// Création des attributs du matériel
 		for (TypeMaterialAttribute tMatAttr : listAttr) {
 			MaterialAttribute matAttr = new MaterialAttribute();
-			String nameAttr = request
-					.getParameter("input" + tMatAttr.getName());
+			String nameAttr = request.getParameter("input" + tMatAttr.getName());
 			if (nameAttr.compareTo("") != 0) {
 				System.out.println("add attr");
 				matAttr.setValue(nameAttr);
@@ -97,10 +96,11 @@ public class AddMaterialServlet {
 		}
 
 		// association du materiel a l'utilisateur courant
-		HttpSession session = request.getSession();
-		mat.setUser((User) session.getAttribute("sessionUser"));
+		User user = userService.getUser(principal.getName());
+		mat.setUser(user);
 
 		materialService.addMaterial(mat);
-		response.sendRedirect(response.encodeURL("./IndexMaterial"));
+
+		return "redirect:/IndexMaterial";
 	}
 }

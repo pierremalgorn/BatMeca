@@ -14,6 +14,5 @@ public class LoginServlet {
 	@RequestMapping(value = "/Login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		return "login";
-//		return "redirect:/list"; XXX
 	}
 }
