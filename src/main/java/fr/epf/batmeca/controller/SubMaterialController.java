@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,12 +23,8 @@ import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.IUserService;
 
-/**
- * Servlet implementation class AddSubMaterialServlet
- */
 @Controller
-@RequestMapping("/AddSubMaterial")
-public class AddSubMaterialServlet {
+public class SubMaterialController {
 
 	@Autowired
 	private IUserService userService;
@@ -38,12 +33,8 @@ public class AddSubMaterialServlet {
 	@Autowired
 	private ITypeMaterialAttributService typeMaterialAttributService;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
+	@RequestMapping(value = "/AddSubMaterial", method = RequestMethod.GET)
+	protected void addSubMaterialGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// récupération de la liste des materiaux
 		List<Material> materials;
@@ -61,12 +52,8 @@ public class AddSubMaterialServlet {
 		rd.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request,
+	@RequestMapping(value = "/AddSubMaterial", method = RequestMethod.POST)
+	protected void addSubMaterialPost(HttpServletRequest request,
 			HttpServletResponse response, Principal principal) throws ServletException, IOException {
 		// récuperation des champs du formulaire
 		String name = request.getParameter("inputName");
@@ -93,7 +80,6 @@ public class AddSubMaterialServlet {
 				matAttr.setMaterial(mat);
 				mat.addMaterialAttribute(matAttr);
 			}
-
 		}
 
 		// Association du sous matériaux à l'utilisateur courant

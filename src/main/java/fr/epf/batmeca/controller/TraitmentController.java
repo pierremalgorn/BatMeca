@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,20 +25,15 @@ import fr.epf.batmeca.service.impl.ValueServiceImpl;
  * class TraitmentServlet
  */
 @Controller
-@RequestMapping("/Traitment")
-public class TraitmentServlet {
+public class TraitmentController {
 
 	@Autowired
 	private ValueServiceImpl valueService;
 	@Autowired
 	private ITestService testService;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
+	@RequestMapping(value = "/Traitment", method = RequestMethod.GET)
+	protected void traitmentGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int idTest = Integer.parseInt(request.getParameter("id"));
 		Test t = testService.find(idTest);
@@ -135,12 +129,8 @@ public class TraitmentServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request,
+	@RequestMapping(value = "/Traitment", method = RequestMethod.POST)
+	protected void traitmentPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int idTest = Integer.parseInt(request.getParameter("inputId"));
 		float factor = Float.parseFloat(request.getParameter("inputFactor"));

@@ -3,7 +3,6 @@ package fr.epf.batmeca.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,24 +16,34 @@ import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
-/**
- * Servlet implementation class ShowResultServlet
- */
 @Controller
-@RequestMapping("/ShowResult")
-public class ShowResultServlet {
+public class ShowController {
 
 	@Autowired
 	private ValueServiceImpl valueService;
 	@Autowired
 	private ITestService testService;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
+	@RequestMapping(value = "/ShowHistoric", method = RequestMethod.GET)
+	protected void showHistoricGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Test test = testService.find(id);
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		String data = f.readHistoric(test);
+
+		// request.setAttribute("results", data);
+		response.getWriter().write(data);
+	}
+
+	@RequestMapping(value = "/ShowHistoric", method = RequestMethod.POST)
+	protected void showHistoricPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	@RequestMapping(value = "/ShowResult", method = RequestMethod.GET)
+	protected void showResultGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Test test = testService.find(id);
@@ -45,12 +54,8 @@ public class ShowResultServlet {
 		response.getWriter().write(data);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	protected void doPost(HttpServletRequest request,
+	@RequestMapping(value = "/ShowResult", method = RequestMethod.POST)
+	protected void showResultPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
