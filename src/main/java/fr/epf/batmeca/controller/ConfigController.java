@@ -1,16 +1,11 @@
 package fr.epf.batmeca.controller;
 
-import java.io.IOException;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,50 +23,35 @@ public class ConfigController {
 	private ITypeTestAttributService typeTestAttrService;
 
 	@RequestMapping(value = "/Config", method = RequestMethod.GET)
-	protected void configGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		/*
-		 * Recuperation des listes d'attributs
-		 */
+	protected String configGet(ModelMap model) {
 		List<TypeMaterialAttribute> typesMat = typeMatAttrService.findAll();
 		List<TypeTestAttribute> typesTest = typeTestAttrService.findAll();
 
-		request.setAttribute("typeMats", typesMat);
-		request.setAttribute("typeTests", typesTest);
+		model.addAttribute("typeMats", typesMat);
+		model.addAttribute("typeTests", typesTest);
 
-		RequestDispatcher rd = request.getRequestDispatcher(response
-				.encodeURL("/WEB-INF/config.jsp"));
-		rd.forward(request, response);
-	}
-
-	@RequestMapping(value = "/Config", method = RequestMethod.POST)
-	protected void configPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		return "config";
 	}
 
 	@RequestMapping(value = "/ConfigGenerator", method = RequestMethod.GET)
-	protected void configGeneratorGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher(response
-				.encodeURL("/WEB-INF/configGenerator.jsp"));
-		rd.forward(request, response);
+	protected String configGeneratorGet() {
+		return "configGenerator";
 	}
 
 	@RequestMapping(value = "/ConfigGenerator", method = RequestMethod.POST)
-	protected void configGeneratorPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// String post = request.getParameter("POST");
-		// System.out.println(post);
-		Enumeration<String> params = request.getParameterNames();
+	protected String configGeneratorPost(ModelMap model) {
+		Iterator<String> params = model.keySet().iterator();
 
-		while (params.hasMoreElements()) {
-			String string = params.nextElement();
+		while (params.hasNext()) {
+			String string = params.next();
 			// String val = request.getParameter(string);
 
 			System.out.println("Name Field = " + string);
 			// System.out.println("Val Filed = "+val);
 		}
-		configGeneratorGet(request, response);
+
+		// TODO finish this function
+
+		return "configGenerator";
 	}
 }

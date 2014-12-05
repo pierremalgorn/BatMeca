@@ -2,21 +2,18 @@ package fr.epf.batmeca.controller;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
-@Controller
+@RestController
 public class ShowController {
 
 	@Autowired
@@ -25,38 +22,34 @@ public class ShowController {
 	private ITestService testService;
 
 	@RequestMapping(value = "/ShowHistoric", method = RequestMethod.GET)
-	protected void showHistoricGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+	protected String showHistoricGet(@RequestParam("id") String idValue) {
+		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
 		FolderHandler f = new FolderHandler(valueService.getResourcePath());
-		String data = f.readHistoric(test);
+		String data = null;
 
-		// request.setAttribute("results", data);
-		response.getWriter().write(data);
-	}
+		try {
+			data = f.readHistoric(test); // TODO handle this differently
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	@RequestMapping(value = "/ShowHistoric", method = RequestMethod.POST)
-	protected void showHistoricPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		return data;
 	}
 
 	@RequestMapping(value = "/ShowResult", method = RequestMethod.GET)
-	protected void showResultGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+	protected String showResultGet(@RequestParam("id") String idValue) {
+		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
 		FolderHandler f = new FolderHandler(valueService.getResourcePath());
-		String data = f.readResult(test);
+		String data = null;
 
-		// request.setAttribute("results", data);
-		response.getWriter().write(data);
-	}
+		try {
+			data = f.readResult(test); // TODO handle this differently
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	@RequestMapping(value = "/ShowResult", method = RequestMethod.POST)
-	protected void showResultPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		return data;
 	}
 }
