@@ -1,4 +1,4 @@
-package fr.epf.batmeca.controller;
+package fr.epf.batmeca.webservice;
 
 import java.io.IOException;
 
