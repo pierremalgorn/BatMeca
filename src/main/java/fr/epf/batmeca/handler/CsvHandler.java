@@ -233,10 +233,9 @@ public class CsvHandler {
 	 *            axe en abscisse
 	 * @param y
 	 *            axe en ordonnée
-	 * @throws InterruptedException
 	 * */
 	public void selectCurve(String input, String output, int x, int y)
-			throws IOException, InterruptedException {
+			throws IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + x + ",$" + y + "}",
 				input };
