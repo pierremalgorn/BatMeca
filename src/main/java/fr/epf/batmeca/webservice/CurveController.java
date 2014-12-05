@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
-import fr.epf.batmeca.handler.FolderHandler;
+import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
 @RestController
@@ -22,6 +22,8 @@ public class CurveController {
 
 	@Autowired
 	private ITestService testService;
+	@Autowired
+	private IFileService fileService;
 
 	/**
 	 * Permet de selectioner une courbe
@@ -37,9 +39,8 @@ public class CurveController {
 		int y = Integer.parseInt(inputY);
 
 		Test test = testService.find(Integer.parseInt(inputId));
-		FolderHandler f = new FolderHandler();
 		CsvHandler csv = new CsvHandler();
-		File[] list = f.listCurve(test);
+		File[] list = fileService.listCurve(test);
 		int nbCurve = list.length;
 
 		boolean content = false;
@@ -53,11 +54,11 @@ public class CurveController {
 			return "{\"content\":true}";
 		} else {
 			// Création de la courbe
-			csv.selectCurve(f.getPathSave(test) + File.separator
-					+ "dataInput.csv", f.getPathSave(test) + File.separator
+			csv.selectCurve(fileService.getTestPath(test) + File.separator
+					+ "dataInput.csv", fileService.getTestPath(test) + File.separator
 					+ "curve" + File.separator + x + "-" + y + ".csv", x, y);
 
-			String data = csv.readAll(f.getPathSave(test) + File.separator
+			String data = csv.readAll(fileService.getTestPath(test) + File.separator
 					+ "curve" + File.separator + x + "-" + y + ".csv");
 
 			return "{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)
@@ -78,7 +79,6 @@ public class CurveController {
 
 		int nbCol = Integer.parseInt(nbField);
 		int id = Integer.parseInt(inputId);
-		FolderHandler f = new FolderHandler();
 		Test test = testService.find(id);
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		String[] elem = new String[nbCol];
@@ -93,7 +93,7 @@ public class CurveController {
 		list.add(unit);
 
 		// TODO clean all that
-		f.saveToJson(list, f.getPathSave(test) + File.separator + "header.json");
+		fileService.saveToJson(list, fileService.getTestPath(test) + File.separator + "header.json");
 		return list;
 	}
 

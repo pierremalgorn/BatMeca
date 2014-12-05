@@ -27,8 +27,8 @@ import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
 import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.handler.CsvHandler;
-import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.handler.ParserConfig;
+import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
@@ -43,6 +43,8 @@ public class TestController {
 	@Autowired
 	private ITestService testService;
 	@Autowired
+	private IFileService fileService;
+	@Autowired
 	private IMaterialService materialService;
 	@Autowired
 	private ITypeMaterialAttributService typeMatService;
@@ -55,19 +57,17 @@ public class TestController {
 
 		int id = Integer.parseInt(idTest);
 		Test t = testService.find(id);
-		CsvHandler csv = new CsvHandler();
-		FolderHandler f = new FolderHandler();
-		ArrayList<String[]> list = f.deserializeFileJson(f.getPathSave(t)
-				+ File.separator + "header.json");
+		List<String[]> list = fileService.deserializeHeader(t);
 
 		// String data =
 		// csv.readAll(f.getPathSave(t)+File.separator+"dataInput.csv");
 
 		// Recuperation des données et du nom des fichiers
-		File[] files = f.listCurve(t);
-		ArrayList<String[]> listData = new ArrayList<String[]>();
-		ArrayList<String> listFile = new ArrayList<String>();
+		File[] files = fileService.listCurve(t);
+		List<String[]> listData = new ArrayList<String[]>();
+		List<String> listFile = new ArrayList<String>();
 
+		CsvHandler csv = new CsvHandler();
 		for (File file : files) {
 			System.out.println("NAME = " + file.getAbsolutePath());
 			listFile.add(file.getAbsolutePath());
@@ -118,7 +118,6 @@ public class TestController {
 		List<TypeTestAttribute> typesTest = typeTestService.findAll();
 		List<TypeMaterialAttribute> typesMat = typeMatService.findAll();
 		Material mat = materialService.find(Integer.parseInt(idMat));
-		CsvHandler csv = new CsvHandler();
 
 		Test test = new Test();
 		test.setName(name);
@@ -129,13 +128,12 @@ public class TestController {
 		User user = userService.getUser(principal.getName());
 		test.setUser(user);
 
-		FolderHandler f = new FolderHandler();
-		f.initDirectory(test);
+		fileService.initTest(test);
 
 		// Upload des fichiers
 
 		try {
-			File serverFile = new File(f.getDataFilename(test));
+			File serverFile = new File(fileService.getDataFilename(test));
 			System.out.println(serverFile.getPath());
 			BufferedOutputStream stream = new BufferedOutputStream(
 					new FileOutputStream(serverFile));
@@ -146,7 +144,7 @@ public class TestController {
 		}
 
 		try {
-			File serverFile = new File(f.getConfigFilename(test));
+			File serverFile = new File(fileService.getConfigFilename(test));
 			System.out.println(serverFile.getPath());
 			BufferedOutputStream stream = new BufferedOutputStream(
 					new FileOutputStream(serverFile));
@@ -159,19 +157,22 @@ public class TestController {
 		testService.add(test);
 		// Conversion du fichier data en csv
 		try {
-			csv.datToCsv(f.getDataFilename(test), f.getPathSave(test)
-					+ File.separator + "dataInput.csv", f.getPathSave(test)
-					+ File.separator + "header.txt");
+			CsvHandler csv = new CsvHandler();
+			csv.datToCsv(fileService.getDataFilename(test),
+					fileService.getTestPath(test) + File.separator
+							+ "dataInput.csv", fileService.getTestPath(test)
+							+ File.separator + "header.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		ParserConfig prconf = new ParserConfig();
-		test = prconf.parseFileConfig(test, f.getConfigFilename(test),
-				typesMat, typesTest);
-		prconf.parseHeader(f.getPathSave(test) + File.separator + "header.txt",
-				f.getPathSave(test) + File.separator + "header.json");
+		test = prconf.parseFileConfig(test,
+				fileService.getConfigFilename(test), typesMat, typesTest);
+		prconf.parseHeader(fileService.getTestPath(test) + File.separator
+				+ "header.txt", fileService.getTestPath(test) + File.separator
+				+ "header.json");
 
 		return "redirect:/ShowTest?idTest=" + test.getId();
 	}
@@ -179,13 +180,8 @@ public class TestController {
 	@RequestMapping(value = "/RemoveTest", method = RequestMethod.GET)
 	protected String removeTestGet(@RequestParam(value = "id") String id,
 			@RequestParam(value = "idMat") String idMat) throws IOException {
-
 		Test t = testService.find(Integer.parseInt(id));
-		FolderHandler f = new FolderHandler();
-
-		f.deleteFolder(t);
 		testService.remove(t);
-
 		return "redirect:/Material?idMat=" + idMat;
 	}
 }

@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
-import fr.epf.batmeca.handler.FolderHandler;
+import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
 /**
@@ -24,6 +24,8 @@ public class TraitmentController {
 
 	@Autowired
 	private ITestService testService;
+	@Autowired
+	private IFileService fileService;
 
 	@RequestMapping(value = "/Traitment", method = RequestMethod.GET)
 	protected String traitmentGet(@RequestParam(value = "id") String id,
@@ -44,19 +46,18 @@ public class TraitmentController {
 		CsvHandler csv = new CsvHandler();
 		StringBuilder result = new StringBuilder();
 
-		FolderHandler f = new FolderHandler();
 		// Réalisation du lissage
 		if (lisser != null) {
 			// FIXME check file not null
 
-			f.addDataHistoryFile("Lisser Data;file " + file, t);
-			csv.lissageOrdre2(file, f.getPathSave(t) + File.separator + "curve"
+			fileService.addHistory("Lisser Data;file " + file, t);
+			csv.lissageOrdre2(file, fileService.getTestPath(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv");
 			// csv.lissageOrdre2(f.getPathSave(t)+File.separator+"dataInput.csv",
 			// f.getPathSave(t)+File.separator+"dataOutput.csv");
-			String data = csv.readAll(f.getPathSave(t) + File.separator
+			String data = csv.readAll(fileService.getTestPath(t) + File.separator
 					+ "curve" + File.separator + "outputLissageTmp.csv");
-			f.renameFile(f.getPathSave(t) + File.separator + "curve"
+			fileService.renameFile(fileService.getTestPath(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv", file);
 
 			result.append(data);
@@ -72,7 +73,7 @@ public class TraitmentController {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				f.addDataHistoryFile("Cut After:" + start + ";file " + file, t);
+				fileService.addHistory("Cut After:" + start + ";file " + file, t);
 			} else if (before != null) {
 				int end = Integer.parseInt(endValue);
 				try {
@@ -80,7 +81,7 @@ public class TraitmentController {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				f.addDataHistoryFile("Cut Before:" + end + ";file " + file
+				fileService.addHistory("Cut Before:" + end + ";file " + file
 						+ ";", t);
 			}
 
@@ -97,8 +98,8 @@ public class TraitmentController {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-			f.addResult("MAX FILE:" + file + ";max=" + max + ";", t);
-			f.addDataHistoryFile(
+			fileService.addResult("MAX FILE:" + file + ";max=" + max + ";", t);
+			fileService.addHistory(
 					"MAX FILE:" + file + ";calMax:" + calMax + ";", t);
 
 			result.append(new Gson().toJson(max));
@@ -106,25 +107,24 @@ public class TraitmentController {
 
 		// Multiplication par un facteur
 		if (factor != null) {
-
-			f.addDataHistoryFile("factor FILE", t);
+			fileService.addHistory("factor FILE", t);
 		}
 
 		// Reset de la courbes
 		if (reset != null) {
 			// csv.datToCsv(f.getPathSave(t)+File.separator+"data"+File.separator+f.getFileNameData(t),
 			// f.getPathSave(t)+File.separator+"dataInput.csv");
-			String data = csv.readAll(f.getPathSave(t) + File.separator
+			String data = csv.readAll(fileService.getTestPath(t) + File.separator
 					+ "dataInput.csv");
 			System.out.println("RESET = " + reset);
-			f.addDataHistoryFile("RESET FILE", t);
+			fileService.addHistory("RESET FILE", t);
 			result.append(data);
 		}
 
 		if (coef != null) {
 			// FIXME check file not null
-			f.addDataHistoryFile("CALCUL COEFF:FILE " + file, t);
-			f.addResult("COEF=" + coef + ";File=" + file + ";", t);
+			fileService.addHistory("CALCUL COEFF:FILE " + file, t);
+			fileService.addResult("COEF=" + coef + ";File=" + file + ";", t);
 		}
 
 		return result.toString();
@@ -142,7 +142,6 @@ public class TraitmentController {
 		int nbColumn = Integer.parseInt(selectRowValue);
 		CsvHandler csv = new CsvHandler();
 
-		FolderHandler f = new FolderHandler();
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
 
@@ -158,14 +157,14 @@ public class TraitmentController {
 			other = 1;
 		}
 
-		csv.factorColumn(nbColumn, other, factor, file, f.getPathSave(test)
+		csv.factorColumn(nbColumn, other, factor, file, fileService.getTestPath(test)
 				+ File.separator + "curve" + File.separator + "factorcurve.csv");
 
-		f.addDataHistoryFile("FACTOR:" + factor + ";FILE:" + file
+		fileService.addHistory("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
-		String data = csv.readAll(f.getPathSave(test) + File.separator
+		String data = csv.readAll(fileService.getTestPath(test) + File.separator
 				+ "curve" + File.separator + "factorcurve.csv");
-		f.renameFile(f.getPathSave(test) + File.separator + "curve"
+		fileService.renameFile(fileService.getTestPath(test) + File.separator + "curve"
 				+ File.separator + "factorcurve.csv", file);
 
 		return data;

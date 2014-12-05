@@ -8,26 +8,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 import com.google.gson.Gson;
 
+import fr.epf.batmeca.config.Config;
+
+@Component
 public class CsvHandler {
 
-	@Value("${project.name}")
-	private String projectname;
-	@Value("${project.root}")
-	private String projectroot;
-
-	private String root;
-
-	public CsvHandler() {
-		root = projectroot + File.separator + projectname;
-		System.out.println(root);
-	}
+	@Autowired
+	private Config config;
 
 	/**
 	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un
@@ -162,7 +159,7 @@ public class CsvHandler {
 			IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
-				this.root };
+				config.getProjectPath() };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
@@ -218,7 +215,7 @@ public class CsvHandler {
 	public void datToCsv(String input, String output, String header)
 			throws IOException, InterruptedException {
 		String[] cmd = new String[] {
-				this.root + File.separator + "script" + File.separator
+				config.getProjectPath() + File.separator + "script" + File.separator
 						+ "datToCsv", input, output, header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);

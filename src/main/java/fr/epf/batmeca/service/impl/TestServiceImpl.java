@@ -10,6 +10,7 @@ import fr.epf.batmeca.dao.ITestDao;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.User;
+import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
 @Service
@@ -17,6 +18,8 @@ public class TestServiceImpl implements ITestService {
 
 	@Autowired
 	private ITestDao testDao;
+	@Autowired
+	private IFileService fileService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -39,6 +42,7 @@ public class TestServiceImpl implements ITestService {
 	@Override
 	@Transactional
 	public void remove(Test test) {
+		fileService.cleanTest(test);
 		testDao.remove(test);
 	}
 

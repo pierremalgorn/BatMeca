@@ -32,8 +32,6 @@
 	<mvc:resources mapping="/imgs/**" location="/imgs/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
 
-	<context:property-placeholder location="classpath:value.properties" />
-
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10000000" />

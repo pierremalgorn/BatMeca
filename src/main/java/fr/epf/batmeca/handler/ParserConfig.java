@@ -24,7 +24,6 @@ public class ParserConfig {
 	public Test parseFileConfig(Test test, String input,
 			List<TypeMaterialAttribute> listAttrMat,
 			List<TypeTestAttribute> listAttrTest) throws IOException {
-		FolderHandler f = new FolderHandler();
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
