@@ -2,9 +2,9 @@ package fr.epf.batmeca.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,18 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
-/**
- * Permet de selectioner un courbe Servlet implementation class SelectRowServlet
- */
 @Controller
-@RequestMapping("/SelectRow")
-public class SelectRowServlet {
+public class CurveController {
 
 	@Autowired
 	private ValueServiceImpl valueService;
@@ -32,19 +30,9 @@ public class SelectRowServlet {
 	private ITestService testService;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * Permet de selectioner une courbe
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/SelectRow", method = RequestMethod.POST)
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		/* Récuperation de l'abscisse et de l'ordonnées */
@@ -87,5 +75,40 @@ public class SelectRowServlet {
 		}
 
 		// response.getWriter().write((new Gson().toJson(nbCurve)));
+	}
+
+	/**
+	 * Permet de créer une courbe en sélectionnant l'abscisse et l'ordonnée
+	 */
+	@RequestMapping(value = "/ColValue", method = RequestMethod.POST)
+	protected void colValuePost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		int nbCol = Integer.parseInt(request.getParameter("nbField"));
+		int id = Integer.parseInt(request.getParameter("inputId"));
+		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		Test test = testService.find(id);
+		ArrayList<String[]> list = new ArrayList<String[]>();
+		String[] elem = new String[nbCol];
+		String[] unit = new String[nbCol];
+
+		for (int i = 0; i < nbCol; i++) {
+			elem[i] = request.getParameter("nameCol" + i);
+			unit[i] = request.getParameter("unit" + i);
+		}
+
+		list.add(elem);
+		list.add(unit);
+
+		f.saveToJson(list, f.getPathSave(test) + File.separator + "header.json");
+		response.getWriter().write(new Gson().toJson(list));
+	}
+
+	@RequestMapping(value = "/RemoveCurve", method = RequestMethod.GET)
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String file = request.getParameter("file");
+		File curve = new File(file);
+		boolean delete = curve.delete();
+		response.getWriter().write("{" + delete + "}");
 	}
 }
