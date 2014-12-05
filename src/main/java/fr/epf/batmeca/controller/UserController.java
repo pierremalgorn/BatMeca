@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,6 +149,56 @@ public class UserController {
 		// } else {
 		// response.sendRedirect(response.encodeURL("./IndexUser"));
 		// }
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@RequestMapping(value = "/EditUserAdmin", method = RequestMethod.GET)
+	protected void editUserAdminGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String edit = request.getParameter("id");
+		int id = Integer.parseInt(edit);
+
+		request.setAttribute("user", userService.getUser(id));
+		request.setAttribute("types", typeUserService.getTypes());
+
+		RequestDispatcher rd = request.getRequestDispatcher(response
+				.encodeURL("/WEB-INF/editUserAdmin.jsp"));
+		rd.forward(request, response);
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@RequestMapping(value = "/EditUserAdmin", method = RequestMethod.POST)
+	protected void editUserAdminPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// Récuêration des elements du formulaire
+		int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		String firtsname = request.getParameter("firstName");
+		String email = request.getParameter("email");
+		String type = request.getParameter("type");
+		String password = request.getParameter("password");
+		String newPassword = request.getParameter("newpassword");
+		String newPasswordConfirm = request.getParameter("newpasswordconfirm");
+		// Création de l'objet associer
+		TypeUser typeUser = new TypeUser();
+		typeUser.setId(Integer.parseInt(type));
+
+		User user = userService.getUser(id);
+		user.setName(name);
+		user.setFirstName(firtsname);
+		user.setEmail(email);
+		user.setType(typeUser);
+		// if user wants to change his password
+		if (!password.equals("") && !newPassword.equals("")
+				&& newPassword.equals(newPasswordConfirm)) {
+			user.setPassword(newPassword);
+		} else {
+			user.setPassword(user.getPassword());
+		}
+
+		userService.editUser(user);
+		response.sendRedirect(response.encodeURL("IndexUser"));
+		// response.sendRedirect(response.encodeURL("IndexUser"));
 	}
 
 	@RequestMapping(value="/RemoveUser", method = RequestMethod.GET)
