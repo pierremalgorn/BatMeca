@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="include/header.jsp" />
 
 <div class="container">
@@ -14,14 +15,29 @@
 			</div>
 		</c:if>
 		<c:if test="${param['logout'] != null}">
-			<%
-				session.invalidate();
-			%>
-			<div class="alert alert-success alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-hidden="true">&times;</button>
-				<p>You are now logged out!</p>
-			</div>
+			<sec:authorize var="loggedIn" access="isAuthenticated()" />
+			<c:choose>
+				<c:when test="${loggedIn}">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<p>
+							You are still logged in!<br>Clear your cookies
+							to fix this.
+						</p>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<%
+						session.invalidate();
+					%>
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<p>You are now logged out!</p>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<div class="control-group">
