@@ -34,13 +34,10 @@ import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.ITypeTestAttributService;
 import fr.epf.batmeca.service.IUserService;
-import fr.epf.batmeca.service.IValueService;
 
 @Controller
 public class TestController {
 
-	@Autowired
-	private IValueService valueService;
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -58,9 +55,8 @@ public class TestController {
 
 		int id = Integer.parseInt(idTest);
 		Test t = testService.find(id);
-		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
-				+ valueService.getName());
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		CsvHandler csv = new CsvHandler();
+		FolderHandler f = new FolderHandler();
 		ArrayList<String[]> list = f.deserializeFileJson(f.getPathSave(t)
 				+ File.separator + "header.json");
 
@@ -115,14 +111,14 @@ public class TestController {
 	protected String addTestPost(
 			@RequestParam(value = "inputNameTest") String name,
 			@RequestParam(value = "idMat") String idMat,
-			@RequestParam("file") MultipartFile[] files, Principal principal)
-			throws IOException {
+			@RequestParam("inputDataFile") MultipartFile dataFile,
+			@RequestParam("inputConfigFile") MultipartFile configFile,
+			Principal principal) throws IOException {
 
 		List<TypeTestAttribute> typesTest = typeTestService.findAll();
 		List<TypeMaterialAttribute> typesMat = typeMatService.findAll();
 		Material mat = materialService.find(Integer.parseInt(idMat));
-		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
-				+ valueService.getName());
+		CsvHandler csv = new CsvHandler();
 
 		Test test = new Test();
 		test.setName(name);
@@ -133,51 +129,47 @@ public class TestController {
 		User user = userService.getUser(principal.getName());
 		test.setUser(user);
 
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		f.initDirectory(test);
-		String savePath = f.getPathSave(test);
 
 		// Upload des fichiers
-		for (int i = 0; i < files.length && i < 2; i++) {
-			MultipartFile file = files[i];
-			String filename = file.getName();
-			String path = savePath + File.separator;
 
-			System.out.println("FILE NAME = " + filename);
-			if (i == 0) {
-				path += "data" + File.separator + filename;
-			} else {
-				path += "config" + File.separator + filename;
-			}
+		try {
+			File serverFile = new File(f.getDataFilename(test));
+			System.out.println(serverFile.getPath());
+			BufferedOutputStream stream = new BufferedOutputStream(
+					new FileOutputStream(serverFile));
+			stream.write(dataFile.getBytes());
+			stream.close();
+		} catch (Exception e) {
+			return "You failed to upload DATA file => " + e.getMessage();
+		}
 
-			try {
-				File serverFile = new File(path);
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
-				stream.write(file.getBytes());
-				stream.close();
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
+		try {
+			File serverFile = new File(f.getConfigFilename(test));
+			System.out.println(serverFile.getPath());
+			BufferedOutputStream stream = new BufferedOutputStream(
+					new FileOutputStream(serverFile));
+			stream.write(configFile.getBytes());
+			stream.close();
+		} catch (Exception e) {
+			return "You failed to upload CONFIG file => " + e.getMessage();
 		}
 
 		testService.add(test);
 		// Conversion du fichier data en csv
 		try {
-			csv.datToCsv(f.getPathSave(test) + File.separator + "data"
-					+ File.separator + f.getFileNameData(test),
-					f.getPathSave(test) + File.separator + "dataInput.csv",
-					f.getPathSave(test) + File.separator + "header.txt");
+			csv.datToCsv(f.getDataFilename(test), f.getPathSave(test)
+					+ File.separator + "dataInput.csv", f.getPathSave(test)
+					+ File.separator + "header.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		ParserConfig prconf = new ParserConfig();
-		test = prconf.parseFileConfig(valueService.getResourcePath(), test,
-				f.getPathSave(test) + File.separator + "config"
-						+ File.separator + f.getFileNameConfig(test), typesMat,
-				typesTest);
+		test = prconf.parseFileConfig(test, f.getConfigFilename(test),
+				typesMat, typesTest);
 		prconf.parseHeader(f.getPathSave(test) + File.separator + "header.txt",
 				f.getPathSave(test) + File.separator + "header.json");
 
@@ -189,7 +181,7 @@ public class TestController {
 			@RequestParam(value = "idMat") String idMat) throws IOException {
 
 		Test t = testService.find(Integer.parseInt(id));
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 
 		f.deleteFolder(t);
 		testService.remove(t);

@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.IValueService;
 
 @RestController
 public class ShowController {
 
-	@Autowired
-	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 
@@ -25,7 +22,7 @@ public class ShowController {
 	protected String showHistoricGet(@RequestParam("id") String idValue) {
 		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		String data = null;
 
 		try {
@@ -41,7 +38,7 @@ public class ShowController {
 	protected String showResultGet(@RequestParam("id") String idValue) {
 		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		String data = null;
 
 		try {

@@ -18,12 +18,10 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.MaterialAttribute;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.User;
-import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.ITypeMaterialAttributService;
 import fr.epf.batmeca.service.IUserService;
-import fr.epf.batmeca.service.IValueService;
 
 @Controller
 public class MaterialController {
@@ -36,8 +34,6 @@ public class MaterialController {
 	private ITestService testService;
 	@Autowired
 	private IUserService userService;
-	@Autowired
-	private IValueService valueService;
 
 	@RequestMapping(value = "/Material", method = RequestMethod.GET)
 	protected String materialGet(@RequestParam("idMat") String id,
@@ -149,9 +145,6 @@ public class MaterialController {
 
 		int id = Integer.parseInt(idMat);
 		Material mat = materialService.find(id);
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
-
-		f.cleanMatFolder(mat);
 		materialService.remove(mat);
 
 		if (idParent != null) {

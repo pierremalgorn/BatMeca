@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.epf.batmeca.dao.IMaterialDao;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.User;
+import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.IMaterialService;
 
 @Service
@@ -44,7 +45,9 @@ public class MaterialServiceImpl implements IMaterialService {
 	@Override
 	@Transactional
 	public boolean remove(Material mat) {
-		return materialDao.remove(mat);
+		boolean result = materialDao.remove(mat);
+		new FolderHandler().cleanMatFolder(mat); // FIXME
+		return result;
 	}
 
 	@Override

@@ -12,6 +12,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.google.gson.Gson;
 
 import fr.epf.batmeca.entity.Material;
@@ -19,21 +21,8 @@ import fr.epf.batmeca.entity.Test;
 
 public class FolderHandler {
 
-	private static String root;
-	private File file;
-
-	public FolderHandler(String root) {
-		super();
-		FolderHandler.root = root;
-	}
-
-	public String getRoot() {
-		return root;
-	}
-
-	public void setRoot(String root) {
-		FolderHandler.root = root;
-	}
+	@Value("${project.root}")
+	private String root;
 
 	/**
 	 * useless
@@ -47,7 +36,7 @@ public class FolderHandler {
 	 * Permet de recuperer les chemin de sauvegarde du Test
 	 * */
 	public String getPathSave(Test test) {
-		return FolderHandler.root + File.separator + test.getName();
+		return root + File.separator + test.getName();
 	}
 
 	/**
@@ -87,28 +76,30 @@ public class FolderHandler {
 		return f.listFiles();
 	}
 
-	public String getFileNameData(Test t) {
-		File file = new File(this.getPathSave(t) + File.separator + "data");
-		File[] files = file.listFiles();
-
-		/*
-		 * for (File f : files) { String name = f.getName(); //
-		 * System.out.println("NAME FILE = "+name); }
-		 */
-
-		return files[files.length - 1].getName();
+	public String getDataFilename(Test t) {
+		return getPathSave(t) + File.separator + "data" + File.separator + t.getId();
+//		File file = new File(this.getPathSave(t) + File.separator + "data");
+//		File[] files = file.listFiles();
+//
+//		/*
+//		 * for (File f : files) { String name = f.getName(); //
+//		 * System.out.println("NAME FILE = "+name); }
+//		 */
+//
+//		return files[files.length - 1].getName();
 	}
 
-	public String getFileNameConfig(Test t) {
-		File file = new File(this.getPathSave(t) + File.separator + "config");
-		File[] files = file.listFiles();
-
-		/*
-		 * for (File f : files) { String name = f.getName(); //
-		 * System.out.println("NAME FILE = "+name); }
-		 */
-
-		return files[files.length - 1].getName();
+	public String getConfigFilename(Test t) {
+		return getPathSave(t) + File.separator + "config" + File.separator + t.getId();
+//		File file = new File(this.getPathSave(t) + File.separator + "config");
+//		File[] files = file.listFiles();
+//
+//		/*
+//		 * for (File f : files) { String name = f.getName(); //
+//		 * System.out.println("NAME FILE = "+name); }
+//		 */
+//
+//		return files[files.length - 1].getName();
 	}
 
 	public void cleanAllTestDir(Material mat) throws IOException {
@@ -120,14 +111,19 @@ public class FolderHandler {
 	/*
 	 * Marche pas bien
 	 */
-	public void cleanMatFolder(Material mat) throws IOException {
-		this.cleanAllTestDir(mat);
-		if (mat.getMaterialParent() != null) {
-			while (mat.getMaterialParent() != null) {
-				mat = mat.getMaterialParent();
+	public void cleanMatFolder(Material mat) {
+		try {
+			this.cleanAllTestDir(mat);
+			if (mat.getMaterialParent() != null) {
+				while (mat.getMaterialParent() != null) {
+					mat = mat.getMaterialParent();
+					cleanAllTestDir(mat);
+				}
 				cleanAllTestDir(mat);
 			}
-			cleanAllTestDir(mat);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

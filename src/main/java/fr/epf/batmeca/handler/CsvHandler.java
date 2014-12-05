@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -15,10 +17,16 @@ import com.google.gson.Gson;
 
 public class CsvHandler {
 
+	@Value("${project.name}")
+	private String projectname;
+	@Value("${project.root}")
+	private String projectroot;
+
 	private String root;
 
-	public CsvHandler(String input) {
-		root = input;
+	public CsvHandler() {
+		root = projectroot + File.separator + projectname;
+		System.out.println(root);
 	}
 
 	/**

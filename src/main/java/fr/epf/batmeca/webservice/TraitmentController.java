@@ -15,7 +15,6 @@ import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.IValueService;
 
 /**
  * Permet de réaliser des traitements sur une courbe
@@ -23,8 +22,6 @@ import fr.epf.batmeca.service.IValueService;
 @RestController
 public class TraitmentController {
 
-	@Autowired
-	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 
@@ -44,11 +41,10 @@ public class TraitmentController {
 
 		int idTest = Integer.parseInt(id);
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
-				+ valueService.getName());
+		CsvHandler csv = new CsvHandler();
 		StringBuilder result = new StringBuilder();
 
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		// Réalisation du lissage
 		if (lisser != null) {
 			// FIXME check file not null
@@ -144,10 +140,9 @@ public class TraitmentController {
 		int idTest = Integer.parseInt(inputIdValue);
 		float factor = Float.parseFloat(inputFactorValue);
 		int nbColumn = Integer.parseInt(selectRowValue);
-		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
-				+ valueService.getName());
+		CsvHandler csv = new CsvHandler();
 
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
 

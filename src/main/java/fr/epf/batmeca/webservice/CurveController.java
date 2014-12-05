@@ -16,13 +16,10 @@ import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.FolderHandler;
 import fr.epf.batmeca.service.ITestService;
-import fr.epf.batmeca.service.IValueService;
 
 @RestController
 public class CurveController {
 
-	@Autowired
-	private IValueService valueService;
 	@Autowired
 	private ITestService testService;
 
@@ -40,9 +37,8 @@ public class CurveController {
 		int y = Integer.parseInt(inputY);
 
 		Test test = testService.find(Integer.parseInt(inputId));
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
-		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
-				+ valueService.getName());
+		FolderHandler f = new FolderHandler();
+		CsvHandler csv = new CsvHandler();
 		File[] list = f.listCurve(test);
 		int nbCurve = list.length;
 
@@ -82,7 +78,7 @@ public class CurveController {
 
 		int nbCol = Integer.parseInt(nbField);
 		int id = Integer.parseInt(inputId);
-		FolderHandler f = new FolderHandler(valueService.getResourcePath());
+		FolderHandler f = new FolderHandler();
 		Test test = testService.find(id);
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		String[] elem = new String[nbCol];
