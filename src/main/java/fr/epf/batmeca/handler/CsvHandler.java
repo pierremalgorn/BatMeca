@@ -121,11 +121,9 @@ public class CsvHandler {
 
 	/**
 	 * Permet de calculer le max d'un colonne
-	 *
-	 * @throws InterruptedException
 	 * */
 	public Float maxValueColumn(int numColumn, String input)
-			throws NumberFormatException, IOException, InterruptedException {
+			throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
 				input };
@@ -151,11 +149,9 @@ public class CsvHandler {
 
 	/**
 	 * Calcule du min sur une colonne
-	 *
-	 * @throws InterruptedException
 	 * */
 	public Float minValueColumn(int numColumn) throws NumberFormatException,
-			IOException, InterruptedException {
+			IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
 				this.root };
@@ -177,8 +173,7 @@ public class CsvHandler {
 	}
 
 	public void factorColumn(int numColumn, int other, float factor,
-			String input, String output) throws IOException,
-			InterruptedException {
+			String input, String output) throws IOException {
 		String[] cmd;
 		if (numColumn < other) {
 			cmd = new String[] {
@@ -293,9 +288,8 @@ public class CsvHandler {
 	 * @param input
 	 *            : chemin du fichier
 	 * @return nombre deligne present dans le fichier
-	 * @throws InterruptedException
 	 * */
-	public int nbLigne(String input) throws IOException, InterruptedException {
+	public int nbLigne(String input) throws IOException {
 		String[] cmd = new String[] { "sed", "-n", "-e", "$=", input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);

@@ -3,14 +3,11 @@ package fr.epf.batmeca.controller;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
@@ -21,10 +18,9 @@ import fr.epf.batmeca.service.ITestService;
 import fr.epf.batmeca.service.impl.ValueServiceImpl;
 
 /**
- * Permet de réaliser des traitements sur une courbe Servlet implementation
- * class TraitmentServlet
+ * Permet de réaliser des traitements sur une courbe
  */
-@Controller
+@RestController
 public class TraitmentController {
 
 	@Autowired
@@ -33,18 +29,30 @@ public class TraitmentController {
 	private ITestService testService;
 
 	@RequestMapping(value = "/Traitment", method = RequestMethod.GET)
-	protected void traitmentGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int idTest = Integer.parseInt(request.getParameter("id"));
+	protected String traitmentGet(@RequestParam(value = "id") String id,
+			@RequestParam(value = "lisser", required = false) String lisser,
+			@RequestParam(value = "cut", required = false) String cut,
+			@RequestParam(value = "after", required = false) String after,
+			@RequestParam(value = "before", required = false) String before,
+			@RequestParam(value = "start", required = false) String startValue,
+			@RequestParam(value = "end", required = false) String endValue,
+			@RequestParam(value = "calMax", required = false) String calMax,
+			@RequestParam(value = "factor", required = false) String factor,
+			@RequestParam(value = "reset", required = false) String reset,
+			@RequestParam(value = "coef", required = false) String coef,
+			@RequestParam(value = "file", required = false) String file) throws IOException {
+
+		int idTest = Integer.parseInt(id);
 		Test t = testService.find(idTest);
 		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
 				+ valueService.getName());
+		StringBuilder result = new StringBuilder();
 
 		FolderHandler f = new FolderHandler(valueService.getResourcePath());
 		// Réalisation du lissage
-		String lisser = request.getParameter("lisser");
 		if (lisser != null) {
-			String file = request.getParameter("file");
+			// FIXME check file not null
+
 			f.addDataHistoryFile("Lisser Data;file " + file, t);
 			csv.lissageOrdre2(file, f.getPathSave(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv");
@@ -54,17 +62,15 @@ public class TraitmentController {
 					+ "curve" + File.separator + "outputLissageTmp.csv");
 			f.renameFile(f.getPathSave(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv", file);
-			response.getWriter().write(data);
+
+			result.append(data);
 		}
+
 		// Réalisation d'une coupe de courbe
-		String cut = request.getParameter("cut");
 		if (cut != null) {
-			String after = request.getParameter("after");
-			String before = request.getParameter("before");
-			// int end = Integer.parseInt(request.getParameter("end"));
-			String file = request.getParameter("file");
+			// FIXME check start, end, file not null
 			if (after != null) {
-				int start = Integer.parseInt(request.getParameter("start"));
+				int start = Integer.parseInt(startValue);
 				try {
 					csv.cutAfter(start, file);
 				} catch (InterruptedException e) {
@@ -72,7 +78,7 @@ public class TraitmentController {
 				}
 				f.addDataHistoryFile("Cut After:" + start + ";file " + file, t);
 			} else if (before != null) {
-				int end = Integer.parseInt(request.getParameter("end"));
+				int end = Integer.parseInt(endValue);
 				try {
 					csv.cutBefore(end, file);
 				} catch (InterruptedException e) {
@@ -83,34 +89,32 @@ public class TraitmentController {
 			}
 
 			String data = csv.readAll(file);
-
-			response.getWriter().write(data);
+			result.append(data);
 		}
+
 		// Calcule du max d'une colonne
-		String calMax = request.getParameter("calMax");
 		if (calMax != null) {
-			String file = request.getParameter("file");
+			// FIXME check file not null
 			float max = 0;
 			try {
 				max = csv.maxValueColumn(Integer.parseInt(calMax), file);
-			} catch (NumberFormatException | InterruptedException e) {
+			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
 			f.addResult("MAX FILE:" + file + ";max=" + max + ";", t);
 			f.addDataHistoryFile(
 					"MAX FILE:" + file + ";calMax:" + calMax + ";", t);
-			response.getWriter().write(new Gson().toJson(max));
+
+			result.append(new Gson().toJson(max));
 		}
+
 		// Multiplication par un facteur
-		String factor = request.getParameter("factor");
 		if (factor != null) {
 
 			f.addDataHistoryFile("factor FILE", t);
 		}
-		/*
-		 * Reset de la courbes
-		 */
-		String reset = request.getParameter("reset");
+
+		// Reset de la courbes
 		if (reset != null) {
 			// csv.datToCsv(f.getPathSave(t)+File.separator+"data"+File.separator+f.getFileNameData(t),
 			// f.getPathSave(t)+File.separator+"dataInput.csv");
@@ -118,24 +122,28 @@ public class TraitmentController {
 					+ "dataInput.csv");
 			System.out.println("RESET = " + reset);
 			f.addDataHistoryFile("RESET FILE", t);
-			response.getWriter().write(data);
+			result.append(data);
 		}
 
-		String coef = request.getParameter("coef");
 		if (coef != null) {
-			String file = request.getParameter("file");
+			// FIXME check file not null
 			f.addDataHistoryFile("CALCUL COEFF:FILE " + file, t);
 			f.addResult("COEF=" + coef + ";File=" + file + ";", t);
 		}
+
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/Traitment", method = RequestMethod.POST)
-	protected void traitmentPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		int idTest = Integer.parseInt(request.getParameter("inputId"));
-		float factor = Float.parseFloat(request.getParameter("inputFactor"));
-		int nbColumn = Integer.parseInt(request.getParameter("selectRow"));
-		String file = request.getParameter("file");
+	protected String traitmentPost(
+			@RequestParam(value = "inputId") String inputIdValue,
+			@RequestParam(value = "inputFactor") String inputFactorValue,
+			@RequestParam(value = "selectRow") String selectRowValue,
+			@RequestParam(value = "file") String file) throws IOException {
+
+		int idTest = Integer.parseInt(inputIdValue);
+		float factor = Float.parseFloat(inputFactorValue);
+		int nbColumn = Integer.parseInt(selectRowValue);
 		CsvHandler csv = new CsvHandler(valueService.getRoot() + File.separator
 				+ valueService.getName());
 
@@ -154,13 +162,9 @@ public class TraitmentController {
 			nbColumn = 2;
 			other = 1;
 		}
-		try {
-			csv.factorColumn(nbColumn, other, factor, file, f.getPathSave(test)
-					+ File.separator + "curve" + File.separator
-					+ "factorcurve.csv");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
+		csv.factorColumn(nbColumn, other, factor, file, f.getPathSave(test)
+				+ File.separator + "curve" + File.separator + "factorcurve.csv");
 
 		f.addDataHistoryFile("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
@@ -168,6 +172,7 @@ public class TraitmentController {
 				+ "curve" + File.separator + "factorcurve.csv");
 		f.renameFile(f.getPathSave(test) + File.separator + "curve"
 				+ File.separator + "factorcurve.csv", file);
-		response.getWriter().write(data);
+
+		return data;
 	}
 }
