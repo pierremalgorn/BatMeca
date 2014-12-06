@@ -37,17 +37,19 @@ public class FileServiceImpl implements IFileService {
 	private static final String DATA_D = S + "data";
 	private static final String HISTORY_D = S + "history";
 	private static final String CURVE_D = S + "curve";
-	// Files
+	// Script
+	private static final String DAT2CSV_S = S + "datToCsv";
+	// Various files
 	private static final String HISTORY_F = HISTORY_D + S + "historic";
 	private static final String RESULT_F = S + "result";
-	private static final String DAT2CSV_F = S + "script" + S + "datToCsv";
-	// Data files
+	// Raw data files
 	private static final String CONFIG_F = CONFIG_D + S + "config";
 	private static final String DATA_F = DATA_D + S + "data";
+	// Data files
+	private static final String DATACSV_F = S + "dataInput.csv";
 	private static final String HEADER_J_F = S + "header.json";
 	// Temporary files
 	private static final String HEADER_T_F = S + "header.txt";
-	private static final String DATACSV_F = S + "dataInput.csv";
 	private static final String TMP_F = S + "tmp.csv";
 
 	@Autowired
@@ -234,7 +236,7 @@ public class FileServiceImpl implements IFileService {
 	}
 
 	private void dat2csv(Test test) throws IOException {
-		String[] cmd = new String[] { config.getProjectPath() + DAT2CSV_F,
+		String[] cmd = new String[] { config.getScriptsPath() + DAT2CSV_S,
 				getDataFilename(test), getTestPath(test) + DATACSV_F,
 				getTestPath(test) + HEADER_T_F };
 		Runtime runtime = Runtime.getRuntime();
