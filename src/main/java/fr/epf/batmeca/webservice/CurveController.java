@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.epf.batmeca.entity.Test;
-import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
@@ -53,12 +52,7 @@ public class CurveController {
 			return "{\"content\":true}";
 		} else {
 			// Création de la courbe
-			CsvHandler.selectCurve(fileService.getTestPath(test) + File.separator
-					+ "dataInput.csv", fileService.getTestPath(test) + File.separator
-					+ "curve" + File.separator + x + "-" + y + ".csv", x, y);
-
-			String data = CsvHandler.readAll(fileService.getTestPath(test) + File.separator
-					+ "curve" + File.separator + x + "-" + y + ".csv");
+			String data = fileService.selectCurve(test, x, y);
 
 			return "{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)
 					+ ",\"nameFile\":\"" + x + "-" + y + ".csv\"}";
@@ -91,8 +85,8 @@ public class CurveController {
 		list.add(elem);
 		list.add(unit);
 
-		// TODO clean all that
-		fileService.saveToJson(list, fileService.getTestPath(test) + File.separator + "header.json");
+		fileService.saveToJson(list, test);
+
 		return list;
 	}
 

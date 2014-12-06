@@ -24,6 +24,7 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
+import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 
@@ -37,11 +38,17 @@ public class FileService implements IFileService {
 	private static final String HISTORY_D = S + "history";
 	private static final String CURVE_D = S + "curve";
 	// Files
-	private static final String CONFIG_F = CONFIG_D + S + "config";
-	private static final String DATA_F = DATA_D + S + "data";
 	private static final String HISTORY_F = HISTORY_D + S + "historic";
 	private static final String RESULT_F = S + "result";
-	private static final String HEADER_F = S + "header.json";
+	private static final String DAT2CSV_F = S + "script" + S + "datToCsv";
+	// Data files
+	private static final String CONFIG_F = CONFIG_D + S + "config";
+	private static final String DATA_F = DATA_D + S + "data";
+	private static final String HEADER_J_F = S + "header.json";
+	// Temporary files
+	private static final String HEADER_T_F = S + "header.txt";
+	private static final String DATACSV_F = S + "dataInput.csv";
+	private static final String TMP_F = S + "tmp.csv";
 
 	@Autowired
 	private Config config;
@@ -49,7 +56,6 @@ public class FileService implements IFileService {
 	@Override
 	public void initTest(Test test) throws IOException {
 		String path = getTestPath(test);
-		System.out.println(path);
 
 		new File(path).mkdirs();
 
@@ -58,8 +64,6 @@ public class FileService implements IFileService {
 		new File(path + HISTORY_D).mkdir();
 		new File(path + CURVE_D).mkdir();
 
-		new File(path + CONFIG_F).createNewFile();
-		new File(path + DATA_F).createNewFile();
 		new File(path + HISTORY_F).createNewFile();
 		new File(path + RESULT_F).createNewFile();
 	}
@@ -68,25 +72,13 @@ public class FileService implements IFileService {
 	public void processTest(Test test, List<TypeTestAttribute> typesTest,
 			List<TypeMaterialAttribute> typesMat) throws IOException {
 		// Convert from dat to csv format
-		String[] cmd = new String[] {
-				config.getProjectPath() + File.separator + "script"
-						+ File.separator + "datToCsv", getDataFilename(test),
-				getTestPath(test) + File.separator + "dataInput.csv",
-				getTestPath(test) + File.separator + "header.txt" };
-		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime.exec(cmd);
-		try {
-			process.waitFor();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		dat2csv(test);
 
 		// Extract header
 		test = ParserConfig.parseFileConfig(test, getConfigFilename(test),
 				typesMat, typesTest);
-		ParserConfig.parseHeader(getTestPath(test) + File.separator
-				+ "header.txt", getTestPath(test) + File.separator
-				+ "header.json");
+		ParserConfig.parseHeader(getTestPath(test) + HEADER_T_F,
+				getTestPath(test) + HEADER_J_F);
 	}
 
 	@Override
@@ -104,7 +96,7 @@ public class FileService implements IFileService {
 	@Override
 	public List<String[]> deserializeHeader(Test test) throws IOException {
 		List<String[]> list = new ArrayList<String[]>();
-		InputStream ips = new FileInputStream(getTestPath(test) + HEADER_F);
+		InputStream ips = new FileInputStream(getTestPath(test) + HEADER_J_F);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		Gson gson = new Gson();
@@ -147,14 +139,9 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public void saveToJson(List<String[]> list, String output)
-			throws IOException {
+	public void saveToJson(List<String[]> list, Test test) throws IOException {
+		String output = getTestPath(test) + HEADER_J_F;
 		writeToFile(new Gson().toJson(list), output, false);
-	}
-
-	@Override
-	public void renameFile(String from, String to) {
-		new File(from).renameTo(new File(to)); // XXX
 	}
 
 	@Override
@@ -197,11 +184,71 @@ public class FileService implements IFileService {
 		return new Gson().toJson(sb.toString());
 	}
 
+	@Override
+	public String selectCurve(Test test, int x, int y) throws IOException {
+		String path = getTestPath(test);
+		String file = path + CURVE_D + S + x + "-" + y + ".csv";
+
+		CsvHandler.selectCurve(path + DATACSV_F, file, x, y);
+
+		return CsvHandler.readAll(file);
+	}
+
+	@Override
+	public String lissageOrdre2(String file, Test test) throws IOException {
+		String filetmp = getTestPath(test) + CURVE_D + TMP_F;
+
+		CsvHandler.lissageOrdre2(file, filetmp);
+		renameTo(filetmp, file);
+
+		return CsvHandler.readAll(file);
+	}
+
+	@Override
+	public String factorColumn(int nbColumn, int other, float factor,
+			String file, Test test) throws IOException {
+		String filetmp = getTestPath(test) + CURVE_D + TMP_F;
+
+		CsvHandler.factorColumn(nbColumn, other, factor, file, filetmp);
+		renameTo(filetmp, file);
+
+		return CsvHandler.readAll(file);
+	}
+
+	@Override
+	public String resetCurve(Test test) throws IOException {
+		String out = getTestPath(test) + DATACSV_F;
+
+		// dat2csv(test); XXX was commented earlier
+
+		// FIXME does this really reset the curve?
+		return CsvHandler.readAll(out);
+	}
+
 	private void writeToFile(String string, String file, boolean append)
 			throws IOException {
 		FileWriter fw = new FileWriter(file, append);
 		PrintWriter pr = new PrintWriter(new BufferedWriter(fw));
 		pr.println(string);
 		pr.close();
+	}
+
+	private void dat2csv(Test test) throws IOException {
+		String[] cmd = new String[] { config.getProjectPath() + DAT2CSV_F,
+				getDataFilename(test), getTestPath(test) + DATACSV_F,
+				getTestPath(test) + HEADER_T_F };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void renameTo(String from, String to) throws IOException {
+		if (!new File(from).renameTo(new File(to))) {
+			throw new IOException("Unable to rename '" + from + "' to '" + to + "'");
+		}
 	}
 }

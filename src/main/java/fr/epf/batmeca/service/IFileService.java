@@ -29,9 +29,7 @@ public interface IFileService {
 
 	String getTestPath(Test test);
 
-	void saveToJson(List<String[]> list, String output) throws IOException;
-
-	void renameFile(String from, String to);
+	void saveToJson(List<String[]> list, Test test) throws IOException;
 
 	void addHistory(String data, Test test) throws IOException;
 
@@ -40,4 +38,13 @@ public interface IFileService {
 	void addResult(String data, Test test) throws IOException;
 
 	String readResult(Test test) throws IOException;
+
+	String selectCurve(Test test, int x, int y) throws IOException;
+
+	String lissageOrdre2(String file, Test test) throws IOException;
+
+	String factorColumn(int nbColumn, int other, float factor, String file,
+			Test test) throws IOException;
+
+	String resetCurve(Test test) throws IOException;
 }

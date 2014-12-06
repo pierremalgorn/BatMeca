@@ -1,6 +1,5 @@
 package fr.epf.batmeca.webservice;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,12 @@ public class TraitmentController {
 			@RequestParam(value = "coef", required = false) String coef,
 			@RequestParam(value = "file", required = false) String file) throws IOException {
 
+		/*
+		 * TODO clean this function
+		 *
+		 * Shouldn't file be FileService.DATACSV_F?
+		 */
+
 		int idTest = Integer.parseInt(id);
 		Test t = testService.find(idTest);
 		StringBuilder result = new StringBuilder();
@@ -50,15 +55,8 @@ public class TraitmentController {
 			// FIXME check file not null
 
 			fileService.addHistory("Lisser Data;file " + file, t);
-			CsvHandler.lissageOrdre2(file, fileService.getTestPath(t) + File.separator + "curve"
-					+ File.separator + "outputLissageTmp.csv");
-			// csv.lissageOrdre2(f.getPathSave(t)+File.separator+"dataInput.csv",
-			// f.getPathSave(t)+File.separator+"dataOutput.csv");
-			String data = CsvHandler.readAll(fileService.getTestPath(t) + File.separator
-					+ "curve" + File.separator + "outputLissageTmp.csv");
-			fileService.renameFile(fileService.getTestPath(t) + File.separator + "curve"
-					+ File.separator + "outputLissageTmp.csv", file);
 
+			String data = fileService.lissageOrdre2(file, t);
 			result.append(data);
 		}
 
@@ -111,12 +109,9 @@ public class TraitmentController {
 
 		// Reset de la courbes
 		if (reset != null) {
-			// csv.datToCsv(f.getPathSave(t)+File.separator+"data"+File.separator+f.getFileNameData(t),
-			// f.getPathSave(t)+File.separator+"dataInput.csv");
-			String data = CsvHandler.readAll(fileService.getTestPath(t) + File.separator
-					+ "dataInput.csv");
 			System.out.println("RESET = " + reset);
 			fileService.addHistory("RESET FILE", t);
+			String data = fileService.resetCurve(t);
 			result.append(data);
 		}
 
@@ -155,15 +150,9 @@ public class TraitmentController {
 			other = 1;
 		}
 
-		CsvHandler.factorColumn(nbColumn, other, factor, file, fileService.getTestPath(test)
-				+ File.separator + "curve" + File.separator + "factorcurve.csv");
-
 		fileService.addHistory("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
-		String data = CsvHandler.readAll(fileService.getTestPath(test) + File.separator
-				+ "curve" + File.separator + "factorcurve.csv");
-		fileService.renameFile(fileService.getTestPath(test) + File.separator + "curve"
-				+ File.separator + "factorcurve.csv", file);
+		String data = fileService.factorColumn(nbColumn, other, factor, file, test);
 
 		return data;
 	}
