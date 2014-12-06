@@ -8,23 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
 import com.google.gson.Gson;
 
-import fr.epf.batmeca.config.Config;
-
-@Component
 public class CsvHandler {
-
-	@Autowired
-	private Config config;
 
 	/**
 	 * Permet de renvoyé une chaine de caractere contenant l'integralité d'un
@@ -33,7 +22,7 @@ public class CsvHandler {
 	 * @param input
 	 *            fichier a lire
 	 * */
-	public String readAll(String input) throws IOException {
+	public static String readAll(String input) throws IOException {
 		// CSVReader reader = new CSVReader(new FileReader(input),',','"',2);
 		CSVReader reader = new CSVReader(new FileReader(input), ',',
 				CSVWriter.NO_QUOTE_CHARACTER);
@@ -53,7 +42,7 @@ public class CsvHandler {
 	/**
 	 * Permet l'echantillonage du fichier csv
 	 * */
-	public void echantillon(int echant) throws IOException {
+	private static void echantillon(int echant) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(
 				"/home/max/BatMeca/data.csv"), ',', /* FIXME hardcoded link */
 		CSVWriter.NO_QUOTE_CHARACTER, 2);
@@ -69,13 +58,6 @@ public class CsvHandler {
 	}
 
 	/**
-	 * Permet de faire la moyenne entre deux points
-	 * */
-	public float average(float f1, float f2) {
-		return (f1 + f2) / 2.0f;
-	}
-
-	/**
 	 * Lissage des points
 	 *
 	 * @param input
@@ -83,7 +65,7 @@ public class CsvHandler {
 	 * @param output
 	 *            chemin du fichier de sortie
 	 * */
-	public void lissageOrdre2(String input, String output) throws IOException {
+	public static void lissageOrdre2(String input, String output) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(input), ',',
 				CSVWriter.NO_QUOTE_CHARACTER, Character.MIN_VALUE);
 		CSVWriter writer = new CSVWriter(new FileWriter(output), ',',
@@ -99,7 +81,7 @@ public class CsvHandler {
 			for (int j = 0; j < tab.length; j++) {
 				float x1 = Float.parseFloat(myEntries.get(i - 1)[j]);
 				float x2 = Float.parseFloat(myEntries.get(i + 1)[j]);
-				tab[j] = Float.toString(this.average(x1, x2));
+				tab[j] = Float.toString((x1 + x2) / 2.0f);
 			}
 			writer.writeNext(tab);
 		}
@@ -114,7 +96,7 @@ public class CsvHandler {
 	 *
 	 * @throws InterruptedException
 	 * */
-	public void deletePortionCsv(String input, int start, int end)
+	private static void deletePortionCsv(String input, int start, int end)
 			throws IOException, InterruptedException {
 		/* FIXME hardcoded link */
 		String[] cmd = new String[] { "/bin/sed", "-i", "-e",
@@ -127,7 +109,7 @@ public class CsvHandler {
 	/**
 	 * Permet de calculer le max d'un colonne
 	 * */
-	public Float maxValueColumn(int numColumn, String input)
+	public static Float maxValueColumn(int numColumn, String input)
 			throws NumberFormatException, IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
@@ -155,19 +137,19 @@ public class CsvHandler {
 	/**
 	 * Calcule du min sur une colonne
 	 * */
-	public Float minValueColumn(int numColumn) throws NumberFormatException,
+	private static Float minValueColumn(String projectPath, int numColumn) throws NumberFormatException,
 			IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + numColumn + "}",
-				config.getProjectPath() };
+				projectPath };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				process.getInputStream()));
-		String line = "";
+		String line;
 
-		Float min = (float) 999999999;
+		Float min = Float.MAX_VALUE;
 		while ((line = reader.readLine()) != null) {
 			float val = Float.parseFloat(line);
 			if (val < min) {
@@ -177,7 +159,7 @@ public class CsvHandler {
 		return min;
 	}
 
-	public void factorColumn(int numColumn, int other, float factor,
+	public static void factorColumn(int numColumn, int other, float factor,
 			String input, String output) throws IOException {
 		String[] cmd;
 		if (numColumn < other) {
@@ -212,10 +194,10 @@ public class CsvHandler {
 	/*
 	 * Permet de convertir un fichier .dat en .csv
 	 */
-	public void datToCsv(String input, String output, String header)
+	public static void datToCsv(String projectPath, String input, String output, String header)
 			throws IOException, InterruptedException {
 		String[] cmd = new String[] {
-				config.getProjectPath() + File.separator + "script" + File.separator
+				projectPath + File.separator + "script" + File.separator
 						+ "datToCsv", input, output, header };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);
@@ -234,7 +216,7 @@ public class CsvHandler {
 	 * @param y
 	 *            axe en ordonnée
 	 * */
-	public void selectCurve(String input, String output, int x, int y)
+	public static void selectCurve(String input, String output, int x, int y)
 			throws IOException {
 		String[] cmd = new String[] { "awk",
 				"BEGIN { FS=\",\"; OFS=\",\"; } {print $" + x + ",$" + y + "}",
@@ -266,10 +248,10 @@ public class CsvHandler {
 	 *            chemin du fichier à couper
 	 * @throws InterruptedException
 	 * */
-	public void cutAfter(int start, String input) throws IOException,
+	public static void cutAfter(int start, String input) throws IOException,
 			InterruptedException {
-		int end = this.nbLigne(input);
-		this.deletePortionCsv(input, start, end);
+		int end = nbLigne(input);
+		deletePortionCsv(input, start, end);
 	}
 
 	/**
@@ -281,10 +263,10 @@ public class CsvHandler {
 	 *            : chemin du fichier csv
 	 * @throws InterruptedException
 	 * */
-	public void cutBefore(int end, String input) throws IOException,
+	public static void cutBefore(int end, String input) throws IOException,
 			InterruptedException {
 		int start = 1;
-		this.deletePortionCsv(input, start, end);
+		deletePortionCsv(input, start, end);
 	}
 
 	/**
@@ -294,7 +276,7 @@ public class CsvHandler {
 	 *            : chemin du fichier
 	 * @return nombre deligne present dans le fichier
 	 * */
-	public int nbLigne(String input) throws IOException {
+	private static int nbLigne(String input) throws IOException {
 		String[] cmd = new String[] { "sed", "-n", "-e", "$=", input };
 		Runtime runtime = Runtime.getRuntime();
 		final Process process = runtime.exec(cmd);

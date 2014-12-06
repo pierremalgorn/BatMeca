@@ -66,11 +66,10 @@ public class TestController {
 		List<String[]> listData = new ArrayList<String[]>();
 		List<String> listFile = new ArrayList<String>();
 
-		CsvHandler csv = new CsvHandler();
 		for (File file : files) {
 			System.out.println("NAME = " + file.getAbsolutePath());
 			listFile.add(file.getAbsolutePath());
-			String[] tab = { csv.readAll(file.getAbsolutePath()),
+			String[] tab = { CsvHandler.readAll(file.getAbsolutePath()),
 					file.getAbsolutePath() };
 			listData.add(tab);
 		}

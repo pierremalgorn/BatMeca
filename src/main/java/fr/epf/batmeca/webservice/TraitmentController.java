@@ -43,7 +43,6 @@ public class TraitmentController {
 
 		int idTest = Integer.parseInt(id);
 		Test t = testService.find(idTest);
-		CsvHandler csv = new CsvHandler();
 		StringBuilder result = new StringBuilder();
 
 		// Réalisation du lissage
@@ -51,11 +50,11 @@ public class TraitmentController {
 			// FIXME check file not null
 
 			fileService.addHistory("Lisser Data;file " + file, t);
-			csv.lissageOrdre2(file, fileService.getTestPath(t) + File.separator + "curve"
+			CsvHandler.lissageOrdre2(file, fileService.getTestPath(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv");
 			// csv.lissageOrdre2(f.getPathSave(t)+File.separator+"dataInput.csv",
 			// f.getPathSave(t)+File.separator+"dataOutput.csv");
-			String data = csv.readAll(fileService.getTestPath(t) + File.separator
+			String data = CsvHandler.readAll(fileService.getTestPath(t) + File.separator
 					+ "curve" + File.separator + "outputLissageTmp.csv");
 			fileService.renameFile(fileService.getTestPath(t) + File.separator + "curve"
 					+ File.separator + "outputLissageTmp.csv", file);
@@ -69,7 +68,7 @@ public class TraitmentController {
 			if (after != null) {
 				int start = Integer.parseInt(startValue);
 				try {
-					csv.cutAfter(start, file);
+					CsvHandler.cutAfter(start, file);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -77,7 +76,7 @@ public class TraitmentController {
 			} else if (before != null) {
 				int end = Integer.parseInt(endValue);
 				try {
-					csv.cutBefore(end, file);
+					CsvHandler.cutBefore(end, file);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -85,7 +84,7 @@ public class TraitmentController {
 						+ ";", t);
 			}
 
-			String data = csv.readAll(file);
+			String data = CsvHandler.readAll(file);
 			result.append(data);
 		}
 
@@ -94,7 +93,7 @@ public class TraitmentController {
 			// FIXME check file not null
 			float max = 0;
 			try {
-				max = csv.maxValueColumn(Integer.parseInt(calMax), file);
+				max = CsvHandler.maxValueColumn(Integer.parseInt(calMax), file);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
@@ -114,7 +113,7 @@ public class TraitmentController {
 		if (reset != null) {
 			// csv.datToCsv(f.getPathSave(t)+File.separator+"data"+File.separator+f.getFileNameData(t),
 			// f.getPathSave(t)+File.separator+"dataInput.csv");
-			String data = csv.readAll(fileService.getTestPath(t) + File.separator
+			String data = CsvHandler.readAll(fileService.getTestPath(t) + File.separator
 					+ "dataInput.csv");
 			System.out.println("RESET = " + reset);
 			fileService.addHistory("RESET FILE", t);
@@ -140,7 +139,6 @@ public class TraitmentController {
 		int idTest = Integer.parseInt(inputIdValue);
 		float factor = Float.parseFloat(inputFactorValue);
 		int nbColumn = Integer.parseInt(selectRowValue);
-		CsvHandler csv = new CsvHandler();
 
 		Test test = testService.find(idTest);
 		String[] tab = file.split("\\.");
@@ -157,12 +155,12 @@ public class TraitmentController {
 			other = 1;
 		}
 
-		csv.factorColumn(nbColumn, other, factor, file, fileService.getTestPath(test)
+		CsvHandler.factorColumn(nbColumn, other, factor, file, fileService.getTestPath(test)
 				+ File.separator + "curve" + File.separator + "factorcurve.csv");
 
 		fileService.addHistory("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
-		String data = csv.readAll(fileService.getTestPath(test) + File.separator
+		String data = CsvHandler.readAll(fileService.getTestPath(test) + File.separator
 				+ "curve" + File.separator + "factorcurve.csv");
 		fileService.renameFile(fileService.getTestPath(test) + File.separator + "curve"
 				+ File.separator + "factorcurve.csv", file);

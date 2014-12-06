@@ -39,7 +39,6 @@ public class CurveController {
 		int y = Integer.parseInt(inputY);
 
 		Test test = testService.find(Integer.parseInt(inputId));
-		CsvHandler csv = new CsvHandler();
 		File[] list = fileService.listCurve(test);
 		int nbCurve = list.length;
 
@@ -54,11 +53,11 @@ public class CurveController {
 			return "{\"content\":true}";
 		} else {
 			// Création de la courbe
-			csv.selectCurve(fileService.getTestPath(test) + File.separator
+			CsvHandler.selectCurve(fileService.getTestPath(test) + File.separator
 					+ "dataInput.csv", fileService.getTestPath(test) + File.separator
 					+ "curve" + File.separator + x + "-" + y + ".csv", x, y);
 
-			String data = csv.readAll(fileService.getTestPath(test) + File.separator
+			String data = CsvHandler.readAll(fileService.getTestPath(test) + File.separator
 					+ "curve" + File.separator + x + "-" + y + ".csv");
 
 			return "{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)

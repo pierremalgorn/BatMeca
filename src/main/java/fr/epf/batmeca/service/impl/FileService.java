@@ -85,19 +85,19 @@ public class FileService implements IFileService {
 	public void processTest(Test test, List<TypeTestAttribute> typesTest,
 			List<TypeMaterialAttribute> typesMat) throws IOException {
 		try {
-			CsvHandler csv = new CsvHandler();
-			csv.datToCsv(getDataFilename(test), getTestPath(test)
-					+ File.separator + "dataInput.csv", getTestPath(test)
-					+ File.separator + "header.txt");
+			CsvHandler.datToCsv(config.getProjectPath(), getDataFilename(test),
+					getTestPath(test) + File.separator + "dataInput.csv",
+					getTestPath(test) + File.separator + "header.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		test = ParserConfig.parseFileConfig(test, getConfigFilename(test), typesMat,
-				typesTest);
-		ParserConfig.parseHeader(getTestPath(test) + File.separator + "header.txt",
-				getTestPath(test) + File.separator + "header.json");
+		test = ParserConfig.parseFileConfig(test, getConfigFilename(test),
+				typesMat, typesTest);
+		ParserConfig.parseHeader(getTestPath(test) + File.separator
+				+ "header.txt", getTestPath(test) + File.separator
+				+ "header.json");
 	}
 
 	@Override
