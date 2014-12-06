@@ -195,7 +195,7 @@ public class FileServiceImpl implements IFileService {
 	}
 
 	@Override
-	public String lissageOrdre2(String file, Test test) throws IOException {
+	public String smooth2ndOrderCurve(String file, Test test) throws IOException {
 		String filetmp = getTestPath(test) + CURVE_D + TMP_F;
 
 		CsvHandler.lissageOrdre2(file, filetmp);
@@ -219,7 +219,7 @@ public class FileServiceImpl implements IFileService {
 	public String resetCurve(Test test) throws IOException {
 		String out = getTestPath(test) + DATACSV_F;
 
-		// dat2csv(test); XXX was commented earlier
+		// dat2csv(test); XXX was commented by team 2013
 
 		// FIXME does this really reset the curve?
 		return CsvHandler.readAll(out);

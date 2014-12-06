@@ -127,7 +127,7 @@ public class CurveWebservice {
 
 			fileService.addHistory("Lisser Data;file " + file, t);
 
-			String data = fileService.lissageOrdre2(file, t);
+			String data = fileService.smooth2ndOrderCurve(file, t);
 			result.append(data);
 		}
 
