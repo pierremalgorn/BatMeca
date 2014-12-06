@@ -18,19 +18,22 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
+	<!-- Load database properties -->
+	<context:property-placeholder location="classpath:database.properties" />
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
-			<value>com.mysql.jdbc.Driver</value>
+			<value>${db.driver}</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://localhost:3306/batmeca</value>
+			<value>${db.url}</value>
 		</property>
 		<property name="username">
-			<value>bat</value>
+			<value>${db.username}</value>
 		</property>
 		<property name="password">
-			<value>bat</value>
+			<value>${db.password}</value>
 		</property>
 	</bean>
 
@@ -45,15 +48,15 @@
 			<props>
 				<!-- if this is true, hibernate will print (to stdout) the SQL it executes, 
 					so you can check it to ensure it's not doing anything crazy -->
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">${db.show_sql}</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<!-- since most database servers have slightly different versions of 
 					the SQL, Hibernate needs you to choose a dialect so it knows the subtleties 
 					of talking to that server -->
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.dialect">${db.dialect}</prop>
 				<!-- this tell Hibernate to update the DDL when it starts, very useful 
 					for development, dangerous in production -->
-				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.hbm2ddl.auto">${db.hbm2ddl.auto}</prop>
 			</props>
 		</property>
 	</bean>
