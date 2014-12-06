@@ -13,7 +13,7 @@ import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
 @RestController
-public class ShowController {
+public class ShowWebservice {
 
 	@Autowired
 	private ITestService testService;

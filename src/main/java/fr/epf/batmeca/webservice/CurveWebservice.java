@@ -1,6 +1,10 @@
 package fr.epf.batmeca.webservice;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,17 +19,83 @@ import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.ITestService;
 
-/**
- * Permet de réaliser des traitements sur une courbe
- */
 @RestController
-public class TraitmentController {
+public class CurveWebservice {
 
 	@Autowired
 	private ITestService testService;
 	@Autowired
 	private IFileService fileService;
 
+	/**
+	 * Permet de selectioner une courbe
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/SelectRow", method = RequestMethod.POST)
+	protected String doPost(@RequestParam("inputX") String inputX,
+			@RequestParam("inputY") String inputY,
+			@RequestParam("inputId") String inputId) throws IOException {
+
+		int x = Integer.parseInt(inputX);
+		int y = Integer.parseInt(inputY);
+
+		Test test = testService.find(Integer.parseInt(inputId));
+		File[] list = fileService.listCurve(test);
+		int nbCurve = list.length;
+
+		boolean content = false;
+		for (File file : list) {
+			if (file.getName().compareTo(x + "-" + y + ".csv") == 0) {
+				content = true;
+			}
+		}
+		// response.setContentType("application/json"); TODO clean all that
+		if (content) {
+			return "{\"content\":true}";
+		} else {
+			// Création de la courbe
+			String data = fileService.selectCurve(test, x, y);
+
+			return "{\"data\":" + data + ",\"nbCurve\":" + (nbCurve + 1)
+					+ ",\"nameFile\":\"" + x + "-" + y + ".csv\"}";
+		}
+	}
+
+	/**
+	 * Permet de créer une courbe en sélectionnant l'abscisse et l'ordonnée
+	 * 
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/ColValue", method = RequestMethod.POST)
+	protected ArrayList<String[]> colValuePost(
+			@RequestParam("nbField") String nbField,
+			@RequestParam("inputId") String inputId, HttpServletRequest request)
+			throws IOException {
+
+		int nbCol = Integer.parseInt(nbField);
+		int id = Integer.parseInt(inputId);
+		Test test = testService.find(id);
+		ArrayList<String[]> list = new ArrayList<String[]>();
+		String[] elem = new String[nbCol];
+		String[] unit = new String[nbCol];
+
+		for (int i = 0; i < nbCol; i++) {
+			elem[i] = request.getParameter("nameCol" + i);
+			unit[i] = request.getParameter("unit" + i);
+		}
+
+		list.add(elem);
+		list.add(unit);
+
+		fileService.saveToJson(list, test);
+
+		return list;
+	}
+
+	/**
+	 * Permet de réaliser des traitements sur une courbe
+	 */
 	@RequestMapping(value = "/Traitment", method = RequestMethod.GET)
 	protected String traitmentGet(@RequestParam(value = "id") String id,
 			@RequestParam(value = "lisser", required = false) String lisser,
@@ -38,11 +108,12 @@ public class TraitmentController {
 			@RequestParam(value = "factor", required = false) String factor,
 			@RequestParam(value = "reset", required = false) String reset,
 			@RequestParam(value = "coef", required = false) String coef,
-			@RequestParam(value = "file", required = false) String file) throws IOException {
+			@RequestParam(value = "file", required = false) String file)
+			throws IOException {
 
 		/*
 		 * TODO clean this function
-		 *
+		 * 
 		 * Shouldn't file be FileService.DATACSV_F?
 		 */
 
@@ -70,7 +141,8 @@ public class TraitmentController {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				fileService.addHistory("Cut After:" + start + ";file " + file, t);
+				fileService.addHistory("Cut After:" + start + ";file " + file,
+						t);
 			} else if (before != null) {
 				int end = Integer.parseInt(endValue);
 				try {
@@ -96,8 +168,8 @@ public class TraitmentController {
 				e.printStackTrace();
 			}
 			fileService.addResult("MAX FILE:" + file + ";max=" + max + ";", t);
-			fileService.addHistory(
-					"MAX FILE:" + file + ";calMax:" + calMax + ";", t);
+			fileService.addHistory("MAX FILE:" + file + ";calMax:" + calMax
+					+ ";", t);
 
 			result.append(new Gson().toJson(max));
 		}
@@ -124,6 +196,9 @@ public class TraitmentController {
 		return result.toString();
 	}
 
+	/**
+	 * Permet de réaliser des traitements sur une courbe
+	 */
 	@RequestMapping(value = "/Traitment", method = RequestMethod.POST)
 	protected String traitmentPost(
 			@RequestParam(value = "inputId") String inputIdValue,
@@ -152,8 +227,16 @@ public class TraitmentController {
 
 		fileService.addHistory("FACTOR:" + factor + ";FILE:" + file
 				+ ";nbColumn:" + nbColumn, test);
-		String data = fileService.factorColumn(nbColumn, other, factor, file, test);
+		String data = fileService.factorColumn(nbColumn, other, factor, file,
+				test);
 
 		return data;
+	}
+
+	@RequestMapping(value = "/RemoveCurve", method = RequestMethod.GET)
+	protected String doGet(@RequestParam("file") String file) {
+		File curve = new File(file);
+		boolean delete = curve.delete();
+		return "{" + delete + "}";
 	}
 }

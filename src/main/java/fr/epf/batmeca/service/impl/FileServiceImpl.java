@@ -29,7 +29,7 @@ import fr.epf.batmeca.handler.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 
 @Service
-public class FileService implements IFileService {
+public class FileServiceImpl implements IFileService {
 
 	private static final String S = File.separator;
 	// Directories
