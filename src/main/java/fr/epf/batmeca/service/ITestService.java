@@ -1,5 +1,6 @@
 package fr.epf.batmeca.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import fr.epf.batmeca.entity.Material;
@@ -13,7 +14,7 @@ public interface ITestService {
 
 	Test find(int id);
 
-	void remove(Test test);
+	void remove(Test test) throws IOException;
 
 	List<Test> findByMaterial(Material mat);
 

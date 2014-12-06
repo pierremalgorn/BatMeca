@@ -1,5 +1,6 @@
 package fr.epf.batmeca.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class TestServiceImpl implements ITestService {
 
 	@Override
 	@Transactional
-	public void remove(Test test) {
-		fileService.cleanTest(test);
+	public void remove(Test test) throws IOException {
 		testDao.remove(test);
+		fileService.cleanTest(test);
 	}
 
 	@Override

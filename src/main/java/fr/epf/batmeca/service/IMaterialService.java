@@ -1,5 +1,6 @@
 package fr.epf.batmeca.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import fr.epf.batmeca.entity.Material;
@@ -14,7 +15,7 @@ public interface IMaterialService {
 
 	void editMaterial(Material mat);
 
-	boolean remove(Material mat);
+	boolean remove(Material mat) throws IOException;
 
 	List<Material> findAllNoParent();
 

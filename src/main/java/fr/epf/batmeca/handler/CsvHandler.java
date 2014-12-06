@@ -191,19 +191,6 @@ public class CsvHandler {
 		writer.close();
 	}
 
-	/*
-	 * Permet de convertir un fichier .dat en .csv
-	 */
-	public static void datToCsv(String projectPath, String input, String output, String header)
-			throws IOException, InterruptedException {
-		String[] cmd = new String[] {
-				projectPath + File.separator + "script" + File.separator
-						+ "datToCsv", input, output, header };
-		Runtime runtime = Runtime.getRuntime();
-		final Process process = runtime.exec(cmd);
-		process.waitFor();
-	}
-
 	/**
 	 * Permet de selctionner un axe en fonction d'un autre
 	 *

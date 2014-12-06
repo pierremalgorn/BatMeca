@@ -24,7 +24,6 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.handler.CsvHandler;
 import fr.epf.batmeca.handler.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 
@@ -48,7 +47,7 @@ public class FileService implements IFileService {
 	private Config config;
 
 	@Override
-	public void initTest(Test test) {
+	public void initTest(Test test) throws IOException {
 		String path = getTestPath(test);
 		System.out.println(path);
 
@@ -59,40 +58,30 @@ public class FileService implements IFileService {
 		new File(path + HISTORY_D).mkdir();
 		new File(path + CURVE_D).mkdir();
 
-		try {
-			new File(path + CONFIG_F).createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			new File(path + DATA_F).createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			new File(path + HISTORY_F).createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			new File(path + RESULT_F).createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		new File(path + CONFIG_F).createNewFile();
+		new File(path + DATA_F).createNewFile();
+		new File(path + HISTORY_F).createNewFile();
+		new File(path + RESULT_F).createNewFile();
 	}
 
 	@Override
 	public void processTest(Test test, List<TypeTestAttribute> typesTest,
 			List<TypeMaterialAttribute> typesMat) throws IOException {
+		// Convert from dat to csv format
+		String[] cmd = new String[] {
+				config.getProjectPath() + File.separator + "script"
+						+ File.separator + "datToCsv", getDataFilename(test),
+				getTestPath(test) + File.separator + "dataInput.csv",
+				getTestPath(test) + File.separator + "header.txt" };
+		Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec(cmd);
 		try {
-			CsvHandler.datToCsv(config.getProjectPath(), getDataFilename(test),
-					getTestPath(test) + File.separator + "dataInput.csv",
-					getTestPath(test) + File.separator + "header.txt");
+			process.waitFor();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		// Extract header
 		test = ParserConfig.parseFileConfig(test, getConfigFilename(test),
 				typesMat, typesTest);
 		ParserConfig.parseHeader(getTestPath(test) + File.separator
@@ -101,40 +90,30 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public void cleanTest(Test test) {
-		try {
-			FileUtils.deleteDirectory(new File(getTestPath(test)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void cleanTest(Test test) throws IOException {
+		FileUtils.deleteDirectory(new File(getTestPath(test)));
 	}
 
 	@Override
-	public void cleanMaterial(Material material) {
+	public void cleanMaterial(Material material) throws IOException {
 		for (Test test : material.getTests()) {
 			cleanTest(test);
 		}
 	}
 
 	@Override
-	public List<String[]> deserializeHeader(Test test) {
+	public List<String[]> deserializeHeader(Test test) throws IOException {
 		List<String[]> list = new ArrayList<String[]>();
-		try {
-			InputStream ips = new FileInputStream(getTestPath(test) + HEADER_F);
-			InputStreamReader ipsr = new InputStreamReader(ips);
-			BufferedReader br = new BufferedReader(ipsr);
-			Gson gson = new Gson();
-			String ligne;
-			while ((ligne = br.readLine()) != null) {
-				System.out.println(ligne);
-				List<String[]> l = gson.fromJson(ligne, ArrayList.class);
-				list.addAll(l);
-			}
-			br.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			list.add(new String[] { e.getMessage() });
+		InputStream ips = new FileInputStream(getTestPath(test) + HEADER_F);
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		Gson gson = new Gson();
+		String ligne;
+		while ((ligne = br.readLine()) != null) {
+			List<String[]> l = gson.fromJson(ligne, ArrayList.class);
+			list.addAll(l);
 		}
+		br.close();
 		return list;
 	}
 
@@ -142,7 +121,12 @@ public class FileService implements IFileService {
 	public File[] listCurve(Test test) {
 		File file = new File(getTestPath(test) + CURVE_D);
 		File[] files = file.listFiles();
-		Arrays.sort(files);
+		if (files == null) {
+			// TODO handle this case (which means IOException)
+			files = new File[0];
+		} else {
+			Arrays.sort(files);
+		}
 		return files;
 	}
 
@@ -163,7 +147,8 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public void saveToJson(List<String[]> list, String output) {
+	public void saveToJson(List<String[]> list, String output)
+			throws IOException {
 		writeToFile(new Gson().toJson(list), output, false);
 	}
 
@@ -173,67 +158,50 @@ public class FileService implements IFileService {
 	}
 
 	@Override
-	public void addHistory(String data, Test test) {
+	public void addHistory(String data, Test test) throws IOException {
 		writeToFile(data, getTestPath(test) + HISTORY_F, true);
 	}
 
 	@Override
-	public String readHistory(Test test) {
-		try {
-			InputStream ips = new FileInputStream(getTestPath(test) + HISTORY_F);
-			InputStreamReader ipsr = new InputStreamReader(ips);
-			BufferedReader br = new BufferedReader(ipsr);
-			StringBuilder sb = new StringBuilder();
-			String ligne;
-			while ((ligne = br.readLine()) != null) {
-				sb.append(ligne);
-				sb.append("<br>");
-			}
-			br.close();
-			return new Gson().toJson(sb.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return e.getMessage();
+	public String readHistory(Test test) throws IOException {
+		InputStream ips = new FileInputStream(getTestPath(test) + HISTORY_F);
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		StringBuilder sb = new StringBuilder();
+		String ligne;
+		while ((ligne = br.readLine()) != null) {
+			sb.append(ligne);
+			sb.append("<br>");
 		}
+		br.close();
+		return new Gson().toJson(sb.toString());
 	}
 
 	@Override
-	public void addResult(String data, Test test) {
+	public void addResult(String data, Test test) throws IOException {
 		writeToFile(data, getTestPath(test) + RESULT_F, true);
 	}
 
 	@Override
-	public String readResult(Test test) {
-		try {
-			InputStream ips = new FileInputStream(getTestPath(test) + RESULT_F);
-			InputStreamReader ipsr = new InputStreamReader(ips);
-			BufferedReader br = new BufferedReader(ipsr);
-			StringBuilder sb = new StringBuilder();
-			String ligne;
-			while ((ligne = br.readLine()) != null) {
-				sb.append(ligne);
-				sb.append("<br>");
-			}
-			br.close();
-			return new Gson().toJson(sb.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return e.getMessage();
+	public String readResult(Test test) throws IOException {
+		InputStream ips = new FileInputStream(getTestPath(test) + RESULT_F);
+		InputStreamReader ipsr = new InputStreamReader(ips);
+		BufferedReader br = new BufferedReader(ipsr);
+		StringBuilder sb = new StringBuilder();
+		String ligne;
+		while ((ligne = br.readLine()) != null) {
+			sb.append(ligne);
+			sb.append("<br>");
 		}
+		br.close();
+		return new Gson().toJson(sb.toString());
 	}
 
-	private boolean writeToFile(String string, String file, boolean append) {
-		boolean result;
-		try {
-			FileWriter fw = new FileWriter(file, append);
-			PrintWriter pr = new PrintWriter(new BufferedWriter(fw));
-			pr.println(string);
-			pr.close();
-			result = true;
-		} catch (IOException e) {
-			result = false;
-			e.printStackTrace();
-		}
-		return result;
+	private void writeToFile(String string, String file, boolean append)
+			throws IOException {
+		FileWriter fw = new FileWriter(file, append);
+		PrintWriter pr = new PrintWriter(new BufferedWriter(fw));
+		pr.println(string);
+		pr.close();
 	}
 }

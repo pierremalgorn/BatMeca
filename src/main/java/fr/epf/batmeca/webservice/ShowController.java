@@ -1,5 +1,7 @@
 package fr.epf.batmeca.webservice;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,13 +24,25 @@ public class ShowController {
 	protected String showHistoricGet(@RequestParam("id") String idValue) {
 		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
-		return fileService.readHistory(test);
+		try {
+			return fileService.readHistory(test);
+		} catch (IOException e) {
+			// TODO handle this exception
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 
 	@RequestMapping(value = "/ShowResult", method = RequestMethod.GET)
 	protected String showResultGet(@RequestParam("id") String idValue) {
 		int id = Integer.parseInt(idValue);
 		Test test = testService.find(id);
-		return fileService.readResult(test);
+		try {
+			return fileService.readResult(test);
+		} catch (IOException e) {
+			// TODO handle this exception
+			e.printStackTrace();
+			return e.getMessage();
+		}
 	}
 }

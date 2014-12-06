@@ -1,5 +1,6 @@
 package fr.epf.batmeca.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,10 @@ public class MaterialServiceImpl implements IMaterialService {
 
 	@Override
 	@Transactional
-	public boolean remove(Material mat) {
+	public boolean remove(Material mat) throws IOException {
+		boolean r = materialDao.remove(mat);
 		fileService.cleanMaterial(mat);
-		return materialDao.remove(mat);
+		return r;
 	}
 
 	@Override
