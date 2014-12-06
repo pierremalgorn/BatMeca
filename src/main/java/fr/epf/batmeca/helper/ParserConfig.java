@@ -1,4 +1,4 @@
-package fr.epf.batmeca.handler;
+package fr.epf.batmeca.helper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -24,8 +24,8 @@ import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
 import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
-import fr.epf.batmeca.handler.CsvHandler;
-import fr.epf.batmeca.handler.ParserConfig;
+import fr.epf.batmeca.helper.CsvHandler;
+import fr.epf.batmeca.helper.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 
 @Service
