@@ -1,13 +1,19 @@
 package fr.epf.batmeca.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
+import fr.epf.batmeca.entity.TypeMaterialAttribute;
+import fr.epf.batmeca.entity.TypeTestAttribute;
 
 public interface IFileService {
 	void initTest(Test test);
+
+	void processTest(Test test, List<TypeTestAttribute> typesTest,
+			List<TypeMaterialAttribute> typesMat) throws IOException;
 
 	void cleanTest(Test test);
 

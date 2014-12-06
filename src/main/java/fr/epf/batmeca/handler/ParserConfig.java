@@ -21,19 +21,21 @@ import fr.epf.batmeca.entity.TypeTestAttribute;
 
 public class ParserConfig {
 
-	public Test parseFileConfig(Test test, String input,
+	// TODO clean this class
+
+	public static Test parseFileConfig(Test test, String input,
 			List<TypeMaterialAttribute> listAttrMat,
 			List<TypeTestAttribute> listAttrTest) throws IOException {
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
-		String ligne = "";
-		ArrayList<String[]> list = new ArrayList<String[]>();
+		String ligne;
+		// ArrayList<String[]> list = new ArrayList<String[]>();
 		// ArrayList<String[]> listCol = new ArrayList<String[]>();
-		String[] row = { "", "" };
+		// String[] row = { "", "" };
 		while ((ligne = br.readLine()) != null) {
 			System.out.println(ligne);
-			MaterialAttribute matAttr = this.getAttributMat(ligne, listAttrMat);
+			MaterialAttribute matAttr = getAttributMat(ligne, listAttrMat);
 			if (ligne.matches("^c_(.*)")) {
 				// listCol.add(ligne.split("\t"));
 				// list.add(row);
@@ -41,16 +43,15 @@ public class ParserConfig {
 				matAttr.setMaterial(test.getMaterial());
 				test.getMaterial().addMaterialAttribute(matAttr);
 			} else {
-				TestAttribute testAttr = this.getAttributTest(ligne,
-						listAttrTest);
+				TestAttribute testAttr = getAttributTest(ligne, listAttrTest);
 				if (testAttr != null) {
 					testAttr.setTest(test);
 					test.addTestAttribute(testAttr);
-
 				}
 			}
 		}
-		//
+		br.close();
+
 		// for (String[] elem : listCol) {
 		// //System.out.println("NB = "+Integer.parseInt(elem[1]));
 		// //System.out.println("ELEM = "+elem[0]);
@@ -58,24 +59,19 @@ public class ParserConfig {
 		// list.set(Integer.parseInt(elem[1]) -1 ,tab);
 		// }
 
-		br.close();
 		// File file = new
 		// File(f.getPathSave(test)+File.separator+"ColValue.json");
 
-		PrintWriter pr;
-
-		// pr = new PrintWriter(new BufferedWriter(new
+		// PrintWriter pr = new PrintWriter(new BufferedWriter(new
 		// FileWriter(f.getFileNameData(test)+File.separator+"ColValue.json")));
 		// pr = new PrintWriter(file);
-		//
 		// pr.println(new Gson().toJson(list));
-		//
 		// pr.close();
 
 		return test;
 	}
 
-	public MaterialAttribute getAttributMat(String ligne,
+	private static MaterialAttribute getAttributMat(String ligne,
 			List<TypeMaterialAttribute> listAttrMat) {
 		MaterialAttribute matAttr = null;
 		String[] attr = ligne.split("\t");
@@ -92,7 +88,7 @@ public class ParserConfig {
 		return matAttr;
 	}
 
-	public TestAttribute getAttributTest(String ligne,
+	private static TestAttribute getAttributTest(String ligne,
 			List<TypeTestAttribute> listAttrTest) {
 		TestAttribute matAttr = null;
 		String[] attr = ligne.split("\t");
@@ -107,21 +103,20 @@ public class ParserConfig {
 		return matAttr;
 	}
 
-	public void parseHeader(String input, String output) throws IOException {
+	public static void parseHeader(String input, String output)
+			throws IOException {
 		InputStream ips = new FileInputStream(input);
 		InputStreamReader ipsr = new InputStreamReader(ips);
 		BufferedReader br = new BufferedReader(ipsr);
 		ArrayList<String[]> list = new ArrayList<String[]>();
-		String ligne = "";
+		String ligne;
 
 		while ((ligne = br.readLine()) != null) {
 			list.add(ligne.split(","));
-
 		}
 		br.close();
 
-		PrintWriter pr;
-		pr = new PrintWriter(new BufferedWriter(new FileWriter(output)));
+		PrintWriter pr = new PrintWriter(new BufferedWriter(new FileWriter(output)));
 		pr.println(new Gson().toJson(list));
 		pr.close();
 	}

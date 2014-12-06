@@ -22,6 +22,10 @@ import com.google.gson.Gson;
 import fr.epf.batmeca.config.Config;
 import fr.epf.batmeca.entity.Material;
 import fr.epf.batmeca.entity.Test;
+import fr.epf.batmeca.entity.TypeMaterialAttribute;
+import fr.epf.batmeca.entity.TypeTestAttribute;
+import fr.epf.batmeca.handler.CsvHandler;
+import fr.epf.batmeca.handler.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 
 @Service
@@ -75,6 +79,25 @@ public class FileService implements IFileService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void processTest(Test test, List<TypeTestAttribute> typesTest,
+			List<TypeMaterialAttribute> typesMat) throws IOException {
+		try {
+			CsvHandler csv = new CsvHandler();
+			csv.datToCsv(getDataFilename(test), getTestPath(test)
+					+ File.separator + "dataInput.csv", getTestPath(test)
+					+ File.separator + "header.txt");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		test = ParserConfig.parseFileConfig(test, getConfigFilename(test), typesMat,
+				typesTest);
+		ParserConfig.parseHeader(getTestPath(test) + File.separator + "header.txt",
+				getTestPath(test) + File.separator + "header.json");
 	}
 
 	@Override

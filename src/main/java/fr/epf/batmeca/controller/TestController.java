@@ -27,7 +27,6 @@ import fr.epf.batmeca.entity.TypeMaterialAttribute;
 import fr.epf.batmeca.entity.TypeTestAttribute;
 import fr.epf.batmeca.entity.User;
 import fr.epf.batmeca.handler.CsvHandler;
-import fr.epf.batmeca.handler.ParserConfig;
 import fr.epf.batmeca.service.IFileService;
 import fr.epf.batmeca.service.IMaterialService;
 import fr.epf.batmeca.service.ITestService;
@@ -115,8 +114,6 @@ public class TestController {
 			@RequestParam("inputConfigFile") MultipartFile configFile,
 			Principal principal) throws IOException {
 
-		List<TypeTestAttribute> typesTest = typeTestService.findAll();
-		List<TypeMaterialAttribute> typesMat = typeMatService.findAll();
 		Material mat = materialService.find(Integer.parseInt(idMat));
 
 		Test test = new Test();
@@ -130,11 +127,9 @@ public class TestController {
 
 		fileService.initTest(test);
 
-		// Upload des fichiers
-
+		// File upload
 		try {
 			File serverFile = new File(fileService.getDataFilename(test));
-			System.out.println(serverFile.getPath());
 			BufferedOutputStream stream = new BufferedOutputStream(
 					new FileOutputStream(serverFile));
 			stream.write(dataFile.getBytes());
@@ -142,10 +137,8 @@ public class TestController {
 		} catch (Exception e) {
 			return "You failed to upload DATA file => " + e.getMessage();
 		}
-
 		try {
 			File serverFile = new File(fileService.getConfigFilename(test));
-			System.out.println(serverFile.getPath());
 			BufferedOutputStream stream = new BufferedOutputStream(
 					new FileOutputStream(serverFile));
 			stream.write(configFile.getBytes());
@@ -155,24 +148,11 @@ public class TestController {
 		}
 
 		testService.add(test);
-		// Conversion du fichier data en csv
-		try {
-			CsvHandler csv = new CsvHandler();
-			csv.datToCsv(fileService.getDataFilename(test),
-					fileService.getTestPath(test) + File.separator
-							+ "dataInput.csv", fileService.getTestPath(test)
-							+ File.separator + "header.txt");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		ParserConfig prconf = new ParserConfig();
-		test = prconf.parseFileConfig(test,
-				fileService.getConfigFilename(test), typesMat, typesTest);
-		prconf.parseHeader(fileService.getTestPath(test) + File.separator
-				+ "header.txt", fileService.getTestPath(test) + File.separator
-				+ "header.json");
+		// Convert from dat to csv file format
+		List<TypeTestAttribute> typesTest = typeTestService.findAll();
+		List<TypeMaterialAttribute> typesMat = typeMatService.findAll();
+		fileService.processTest(test, typesTest, typesMat);
 
 		return "redirect:/ShowTest?idTest=" + test.getId();
 	}
