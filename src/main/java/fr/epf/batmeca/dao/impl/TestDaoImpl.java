@@ -62,11 +62,8 @@ public class TestDaoImpl implements ITestDao {
 				.createQuery(
 						"Select t From Test t Where t.material = :material")
 				.setParameter("material", mat.getId()).getResultList();
-		// } catch (NoResultException e) {
-		// e.printStackTrace();
-		// }
 
-		return null; // FIXME return null?
+		return tests;
 	}
 
 	@SuppressWarnings("unchecked")
