@@ -12,35 +12,34 @@
 			<form class="form-horizontal" autocomplete="off" action="addUser" method="POST">
 				<fieldset>
 					<div id="controlName" class="control-group" >
-						<label for="name">Last name</label>
+						<label for="name">Last name:</label>
 						<div class="controls">
-							<input id="inputName" type="text" name="name" type=text class="form-control" for="name"">
+							<input id="inputName" type="text" name="name" type=text class="form-control" id="name">
 						</div>
 					</div>
 		
 					<div id="controlIntro" class="control-group">
-						<label for="firstName">First name</label>
+						<label for="firstName">First name:</label>
 						<div class="controls">
-							<input type="text" class="form-control" name="firstName" for="firstName">
+							<input type="text" class="form-control" name="firstName" id="firstName">
 						</div>
 					</div>
 					<div id="controlDis" class="control-group">
-						<label for="email">Email :</label>
+						<label for="email">Email:</label>
 						<div class="controls">
-							<input type="text" name="email" class="form-control" for="email"">
+							<input type="text" name="email" class="form-control" id="email">
 						</div>
 					</div>
 					<div id="controlDis" class="control-group">
-						<label for="password">Password :</label>
+						<label for="password">Password:</label>
 						<div class="controls">
-							<input type="password" name="password" class="form-control" for="password">
+							<input type="password" name="password" class="form-control" id="password">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="type">Account type</label>
 						<div class="controls">
 							<select id="selectType" class="form-control" name="type">
-								<option class="text-center" value="0">--</option>
 								<c:forEach items="${requestScope.types}" var="type">
 									<option value="${type.id}">${type.type}</option>
 								</c:forEach>

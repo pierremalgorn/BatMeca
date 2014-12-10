@@ -65,11 +65,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/EditUser", method = RequestMethod.GET)
-	protected String editUserGet(@RequestParam(value = "id") String edit,
-			ModelMap model) {
-		int id = Integer.parseInt(edit);
+	protected String editUserGet(ModelMap model, Principal principal) {
+		User user = userService.getUser(principal.getName());
 
-		model.addAttribute("user", userService.getUser(id));
+		model.addAttribute("page", "EditUser");
+		model.addAttribute("user", user);
 		model.addAttribute("types", typeUserService.getTypes());
 
 		return "editUser";
@@ -77,30 +77,23 @@ public class UserController {
 
 	@RequestMapping(value = "/EditUser", method = RequestMethod.POST)
 	protected String editUserPost(
-			@RequestParam(value = "id") String id,
 			@RequestParam(value = "name") String name,
 			@RequestParam(value = "firstName") String firstName,
 			@RequestParam(value = "email") String email,
 			@RequestParam(value = "password") String password,
-			@RequestParam(value = "type") String type,
 			@RequestParam(value = "newpassword") String newPassword,
-			@RequestParam(value = "newpasswordconfirm") String newPasswordConfirm) {
+			@RequestParam(value = "newpasswordconfirm") String newPasswordConfirm,
+			Principal principal) {
 
-		TypeUser typeUser = new TypeUser();
-		typeUser.setId(Integer.parseInt(type));
-
-		User user = userService.getUser(Integer.parseInt(id));
+		User user = userService.getUser(principal.getName());
 		user.setName(name);
 		user.setFirstName(firstName);
 		user.setEmail(email);
-		user.setType(typeUser);
 
 		// if user wants to change his password
-		if (!password.equals("") && !newPassword.equals("")
+		if (!password.isEmpty() && !newPassword.isEmpty()
 				&& newPassword.equals(newPasswordConfirm)) {
 			user.setPassword(newPassword);
-		} else {
-			user.setPassword(user.getPassword());
 		}
 
 		userService.editUser(user);
@@ -114,10 +107,12 @@ public class UserController {
 			ModelMap model) {
 		int id = Integer.parseInt(edit);
 
+		model.addAttribute("admin", true);
+		model.addAttribute("page", "EditUserAdmin");
 		model.addAttribute("user", userService.getUser(id));
 		model.addAttribute("types", typeUserService.getTypes());
 
-		return "editUserAdmin";
+		return "editUser";
 	}
 
 	@Secured({ "ROLE_ADMIN" })
@@ -142,11 +137,9 @@ public class UserController {
 		user.setType(typeUser);
 
 		// if user wants to change his password
-		if (!password.equals("") && !newPassword.equals("")
+		if (!password.isEmpty() && !newPassword.isEmpty()
 				&& newPassword.equals(newPasswordConfirm)) {
 			user.setPassword(newPassword);
-		} else {
-			user.setPassword(user.getPassword());
 		}
 
 		userService.editUser(user);

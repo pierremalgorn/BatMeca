@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page import="fr.epf.batmeca.entity.*"%>
 <jsp:include page="include/header.jsp" />
 <div class="container">
@@ -9,8 +10,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<form class="form-horizontal" action="EditUser" method="POST">
-			
+			<form class="form-horizontal" action="${page}" method="POST">
 			<div class="panel-group" id="accordion">
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
@@ -23,30 +23,31 @@
 			    <div id="collapseOne" class="panel-collapse collapse in">
 			      <div class="panel-body">
 			      	<div class="control-group">
-					  <label class="control-label" for="name">Last Name</label>
+					  <label class="control-label" for="name">Last name</label>
 					  <div class="controls">
 					  	<input hidden="true" id="id" name="id" value="${user.id}" />
-					    <input id="name" name="name" placeholder="Last Name" class="form-control" value="${user.name}" required="" type="text">
+					    <input id="name" name="name" placeholder="Last Name" class="form-control" value="${user.name}" required="required" type="text">
 					    <p class="help-block"></p>
 					  </div>
 					</div>
 					
 					<div class="control-group">
-					  <label class="control-label" for="textinput">First Name</label>
+					  <label class="control-label" for="textinput">First name</label>
 					  <div class="controls">
-					    <input id="firstName" name="firstName" placeholder="First Name" class="form-control" value="${user.firstName}" required="" type="text">
+					    <input id="firstName" name="firstName" placeholder="First Name" class="form-control" value="${user.firstName}" required="required" type="text">
 					    <p class="help-block"></p>
 					  </div>
 					</div>
 					
 					<div class="control-group">
-					  <label class="control-label" for="email">Email Address</label>
+					  <label class="control-label" for="email">Email address</label>
 					  <div class="controls">
-					    <input type="email" id="email" name="email" placeholder="Email Address" class="form-control" required="" value="${user.email}">
+					    <input type="email" id="email" name="email" placeholder="Email Address" class="form-control" required="required" value="${user.email}">
 					    <p class="help-block"></p>
 					  </div>
 					</div>
 					
+					<c:if test="${admin == true}">
 					<div class="control-group">
 					  <label class="control-label" for="typeuser">Account Type</label>
 					  <div class="controls">
@@ -57,6 +58,7 @@
 					    </select>
 					  </div>
 					</div>
+					</c:if>
 			      </div>
 			    </div>
 			  </div>
@@ -73,7 +75,7 @@
 			      	<!-- Password input-->
 					<div id="changePassword">
 						<div class="control-group">
-						  <label class="control-label" for="password">Old Password</label>
+						  <label class="control-label" for="password">Old password</label>
 						  <div class="controls">
 						    <input id="password" name="password" placeholder="Password" class="form-control" type="password">
 						    <p class="help-block"></p>
@@ -82,7 +84,7 @@
 						
 						<!-- Password input-->
 						<div class="control-group">
-						  <label class="control-label" for="newpassword">New Password</label>
+						  <label class="control-label" for="newpassword">New password</label>
 						  <div class="controls">
 						    <input id="newpassword" name="newpassword" placeholder="New Password" class="form-control" type="password">
 						    <p class="help-block"></p>
@@ -91,7 +93,7 @@
 						
 						<!-- Password input-->
 						<div class="control-group">
-						  <label class="control-label" for="newpasswordconfirm">New Password (confirm)</label>
+						  <label class="control-label" for="newpasswordconfirm">New password (confirm)</label>
 						  <div class="controls">
 						    <input id="newpasswordconfirm" name="newpasswordconfirm" placeholder="New Password (confirm)" class="form-control" type="password" data-validation-match-match="newpassword" data-validation-match-message="The two passwords don't match!">
 						    <p class="help-block"></p>
@@ -108,7 +110,7 @@
 				  <label class="control-label" for="Edit"></label>
 				  <div class="controls">
 				    <button type="submit" id="edit" name="Edit" class="btn btn-success">Edit</button>
-				    <a href="./User" class="btn btn-danger">Discard</a>
+				    <a onClick="history.go(-1);" class="btn btn-danger">Discard</a>
 				  </div>
 				</div>
 							
