@@ -39,9 +39,9 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<li><a href="<c:url value="/admin/user/list" />">Administration</a></li>
+							<li><a href="<c:url value="/admin" />">Administration</a></li>
 						</sec:authorize>
-						<li><a href="<c:url value="/user" />">Profile</a></li>
+						<li><a href="<c:url value="/profile" />">Profile</a></li>
 						<li><a href="<c:url value="/j_spring_security_logout" />" class="logout">Sign out</a></li>
 					</ul>
 				</div>

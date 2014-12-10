@@ -1,7 +1,5 @@
 package fr.epf.batmeca.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,58 +14,20 @@ import fr.epf.batmeca.service.ITypeUserService;
 import fr.epf.batmeca.service.IUserService;
 
 @Controller
-public class UserController {
+public class AdministrationController {
 
 	@Autowired
 	private IUserService userService;
 	@Autowired
 	private ITypeUserService typeUserService;
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	protected String userGet(ModelMap model, Principal principal) {
-		User user = userService.getUser(principal.getName());
-		model.addAttribute("user", user);
-		return "user";
-	}
-
-	@RequestMapping(value = "/user/edit", method = RequestMethod.GET)
-	protected String editUserGet(ModelMap model, Principal principal) {
-		User user = userService.getUser(principal.getName());
-
-		model.addAttribute("user", user);
-		model.addAttribute("types", typeUserService.getTypes());
-
-		return "editUser";
-	}
-
-	@RequestMapping(value = "/user/edit", method = RequestMethod.POST)
-	protected String editUserPost(
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "firstName") String firstName,
-			@RequestParam(value = "email") String email,
-			@RequestParam(value = "password") String password,
-			@RequestParam(value = "newpassword") String newPassword,
-			@RequestParam(value = "newpasswordconfirm") String newPasswordConfirm,
-			Principal principal) {
-
-		User user = userService.getUser(principal.getName());
-		user.setName(name);
-		user.setFirstName(firstName);
-		user.setEmail(email);
-
-		// if user wants to change his password
-		if (!password.isEmpty() && !newPassword.isEmpty()
-				&& newPassword.equals(newPasswordConfirm)) {
-			user.setPassword(newPassword);
-		}
-
-		userService.editUser(user);
-
-		return "redirect:/user";
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	protected String adminGet() {
+		return "redirect:/admin/user/list";
 	}
 
 	@RequestMapping(value = "/admin/user/list", method = RequestMethod.GET)
-	protected String indexUserGet(ModelMap model) {
+	protected String listUsersGet(ModelMap model) {
 		model.addAttribute("users", userService.findAllUsers());
 		return "indexUser";
 	}
