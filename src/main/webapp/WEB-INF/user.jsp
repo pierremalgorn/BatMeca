@@ -52,7 +52,8 @@
 					<div class="control-group">
 						<label class="control-label" for="Edit"></label>
 						<div class="controls">
-							<a class="btn btn-primary" id="Edit" href="EditUser">Edit</a> <a
+							<a class="btn btn-primary" id="Edit"
+								href="<c:url value="/user/edit" />">Edit</a> <a
 								onClick="history.go(-1);" class="btn btn-default">Back</a>
 						</div>
 					</div>

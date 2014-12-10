@@ -8,19 +8,19 @@
 	<div class="row" >
 		<h1 class="page-header" >
 			Users list
-			<a href="addUser" class="btn btn-primary pull-right" >Add User</a>
+			<a href="<c:url value="/admin/user/add" />" class="btn btn-primary pull-right" >Add User</a>
 		</h1>
 	</div>
-	<c:if test="${requestScope.event eq 'userremoved'}">
+	<c:if test="${param['event'] eq 'removed'}">
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			The user has been removed successfully!
+			The user was successfully removed!
 		</div>
 	</c:if>
-	<c:if test="${requestScope.event eq 'useredited'}">
+	<c:if test="${param['event'] eq 'edited'}">
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			The user has been edited successfully!
+			The user was successfully edited!
 		</div>
 	</c:if>
 	<div class="row" >
@@ -29,7 +29,7 @@
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
-					<th>Firstname</th>
+					<th>First name</th>
 					<th>Email</th>
 					<th>Type</th>
 					<th>Edit</th>
@@ -44,8 +44,8 @@
 						<td>${user.firstName}</td>
 						<td>${user.email}</td>
 						<td>${user.type.type}</td>
-						<td><a href="EditUserAdmin?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
-						<td><a href="RemoveUser?id=${user.id}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+						<td><a href="<c:url value="/admin/user/edit/${user.id}" />"><span class="glyphicon glyphicon-edit"></span></a></td>
+						<td><a href="<c:url value="/admin/user/remove/${user.id}" />"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

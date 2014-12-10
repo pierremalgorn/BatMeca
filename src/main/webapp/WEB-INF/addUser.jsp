@@ -9,7 +9,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<form class="form-horizontal" autocomplete="off" action="addUser"
+			<form class="form-horizontal" autocomplete="off" action=""
 				method="POST">
 				<fieldset>
 					<div id="controlName" class="control-group">

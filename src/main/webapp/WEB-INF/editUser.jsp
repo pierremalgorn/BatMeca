@@ -11,13 +11,13 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<form class="form-horizontal" action="${page}" method="POST">
+			<form class="form-horizontal" action="" method="POST">
 				<div class="panel-group" id="accordion">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapseOne"> Change profile </a>
+									href="#collapseOne">Change profile</a>
 							</h4>
 						</div>
 						<div id="collapseOne" class="panel-collapse collapse in">
@@ -25,7 +25,6 @@
 								<div class="control-group">
 									<label class="control-label" for="name">Last name</label>
 									<div class="controls">
-										<input hidden="true" id="id" name="id" value="${user.id}" />
 										<input id="name" name="name" placeholder="Last Name"
 											class="form-control" value="${user.name}" required="required"
 											type="text">
@@ -73,7 +72,7 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapseTwo"> Change password </a>
+									href="#collapseTwo">Change password</a>
 							</h4>
 						</div>
 						<div id="collapseTwo" class="panel-collapse collapse">
@@ -104,8 +103,8 @@
 
 									<!-- Password input-->
 									<div class="control-group">
-										<label class="control-label" for="newpasswordconfirm">New
-											password (confirm)</label>
+										<label class="control-label" for="newpasswordconfirm">Confirm
+											password</label>
 										<div class="controls">
 											<input id="newpasswordconfirm" name="newpasswordconfirm"
 												placeholder="New Password (confirm)" class="form-control"
