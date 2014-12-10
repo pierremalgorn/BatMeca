@@ -10,50 +10,22 @@
 <div class="container">
 	<div class="row">
 		<h1>Test Details - ${requestScope.test.name }</h1>
-		<a class="btn btn-info"
-			href="Material?idMat=${requestScope.test.material.id }">Return
-			Test List</a>
+		<a class="btn btn-default pull-right"
+			href="Material?idMat=${requestScope.test.material.id }">Return to
+			test list</a>
 	</div>
 	<div class="row">
-		<form id="formSelect" class="form-inline well" action="SelectRow"
-			method="post" role="form">
-			<input type="hidden" id="inputId" name="inputId"
-				value="${requestScope.test.id }"> <label for="inputX">X:
-			</label> <select id="inputX" name="inputX" class="form-control">
-				<c:set var="i" value="0" />
-				<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
-
-					<option value="${i + 1 }">${rowName }</option>
-					<c:set var="i" value="${i + 1}"></c:set>
-				</c:forEach>
-			</select> <label for="inputY">Y: </label> <select id="inputY" name="inputY"
-				class="form-control">
-				<c:set var="i" value="0" />
-				<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
-
-					<option value="${i +1 }">${rowName }</option>
-					<c:set var="i" value="${i + 1}"></c:set>
-				</c:forEach>
-			</select>
-			<button type="button" class="btn btn-info" id="btnSelectRow">Submit</button>
-		</form>
-		<script>
-			selectRow("${pageContext.request.contextPath}/RemoveCurve");
-		</script>
-
-
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab" >Details</a></li>
 			<li><a href="#curve" data-toggle="tab" >Curve</a></li>
 			<li><a id="ongletResult" href="#result" data-toggle="tab" >Result</a></li>
-			<li><a id="ongletHist" href="#historic" data-toggle="tab" >Historic</a></li>
-
+			<li><a id="ongletHist" href="#historic" data-toggle="tab" >History</a></li>
 		</ul>
+		<br>
 		<div id="test"></div>
 
 		<div class="tab-content">
 			<div class="tab-pane" id="details">
-
 				<table class="table">
 					<tbody>
 						<tr>
@@ -86,8 +58,96 @@
 				</table>
 			</div>
 
-
 			<div class="tab-pane active" id="curve">
+				<div class="row">
+					<form id="formSelect" class="form-inline well" action="SelectRow"
+						method="post" role="form">
+						<h4>New curve</h4>
+						<input type="hidden" id="inputId" name="inputId"
+							value="${requestScope.test.id }">
+						<table class="table">
+							<tr>
+								<td>
+									<label for="inputX">X:</label>
+								</td>
+								<td>
+									<select id="inputX" name="inputX" class="form-control">
+										<c:set var="i" value="0" />
+										<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
+						
+											<option value="${i + 1 }">${rowName }</option>
+											<c:set var="i" value="${i + 1}"></c:set>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="inputY">Y:</label>
+								</td>
+								<td>
+									<select id="inputY" name="inputY"
+										class="form-control">
+										<c:set var="i" value="0" />
+										<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
+						
+											<option value="${i +1 }">${rowName }</option>
+											<c:set var="i" value="${i + 1}"></c:set>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="button" class="btn btn-info pull-right" id="btnSelectRow">Create</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+					<script>
+						selectRow("${pageContext.request.contextPath}/RemoveCurve");
+					</script>
+				</div>
+
+				<div class="row">
+					<form id="formHeader" class="form-inline well" action="ColValue" method="post" role="form">
+						<input name="inputId" type="hidden" value="${requestScope.test.id }" >
+						<h4>Edit names</h4>
+						<table class="table">
+							<tr>
+							<th>Column</th>
+							<c:set var="i" value="0" />
+							<c:forEach items="${requestScope.colHeader[0]}" var="row">
+							<td>
+								<div class="form-group"  >
+									<input name="nameCol${i }" id="" class="form-control" type="text" value="${row} " >		
+								</div>
+								</td>
+								<c:set var="i" value="${i + 1}"></c:set>
+							</c:forEach>
+							</tr>
+							<tr>
+								<th>Unit</th>
+								<c:set var="i" value="0" />
+								<c:forEach items="${requestScope.colHeader[1]}" var="row" >
+								<td>
+								<div class="form-group"  >
+									<input name="unit${i }" class="form-control" type="text" value="${row}" >
+								</div>
+								</td>
+								<c:set var="i" value="${i + 1}"></c:set>
+							</c:forEach>
+							</tr>
+							<tr>
+								<td colspan="${i + 1}">
+									<input name="nbField" type="hidden" value="${i}" />
+									<button id="btnSaveHeader" type="button" class="btn btn-primary pull-right" >Save</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+
 				<div class="row">
 					<div class="col-md-2">
 						<ul class="nav nav-pills nav-stacked">
@@ -103,60 +163,24 @@
 
 							<li><a onclick="coeffDir('${pageContext.request.contextPath}/Traitment','${requestScope.test.id }');" >Coeff dir</a></li>
 						</ul>
-
-						
 					</div>
+
 					<div class="col-md-10">
-						<form id="formHeader" class="form-inline" action="ColValue" method="post" role="form">
-						
-						<input name="inputId" type="hidden" value="${requestScope.test.id }" >
-							<table class="table">
-								<tr>
-								<th>Column</th>
-								<c:set var="i" value="0" />
-								<c:forEach items="${requestScope.colHeader[0]}" var="row">
-								<td>
-									<div class="form-group"  >
-										<input name="nameCol${i }" id="" class="form-control" type="text" value="${row} " >		
-									</div>
-									</td>
+
+						<script>var tabGraph = new Array();</script>
+	
+						<div class="row">
+							<ul id="navCurve" class="nav nav-tabs">
+								<c:set var="i" value="1" />
+								<c:forEach items="${requestScope.listData }" var="data">
+									<li id="ongletCurve${i }" ><a class="ongletCurve" href="#curve${i }"
+										data-toggle="tab" data="${i }">Curve ${i } <button onclick="deleteCurve('${pageContext.request.contextPath}/RemoveCurve');" class="close">&times;</button>
+									</a></li>
 									<c:set var="i" value="${i + 1}"></c:set>
 								</c:forEach>
-								</tr>
-								<tr>
-									<th>Unit</th>
-									<c:set var="i" value="0" />
-									<c:forEach items="${requestScope.colHeader[1]}" var="row" >
-									<td>
-									<div class="form-group"  >
-										<input name="unit${i }" class="form-control" type="text" value="${row}" >
-									</div>
-									</td>
-									<c:set var="i" value="${i + 1}"></c:set>
-								</c:forEach>
-								</tr>
-							</table>
-							<input name="nbField" type="hidden" value="${i}" />
-							<button id="btnSaveHeader" type="button" class="btn btn-primary pull-right" >Save</button>
-						</form>
-						<script>
-						
-						var tabGraph = new Array() ;
-						</script>
-
-						<c:set var="i" value="1" />
-
-						<ul id="navCurve" class="nav nav-tabs">
-							<c:forEach items="${requestScope.listData }" var="data">
-								<li id="ongletCurve${i }" ><a class="ongletCurve" href="#curve${i }"
-									data-toggle="tab" data="${i }">Curve ${i } <button onclick="deleteCurve('${pageContext.request.contextPath}/RemoveCurve');" class="close">&times;</button>
-										
-								</a></li>
-								<c:set var="i" value="${i + 1}"></c:set>
-							</c:forEach>
-
-						</ul>
-
+							</ul>
+						</div>
+						<div class="row">
 						<div id="contentCurves" class="tab-content">
 							<c:set var="i" value="1" />
 							<c:forEach items="${requestScope.listData }" var="data">
@@ -166,8 +190,6 @@
 									<script charset="UTF-8">
 									//$(function(tabGraph) {
 										(function() {
-
-
 										var nb = '${i}';
 										var data = '${data[0] }';
 										//console.log(data);
@@ -190,35 +212,24 @@
 										
 										})()
 									//});
-
-								</script>
-
+									</script>
 								</div>
 								<c:set var="i" value="${i + 1}"></c:set>
 							</c:forEach>
-
-
 						</div>
-
-
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="tab-pane" id="result" >
-			<pre>
-				<p id="contentResult" > 
-							
-						</p>
-			</pre>
-			
+				<pre>
+					<p id="contentResult" ></p>
+				</pre>
 			</div>
 			<div class="tab-pane" id="historic" >
-			<pre>
-				<p id="contentHistoric" > 
-							
-						</p>
-			</pre>
-			
+				<pre>
+					<p id="contentHistoric" ></p>
+				</pre>
 			</div>
 		</div>
 	</div>
