@@ -109,8 +109,8 @@ public class TestController {
 	protected String addTestPost(
 			@RequestParam(value = "inputNameTest") String name,
 			@RequestParam(value = "idMat") String idMat,
-			@RequestParam("inputDataFile") MultipartFile dataFile,
-			@RequestParam("inputConfigFile") MultipartFile configFile,
+			@RequestParam(value = "inputDataFile") MultipartFile dataFile,
+			@RequestParam(value = "inputConfigFile") MultipartFile configFile,
 			Principal principal) throws IOException {
 
 		Material mat = materialService.find(Integer.parseInt(idMat));

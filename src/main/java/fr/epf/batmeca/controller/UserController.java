@@ -43,11 +43,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	protected String addUserPost(@RequestParam("name") String name,
-			@RequestParam("firstName") String firstName,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
-			@RequestParam("type") String type) {
+	protected String addUserPost(@RequestParam(value = "name") String name,
+			@RequestParam(value = "firstName") String firstName,
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "password") String password,
+			@RequestParam(value = "type") String type) {
 
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
@@ -65,7 +65,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/EditUser", method = RequestMethod.GET)
-	protected String editUserGet(@RequestParam("id") String edit, ModelMap model) {
+	protected String editUserGet(@RequestParam(value = "id") String edit,
+			ModelMap model) {
 		int id = Integer.parseInt(edit);
 
 		model.addAttribute("user", userService.getUser(id));
@@ -75,14 +76,15 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/EditUser", method = RequestMethod.POST)
-	protected String editUserPost(@RequestParam("id") String id,
-			@RequestParam("name") String name,
-			@RequestParam("firstName") String firstName,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
-			@RequestParam("type") String type,
-			@RequestParam("newpassword") String newPassword,
-			@RequestParam("newpasswordconfirm") String newPasswordConfirm) {
+	protected String editUserPost(
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "firstName") String firstName,
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "password") String password,
+			@RequestParam(value = "type") String type,
+			@RequestParam(value = "newpassword") String newPassword,
+			@RequestParam(value = "newpasswordconfirm") String newPasswordConfirm) {
 
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
@@ -108,7 +110,7 @@ public class UserController {
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/EditUserAdmin", method = RequestMethod.GET)
-	protected String editUserAdminGet(@RequestParam("id") String edit,
+	protected String editUserAdminGet(@RequestParam(value = "id") String edit,
 			ModelMap model) {
 		int id = Integer.parseInt(edit);
 
@@ -120,14 +122,15 @@ public class UserController {
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = "/EditUserAdmin", method = RequestMethod.POST)
-	protected String editUserAdminPost(@RequestParam("id") String id,
-			@RequestParam("name") String name,
-			@RequestParam("firstName") String firstName,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
-			@RequestParam("type") String type,
-			@RequestParam("newpassword") String newPassword,
-			@RequestParam("newpasswordconfirm") String newPasswordConfirm) {
+	protected String editUserAdminPost(
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "firstName") String firstName,
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "password") String password,
+			@RequestParam(value = "type") String type,
+			@RequestParam(value = "newpassword") String newPassword,
+			@RequestParam(value = "newpasswordconfirm") String newPasswordConfirm) {
 
 		TypeUser typeUser = new TypeUser();
 		typeUser.setId(Integer.parseInt(type));
@@ -152,7 +155,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/RemoveUser", method = RequestMethod.GET)
-	protected String removeUserGet(@RequestParam("id") String id, ModelMap model) {
+	protected String removeUserGet(@RequestParam(value = "id") String id,
+			ModelMap model) {
 		User user = userService.getUser(Integer.parseInt(id));
 		userService.removeUser(user);
 

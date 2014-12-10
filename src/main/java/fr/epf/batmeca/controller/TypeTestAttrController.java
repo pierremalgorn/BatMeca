@@ -22,8 +22,8 @@ public class TypeTestAttrController {
 
 	@RequestMapping(value = "/AddTypeTestAttr", method = RequestMethod.POST)
 	protected String addTypeTestAttrPost(
-			@RequestParam("inputName") String inputName,
-			@RequestParam("inputPattern") String inputPattern) {
+			@RequestParam(value = "inputName") String inputName,
+			@RequestParam(value = "inputPattern") String inputPattern) {
 
 		TypeTestAttribute type = new TypeTestAttribute();
 		type.setName(inputName);
@@ -35,7 +35,7 @@ public class TypeTestAttrController {
 	}
 
 	@RequestMapping(value = "/RemoveTypeTestAttr", method = RequestMethod.GET)
-	protected String removeTypeTestAttrGet(@RequestParam("id") String id) {
+	protected String removeTypeTestAttrGet(@RequestParam(value = "id") String id) {
 		int typeId = Integer.parseInt(id);
 		TypeTestAttribute type = typeService.find(typeId);
 

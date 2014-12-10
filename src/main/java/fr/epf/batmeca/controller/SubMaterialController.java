@@ -33,7 +33,7 @@ public class SubMaterialController {
 
 	@RequestMapping(value = "/AddSubMaterial", method = RequestMethod.GET)
 	protected String addSubMaterialGet(
-			@RequestParam("idParent") String idParent, ModelMap model) {
+			@RequestParam(value = "idParent") String idParent, ModelMap model) {
 
 		List<Material> materials = materialService.findAll();
 		List<TypeMaterialAttribute> listAttr = typeMatAttrService.findAll();
@@ -46,8 +46,9 @@ public class SubMaterialController {
 	}
 
 	@RequestMapping(value = "/AddSubMaterial", method = RequestMethod.POST)
-	protected String addSubMaterialPost(@RequestParam("inputName") String name,
-			@RequestParam("inputMaterialParent") String parent,
+	protected String addSubMaterialPost(
+			@RequestParam(value = "inputName") String name,
+			@RequestParam(value = "inputMaterialParent") String parent,
 			HttpServletRequest request, Principal principal) {
 
 		Material mat = new Material();

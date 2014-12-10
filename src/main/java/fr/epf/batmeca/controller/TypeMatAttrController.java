@@ -22,8 +22,8 @@ public class TypeMatAttrController {
 
 	@RequestMapping(value = "/AddTypeAttrMat", method = RequestMethod.POST)
 	protected String addTypeAttrMatPost(
-			@RequestParam("inputName") String inputName,
-			@RequestParam("inputPattern") String inputPattern) {
+			@RequestParam(value = "inputName") String inputName,
+			@RequestParam(value = "inputPattern") String inputPattern) {
 
 		TypeMaterialAttribute type = new TypeMaterialAttribute();
 		type.setName(inputName);
@@ -35,7 +35,7 @@ public class TypeMatAttrController {
 	}
 
 	@RequestMapping(value = "/RemoveTypeMatAttr", method = RequestMethod.GET)
-	protected String removeTypeMatAttrGet(@RequestParam("id") String id) {
+	protected String removeTypeMatAttrGet(@RequestParam(value = "id") String id) {
 		int typeId = Integer.parseInt(id);
 		TypeMaterialAttribute type = typeService.find(typeId);
 

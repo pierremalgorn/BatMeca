@@ -36,7 +36,7 @@ public class MaterialController {
 	private IUserService userService;
 
 	@RequestMapping(value = "/Material", method = RequestMethod.GET)
-	protected String materialGet(@RequestParam("idMat") String id,
+	protected String materialGet(@RequestParam(value = "idMat") String id,
 			ModelMap model) {
 		Material mat = materialService.find(Integer.parseInt(id));
 		List<Material> childs = materialService.findByParent(mat);
