@@ -123,10 +123,11 @@ public class TestController {
 
 		User user = userService.getUser(principal.getName());
 		test.setUser(user);
-
-		fileService.initTest(test);
+		// We need to save the test right now in order to get an ID
+		testService.add(test);
 
 		// File upload
+		fileService.initTest(test);
 		try {
 			File serverFile = new File(fileService.getDataFilename(test));
 			BufferedOutputStream stream = new BufferedOutputStream(
@@ -146,12 +147,15 @@ public class TestController {
 			return "You failed to upload CONFIG file => " + e.getMessage();
 		}
 
-		testService.add(test);
-
 		// Convert from dat to csv file format
 		List<TypeTestAttribute> typesTest = typeTestService.findAll();
 		List<TypeMaterialAttribute> typesMat = typeMatService.findAll();
 		fileService.processTest(test, typesTest, typesMat);
+
+		/*
+		 * FIXME remove test from the database if an error occurred during
+		 * upload or process.
+		 */
 
 		return "redirect:/ShowTest?idTest=" + test.getId();
 	}

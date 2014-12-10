@@ -136,8 +136,7 @@ public class FileServiceImpl implements IFileService {
 
 	@Override
 	public String getTestPath(Test test) {
-		// FIXME two tests with the same name will overlap
-		return config.getResourcePath() + S + test.getName();
+		return config.getResourcePath() + S + test.getId();
 	}
 
 	@Override
@@ -236,6 +235,7 @@ public class FileServiceImpl implements IFileService {
 	}
 
 	private void dat2csv(Test test) throws IOException {
+		// FIXME do NOT use an external script to do this
 		String[] cmd = new String[] { config.getScriptsPath() + DAT2CSV_S,
 				getDataFilename(test), getTestPath(test) + DATACSV_F,
 				getTestPath(test) + HEADER_T_F };

@@ -12,7 +12,7 @@ import org.springframework.core.env.Environment;
 public class Config {
 
 	@Autowired
-	Environment env;
+	private Environment env;
 
 	private String scripts;
 	private String resource;
