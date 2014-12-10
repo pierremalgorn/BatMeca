@@ -6,9 +6,7 @@
 
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">
-			Profile
-		</h1>
+		<h1 class="page-header">Profile</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
@@ -17,42 +15,47 @@
 					<div id="controlName" class="control-group">
 						<label for="name">Last name:</label>
 						<div class="controls">
-							<input type=text class="form-control" id="name" disabled="disabled" value="${user.name}">
+							<input type=text class="form-control" id="name"
+								disabled="disabled" value="${user.name}">
 						</div>
 					</div>
-		
+
 					<div id="controlIntro" class="control-group">
 						<label for="firstName">First name:</label>
 						<div class="controls">
-							<input type="text" class="form-control" id="firstName" disabled="disabled" value="${user.firstName}">
+							<input type="text" class="form-control" id="firstName"
+								disabled="disabled" value="${user.firstName}">
 						</div>
 					</div>
 					<div id="controlDis" class="control-group">
 						<label for="email">Email:</label>
 						<div class="controls">
-							<input type="text" class="form-control" id="email" disabled="disabled" value="${user.email}">
+							<input type="text" class="form-control" id="email"
+								disabled="disabled" value="${user.email}">
 						</div>
 					</div>
 					<div id="controlDis" class="control-group">
 						<label for="password">Password:</label>
 						<div class="controls">
-							<input type="password" class="form-control" id="password" disabled="disabled" value="password">
+							<input type="password" class="form-control" id="password"
+								disabled="disabled" value="password">
 						</div>
 					</div>
 					<div class="control-group">
 						<label for="type">Account type:</label>
 						<div class="controls">
-							<input type="text" class="form-control" id="type" disabled="disabled" value="${user.type.type}">
+							<input type="text" class="form-control" id="type"
+								disabled="disabled" value="${user.type.type}">
 						</div>
 					</div>
 					<!-- Button (Double) -->
 					<div class="control-group">
-					  <label class="control-label" for="Edit"></label>
-					  <div class="controls">
-					  	<a class="btn btn-primary" id="Edit" href="EditUser">Edit</a>
-					    <a onClick="history.go(-1);" class="btn btn-default">Back</a>
-					 </div>
-				</div>
+						<label class="control-label" for="Edit"></label>
+						<div class="controls">
+							<a class="btn btn-primary" id="Edit" href="EditUser">Edit</a> <a
+								onClick="history.go(-1);" class="btn btn-default">Back</a>
+						</div>
+					</div>
 				</fieldset>
 			</form>
 		</div>

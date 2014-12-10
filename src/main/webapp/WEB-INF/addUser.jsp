@@ -9,19 +9,22 @@
 	</div>
 	<div class="row">
 		<div class="col-md-4">
-			<form class="form-horizontal" autocomplete="off" action="addUser" method="POST">
+			<form class="form-horizontal" autocomplete="off" action="addUser"
+				method="POST">
 				<fieldset>
-					<div id="controlName" class="control-group" >
+					<div id="controlName" class="control-group">
 						<label for="name">Last name:</label>
 						<div class="controls">
-							<input id="inputName" type="text" name="name" type=text class="form-control" id="name">
+							<input id="inputName" type="text" name="name" type=text
+								class="form-control" id="name">
 						</div>
 					</div>
-		
+
 					<div id="controlIntro" class="control-group">
 						<label for="firstName">First name:</label>
 						<div class="controls">
-							<input type="text" class="form-control" name="firstName" id="firstName">
+							<input type="text" class="form-control" name="firstName"
+								id="firstName">
 						</div>
 					</div>
 					<div id="controlDis" class="control-group">
@@ -33,7 +36,8 @@
 					<div id="controlDis" class="control-group">
 						<label for="password">Password:</label>
 						<div class="controls">
-							<input type="password" name="password" class="form-control" id="password">
+							<input type="password" name="password" class="form-control"
+								id="password">
 						</div>
 					</div>
 					<div class="control-group">
@@ -43,20 +47,19 @@
 								<c:forEach items="${requestScope.types}" var="type">
 									<option value="${type.id}">${type.type}</option>
 								</c:forEach>
-							</select> 
+							</select>
 						</div>
 					</div>
 					<div class="control-group">
-					  <label class="control-label" for="Edit"></label>
-					  <div class="controls">
-					  	<input type="submit" value="Add" class="btn btn-primary">
-					    <a onClick="history.go(-1);" class="btn btn-default">Back</a>
-					 </div>
-				</div>
+						<label class="control-label" for="Edit"></label>
+						<div class="controls">
+							<input type="submit" value="Add" class="btn btn-primary">
+							<a onClick="history.go(-1);" class="btn btn-default">Back</a>
+						</div>
+					</div>
 				</fieldset>
 			</form>
 		</div>
 	</div>
-
 </div>
 <jsp:include page="include/footer.jsp" />
