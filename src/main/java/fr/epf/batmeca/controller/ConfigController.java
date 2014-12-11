@@ -52,6 +52,6 @@ public class ConfigController {
 
 		// TODO finish this function
 
-		return "configGenerator";
+		return "redirect:/ConfigGenerator";
 	}
 }
