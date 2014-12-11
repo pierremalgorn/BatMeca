@@ -15,14 +15,14 @@
 			<div class="well">
 				<ul class="nav nav-pills nav-stacked">
 					<li><a
-						href="AddSubMaterial?idParent=${requestScope.material.id }"><span
+						href="<c:url value="/AddSubMaterial?idParent=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-plus"></span> Add Sub-MAterial</a></li>
-					<li><a href="AddTest?idMat=${requestScope.material.id }"><span
+					<li><a href="<c:url value="/AddTest?idMat=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-plus"></span> Add Test</a></li>
 					<li><a
-						href="RemoveMaterial?idMat=${requestScope.material.id }"><span
+						href="<c:url value="/RemoveMaterial?idMat=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-trash"></span> Remove</a></li>
-					<li><a href="EditMaterial?id=${requestScope.material.id }"><span
+					<li><a href="<c:url value="/EditMaterial?id=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-edit"></span> Edit</a></li>
 
 				</ul>
@@ -43,18 +43,12 @@
 			%>
 			<ol class="breadcrumb">
 
- 				<li><a href="IndexMaterial">Index</a></li>
-			
-				<%
-					
-					for(int i = list.size() - 1;i >= 0;i--){
-						
-						out.println("<li><a href=\"Material?idMat="+list.get(i).getId()+"\" >"+list.get(i).getName()+"</a></li>");
-					}
-									
-					
-				%>
-
+ 				<li><a href="<c:url value="/IndexMaterial" />">Material index</a></li>
+				<c:set var="i" value="${ list.size() }" />
+				<c:forEach items="${ list }" var="data">
+					<c:set var="i" value="${i - 1}" />
+					<li><a href="<c:url value="/Material?idMat=${list.get(i).getId()}" />">${list.get(i).getName()}</a></li>
+				</c:forEach>
 
 			</ol>
 
@@ -100,11 +94,11 @@
 							<c:forEach items="${requestScope.material.tests }" var="test">
 								<tr>
 									<td>${test.id }</td>
-									<td><a href="ShowTest?idTest=${test.id }">${test.name }</a></td>
+									<td><a href="<c:url value="/ShowTest?idTest=${test.id }" />">${test.name }</a></td>
 									<td>
 										<ul class="nav nav-pills">
 											<li><a
-												href="RemoveTest?id=${test.id }&idMat=${requestScope.material.id}"><span
+												href="<c:url value="/RemoveTest?id=${test.id }&idMat=${requestScope.material.id}" />"><span
 													class="glyphicon glyphicon-remove"></span></a></li>
 										</ul>
 
@@ -128,9 +122,9 @@
 							<c:forEach items="${requestScope.childs }" var="child">
 								<tr>
 									<td>${child.id }</td>
-									<td><a href="Material?idMat=${child.id}">${child.name }</a></td>
+									<td><a href="<c:url value="/Material?idMat=${child.id}" />">${child.name }</a></td>
 									<td><a
-										href="RemoveMaterial?idMat=${child.id }&idParent=${requestScope.material.id}"><span
+										href="<c:url value="/RemoveMaterial?idMat=${child.id }&idParent=${requestScope.material.id}" />"><span
 											class="glyphicon glyphicon-remove"></span></a></td>
 								</tr>
 							</c:forEach>

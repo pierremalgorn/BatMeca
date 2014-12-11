@@ -8,8 +8,8 @@
 		<h1 class="page-header">Config</h1>
 	</div>
 	<div class="row">
-		<a class="btn btn-info" href="AddTypeAttrMat">Add Type Attribute Material</a> 
-		<a class="btn btn-info" href="AddTypeTestAttr">Add
+		<a class="btn btn-info" href="<c:url value="/AddTypeAttrMat" />">Add Type Attribute Material</a> 
+		<a class="btn btn-info" href="<c:url value="/AddTypeTestAttr" />">Add
 			Type Attribute Test</a>
 
 		<ul class="nav nav-tabs">
@@ -32,7 +32,7 @@
 								<td>${type.name }</td>
 								<td>
 									<ul class="nav nav-pills" >
-										<li><a href="RemoveTypeMatAttr?id=${type.id }" >Remove</a></li>
+										<li><a href="<c:url value="/RemoveTypeMatAttr?id=${type.id }" />" >Remove</a></li>
 										<li><a href="#" >Edit</a></li>
 									</ul>
 								</td>
@@ -59,7 +59,7 @@
 								<td>${type.name }</td>
 								<td>
 									<ul class="nav nav-pills" >
-										<li><a href="RemoveTypeTestAttr?id=${type.id }" >Remove</a></li>
+										<li><a href="<c:url value="/RemoveTypeTestAttr?id=${type.id }" />" >Remove</a></li>
 										<li><a href="#" >Edit</a></li>
 									</ul>
 								</td>

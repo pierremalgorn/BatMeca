@@ -8,7 +8,7 @@
 		<h1 class="page-header">Config</h1>
 	</div>
 	<div class="row">
-		<form action="AddTypeAttrMat" method="post" >
+		<form action="" method="post" >
 		
 			<div class="form-group" >
 				<input class="form-control" type="text" name="inputName" placeholder="Name" id="inputName" >

@@ -7,7 +7,7 @@
 <div class="container" >
 	<div class="row" >
 		<h1 class="page-header" >Material
-			<a href="addMaterial" class="btn btn-primary pull-right" >Add Material</a>
+			<a href="<c:url value="/addMaterial" />" class="btn btn-primary pull-right" >Add material</a>
 		</h1>
 	</div>
 	<div class="row" >
@@ -25,13 +25,13 @@
 				<c:forEach items="${requestScope.materials}" var="material" >
 					<tr>
 						<td>${material.id}</td>
-						<td><a href="Material?idMat=${material.id}" >${material.name}</a></td>
+						<td><a href="<c:url value="/Material?idMat=${material.id}" />" >${material.name}</a></td>
 						<td>
 							<ul class="nav nav-pills" >
 								<li>
-									<a href="EditMaterial?id=${material.id }" >Edit</a>
+									<a href="<c:url value="/EditMaterial?id=${material.id }" />" >Edit</a>
 								</li>
-								<li><a href="RemoveMaterial?idMat=${material.id }" ><span class="glyphicon glyphicon-remove" ></span></a></li>
+								<li><a href="<c:url value="/RemoveMaterial?idMat=${material.id }" />" ><span class="glyphicon glyphicon-remove" ></span></a></li>
 							</ul>
 						</td>
 					</tr>
@@ -40,7 +40,5 @@
 		</table>
 	</div>
 </div>
-
-	
 
 <jsp:include page="include/footer.jsp" />

@@ -9,7 +9,7 @@
 		</h1>
 	</div>
 	<div class="row">
-		<form method="post" action="AddTest" enctype="multipart/form-data" >
+		<form method="post" action="" enctype="multipart/form-data" >
 		<input type="hidden" value="${requestScope.idMat }" name="idMat" id="idMat">
 			<div class="form-group">
 				<label for="inputNameTest">Name</label> <input

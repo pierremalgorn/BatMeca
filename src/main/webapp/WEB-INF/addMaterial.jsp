@@ -7,7 +7,7 @@
 		<h1 class="page-header">Add Material</h1>
 	</div>
 	<div class="row">
-		<form role="form" action="addMaterial" method="post">
+		<form role="form" action="" method="post">
 			<div class="form-group">
 				<label for="inputName">Name</label> <input type="name"
 					class="form-control" id="inputName" placeholder="Enter Name"

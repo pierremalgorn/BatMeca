@@ -7,7 +7,7 @@
 		<h1 class="page-header">Edit Material</h1>
 	</div>
 	<div class="row">
-		<form role="form" action="EditMaterial" method="post" >
+		<form role="form" action="" method="post" >
 			<input type="hidden" value="${requestScope.mat.id}" name="id" >
 			<div class="form-group">
 				<label for="inputName">Name</label> <input
