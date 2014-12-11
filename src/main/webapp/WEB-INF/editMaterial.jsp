@@ -4,7 +4,7 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">Edit Material</h1>
+		<h1 class="page-header">Edit material</h1>
 	</div>
 	<div class="row">
 		<form role="form" action="" method="post" >

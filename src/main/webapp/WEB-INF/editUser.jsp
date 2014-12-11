@@ -55,7 +55,7 @@
 								<c:if test="${admin == true}">
 									<div class="control-group">
 										<label class="control-label" for="typeuser">Account
-											Type</label>
+											type</label>
 										<div class="controls">
 											<select id="type" name="type" class="form-control">
 												<c:forEach items="${requestScope.types}" var="type">

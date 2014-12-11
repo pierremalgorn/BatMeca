@@ -5,8 +5,7 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">Add Test
-		</h1>
+		<h1 class="page-header">Add test</h1>
 	</div>
 	<div class="row">
 		<form method="post" action="" enctype="multipart/form-data" >
@@ -17,11 +16,11 @@
 					placeholder="Enter Name" name="inputNameTest" >
 			</div>
 			<div class="form-group" >
-				<label for="inputDataFile" >Data file</label>
+				<label for="inputDataFile" >Data file (*.txt)</label>
 				<input type="file" class="form-control" id="inputDataFile" name="inputDataFile" />
 			</div>
 			<div class="form-group" >
-				<label for="inputConfigFile" >Config File</label>
+				<label for="inputConfigFile" >Config file (*.par)</label>
 				<input type="file" class="form-control" id="inputConfigFile" name="inputConfigFile" >
 			</div>
 			

@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/js/function.js"></script>
 <div class="container">
 	<div class="row">
-		<h1>Test Details - ${requestScope.test.name }</h1>
+		<h1>Test details - ${requestScope.test.name }</h1>
 		<a class="btn btn-default pull-right"
 			href="Material?idMat=${requestScope.test.material.id }">Return to
 			test list</a>
@@ -37,11 +37,11 @@
 							<td>${requestScope.test.name }</td>
 						</tr>
 						<tr>
-							<th>Material Attribute</th>
+							<th>Material attribute</th>
 							<td></td>
 						</tr>
 						<tr>
-							<th>Test Attribute</th>
+							<th>Test attribute</th>
 							<td>
 								<table class="table">
 									<c:forEach items="${requestScope.test.testAttributs }"
@@ -152,23 +152,20 @@
 					<div class="col-md-2">
 						<ul class="nav nav-pills nav-stacked">
 							<li><a
-								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Lisser</a></li>
+								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Smooth</a></li>
 							<li><a
-								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calcul
-									Max</a></li>
+								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calc.
+									max</a></li>
 							<li><a id="btnCutMode" data-toggle="modal" data-target="#modalCut" >Cut mode</a></li>
 							<li><a id="btnFactor" data-toggle="modal" data-target="#myModal">Factor</a></li>
 							<li><a 
 								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
 
-							<li><a onclick="coeffDir('${pageContext.request.contextPath}/Traitment','${requestScope.test.id }');" >Coeff dir</a></li>
+							<li><a onclick="coeffDir('${pageContext.request.contextPath}/Traitment','${requestScope.test.id }');" >Coef dir</a></li>
 						</ul>
 					</div>
 
 					<div class="col-md-10">
-
-						<script>var tabGraph = new Array();</script>
-	
 						<div class="row">
 							<ul id="navCurve" class="nav nav-tabs">
 								<c:set var="i" value="1" />
@@ -182,6 +179,9 @@
 						</div>
 						<div class="row">
 						<div id="contentCurves" class="tab-content">
+
+							<script>var tabGraph = new Array();</script>
+
 							<c:set var="i" value="1" />
 							<c:forEach items="${requestScope.listData }" var="data">
 								<div class="tab-pane" id="curve${i }">
@@ -245,12 +245,12 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Apply Factor</h4>
+					<h4 class="modal-title" id="myModalLabel">Apply factor</h4>
 				</div>
 				<div class="modal-body">
 					<div class="col-md-offset-3" >
-						<button onclick="cutAfter('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut After</button>
-						<button onclick="cutBefore('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut Before</button>
+						<button onclick="cutAfter('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut after</button>
+						<button onclick="cutBefore('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut before</button>
 					</div>
 					
 				</div>
@@ -277,7 +277,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Apply Factor</h4>
+					<h4 class="modal-title" id="myModalLabel">Apply factor</h4>
 				</div>
 				<div class="modal-body">
 

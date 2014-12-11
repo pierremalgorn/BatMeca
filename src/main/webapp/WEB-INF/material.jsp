@@ -7,7 +7,7 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header col-md-offset-2">Material Details -
+		<h1 class="page-header col-md-offset-2">Material details -
 			${requestScope.material.name }</h1>
 	</div>
 	<div class="row">
@@ -16,9 +16,9 @@
 				<ul class="nav nav-pills nav-stacked">
 					<li><a
 						href="<c:url value="/AddSubMaterial?idParent=${requestScope.material.id }" />"><span
-							class="glyphicon glyphicon-plus"></span> Add Sub-MAterial</a></li>
+							class="glyphicon glyphicon-plus"></span> Add sub-material</a></li>
 					<li><a href="<c:url value="/AddTest?idMat=${requestScope.material.id }" />"><span
-							class="glyphicon glyphicon-plus"></span> Add Test</a></li>
+							class="glyphicon glyphicon-plus"></span> Add test</a></li>
 					<li><a
 						href="<c:url value="/RemoveMaterial?idMat=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-trash"></span> Remove</a></li>
@@ -55,7 +55,7 @@
 
 
 
-			<h3>Material Attribute</h3>
+			<h3>Material attributes</h3>
 
 			<table class="table table-striped">
 				<thead>
@@ -75,8 +75,7 @@
 			</table>
 			<ul class="nav nav-tabs">
 				<li><a href="#tests" data-toggle="tab">Test</a></li>
-				<li><a href="#subMat" data-toggle="tab">SubMaterial</a></li>
-
+				<li><a href="#subMat" data-toggle="tab">Sub-material</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tests">

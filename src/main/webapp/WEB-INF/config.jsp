@@ -8,17 +8,16 @@
 		<h1 class="page-header">Config</h1>
 	</div>
 	<div class="row">
-		<a class="btn btn-info" href="<c:url value="/AddTypeAttrMat" />">Add Type Attribute Material</a> 
-		<a class="btn btn-info" href="<c:url value="/AddTypeTestAttr" />">Add
-			Type Attribute Test</a>
+		<a class="btn btn-info" href="<c:url value="/AddTypeAttrMat" />">Add material type attribute</a> 
+		<a class="btn btn-info" href="<c:url value="/AddTypeTestAttr" />">Add test type attribute</a>
 
 		<ul class="nav nav-tabs">
-			<li><a href="#matAttr" data-toggle="tab" >Type Material Attribute</a></li>
-			<li><a href="#testAttr" data-toggle="tab" >Type Test Attribute</a></li>
+			<li><a href="#matAttr" data-toggle="tab" >Material type attribute</a></li>
+			<li><a href="#testAttr" data-toggle="tab" >Test type attribute</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="matAttr">
-				<h3>Type Material</h3>
+				<h3>Material type</h3>
 				<table class="table table-striped" >
 					<thead>
 						<tr>
@@ -45,7 +44,7 @@
 
 			</div>
 			<div class="tab-pane" id="testAttr">
-				<h3>Test Attribute</h3>
+				<h3>Test attribute</h3>
 				<table class="table table-striped" >
 					<thead>
 						<tr>

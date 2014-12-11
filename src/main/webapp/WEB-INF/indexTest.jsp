@@ -5,10 +5,7 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">
-			Test List 
-			<!-- <a href="AddTest?idSub=${requestScope.sub.id }"	class="btn btn-primary pull-right">Add Test</a>-->
-		</h1>
+		<h1 class="page-header">Test list</h1>
 	</div>
 	<div class="row">
 		<ol class="breadcrumb">

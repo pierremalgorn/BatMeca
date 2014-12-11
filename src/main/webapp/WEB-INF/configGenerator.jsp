@@ -5,8 +5,8 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row" >
-		<h1 class="page-header" >Config Generator
-			<button class="btn btn-info" id="btnPlus" type="button" >add Parameter</button>
+		<h1 class="page-header" >Config generator
+			<button class="btn btn-info" id="btnPlus" type="button" >Add parameter</button>
 		</h1>
 		<form action="" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
 		

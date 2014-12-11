@@ -8,7 +8,7 @@
 	<div class="row" >
 		<h1 class="page-header" >
 			Users list
-			<a href="<c:url value="/admin/user/add" />" class="btn btn-primary pull-right" >Add User</a>
+			<a href="<c:url value="/admin/user/add" />" class="btn btn-primary pull-right" >Add user</a>
 		</h1>
 	</div>
 	<c:if test="${param['event'] eq 'removed'}">
