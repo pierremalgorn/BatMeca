@@ -24,7 +24,6 @@
 							class="glyphicon glyphicon-trash"></span> Remove</a></li>
 					<li><a href="<c:url value="/EditMaterial?id=${requestScope.material.id }" />"><span
 							class="glyphicon glyphicon-edit"></span> Edit</a></li>
-
 				</ul>
 			</div>
 		</div>
@@ -38,22 +37,16 @@
 						mat = mat.getMaterialParent();
 						
 					}
-					list.add(mat);
-					
+					list.add(mat);	
 			%>
 			<ol class="breadcrumb">
-
  				<li><a href="<c:url value="/IndexMaterial" />">Material index</a></li>
 				<c:set var="i" value="${ list.size() }" />
 				<c:forEach items="${ list }" var="data">
 					<c:set var="i" value="${i - 1}" />
 					<li><a href="<c:url value="/Material?idMat=${list.get(i).getId()}" />">${list.get(i).getName()}</a></li>
 				</c:forEach>
-
 			</ol>
-
-
-
 
 			<h3>Material attributes</h3>
 
@@ -79,8 +72,6 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tests">
-
-
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -100,7 +91,6 @@
 												href="<c:url value="/RemoveTest?id=${test.id }&idMat=${requestScope.material.id}" />"><span
 													class="glyphicon glyphicon-remove"></span></a></li>
 										</ul>
-
 									</td>
 									<td></td>
 								</tr>

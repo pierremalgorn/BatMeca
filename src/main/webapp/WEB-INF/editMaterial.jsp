@@ -11,10 +11,9 @@
 			<input type="hidden" value="${requestScope.mat.id}" name="id" >
 			<div class="form-group">
 				<label for="inputName">Name</label> <input
-					type="name" class="form-control" id="inputName"
+					type="text" class="form-control" id="inputName"
 					placeholder="Enter Name" name="inputName" value="${requestScope.mat.name }" >
 			</div>
-			
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>

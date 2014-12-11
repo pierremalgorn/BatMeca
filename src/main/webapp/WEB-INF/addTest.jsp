@@ -23,14 +23,12 @@
 				<label for="inputConfigFile" >Config file (*.par)</label>
 				<input type="file" class="form-control" id="inputConfigFile" name="inputConfigFile" >
 			</div>
-			
 <%-- 			<c:forEach items="${requestScope.typesTest }" var="type" > --%>
 <!-- 				<div class="form-group" > -->
 <%-- 					<label for="input${type.name }" >${type.name}</label> --%>
 <%-- 					<input class="form-control" type="text" id="input${type.name }" name="input${type.name }" > --%>
 <!-- 				</div> -->
 <%-- 			</c:forEach> --%>
-			
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>

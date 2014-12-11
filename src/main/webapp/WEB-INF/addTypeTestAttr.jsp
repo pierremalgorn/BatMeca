@@ -9,17 +9,14 @@
 	</div>
 	<div class="row">
 		<form action="" method="post" >
-		
 			<div class="form-group" >
 				<input class="form-control" type="text" name="inputName" placeholder="Name" id="inputName" >
 			</div>
-			
 			<div class="form-group" >
 				<input class="form-control" type="text" name="inputPattern" placeholder="Pattern" id="inputPattern" >
 			</div>
 			<button class="btn btn-primary" type="submit" >Add</button>
 		</form>
-	
 	</div>
 </div>
 <jsp:include page="include/footer.jsp" />

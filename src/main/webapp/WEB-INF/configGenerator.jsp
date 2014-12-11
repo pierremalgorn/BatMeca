@@ -17,7 +17,6 @@
 	</div>
 </div>
 <script>
-
 	$(function() {
 	var cpt = 0;
 		$("#btnPlus").on('click',function(event){
@@ -39,7 +38,5 @@
 		$(strId).remove();
 		console.log(strId);
 	}
-
-
 </script>
 <jsp:include page="include/footer.jsp" />

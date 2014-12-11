@@ -39,9 +39,6 @@
 						</c:forEach>
 					</tbody>
 				</table>
-
-
-
 			</div>
 			<div class="tab-pane" id="testAttr">
 				<h3>Test attribute</h3>
@@ -68,8 +65,6 @@
 				</table>
 			</div>
 		</div>
-
-
 	</div>
 </div>
 <jsp:include page="include/footer.jsp" />
