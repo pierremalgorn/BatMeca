@@ -13,10 +13,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
@@ -83,6 +85,17 @@ public class TestController {
 		// model.addAttribute("listCol", listCol);
 
 		return "test";
+	}
+
+	@RequestMapping(value = "/generatepdf/{id}", method = RequestMethod.GET)
+	protected ModelAndView generatePDFGet(@PathVariable(value = "id") int id) {
+		ModelAndView model = new ModelAndView("pdfView");
+
+		Test test = testService.find(id);
+
+		model.addObject("test", test);
+
+		return model;
 	}
 
 	@RequestMapping(value = "/IndexTest", method = RequestMethod.GET)
