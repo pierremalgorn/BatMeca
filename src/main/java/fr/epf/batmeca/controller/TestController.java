@@ -69,7 +69,7 @@ public class TestController {
 		List<String> listFile = new ArrayList<String>();
 
 		for (File file : files) {
-			System.out.println("NAME = " + file.getAbsolutePath());
+			// System.out.println("NAME = " + file.getAbsolutePath());
 			listFile.add(file.getAbsolutePath());
 			String[] tab = { CsvHandler.readAll(file.getAbsolutePath()),
 					file.getAbsolutePath() };

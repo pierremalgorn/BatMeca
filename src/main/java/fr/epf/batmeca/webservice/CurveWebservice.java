@@ -235,6 +235,7 @@ public class CurveWebservice {
 
 	@RequestMapping(value = "/RemoveCurve", method = RequestMethod.GET)
 	protected String doGet(@RequestParam("file") String file) {
+		// TODO move file operation to file service
 		File curve = new File(file);
 		boolean delete = curve.delete();
 		return "{" + delete + "}";

@@ -235,7 +235,7 @@ public class FileServiceImpl implements IFileService {
 	}
 
 	private void dat2csv(Test test) throws IOException {
-		// FIXME do NOT use an external script to do this
+		// FIXME do NOT use an external script to do this, use Java
 		String[] cmd = new String[] { config.getScriptsPath() + DAT2CSV_S,
 				getDataFilename(test), getTestPath(test) + DATACSV_F,
 				getTestPath(test) + HEADER_T_F };
