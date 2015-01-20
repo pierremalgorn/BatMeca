@@ -2,6 +2,9 @@
 
 ### Nettoyage
 
+- *Coder en anglais !*
+    - Traduire/corriger/améliorer les commentaires en français laissés par l'équipe 2013
+    - Générer de la javadoc
 - Améliorer le layout des pages (position des éléments, alignements, marges...), c'est du grand n'importe quoi pour le moment. Mieux utiliser Bootstrap pour gérer des alignements.
 - Nettoyer et améliorer le JavaScript qui est mis dans tous les sens dans les pages (notamment la page de détails d'un test).
 - Nettoyer les fonctions permettant d'effectuer des traitements sur les courbes (CurveWebservice).
@@ -17,8 +20,8 @@ si possible, découper chaque fonction en différentes URL (/traitement/smooth, 
     - Si MySQL donne des erreurs d'élément non trouvé après la suppression d'un matériau, il faut regarder dans la BDD et supprimer les liens restant vers ce matériau.
 - Traduire le script shell en Java pour pouvoir s'en passer.
 - Améliorer la façon dont les tests sont stockés
-    - en ce moment ils sont tous dans un même dossier, un dossier par test. Cela peut poser des problèmes par rapport au nombre maximum de fichiers autorisés dans un seul dossier.
-        - Stocker les tests groupés par utilisateurs par exemple...
+    - en ce moment ils sont tous dans un même dossier (un dossier par test), cela peut poser des problèmes par rapport au nombre maximum de fichiers autorisés dans un seul dossier.
+        - Stocker les tests (un dossier par test) groupés par utilisateurs par exemple...
 
 
 ### Améliorations
