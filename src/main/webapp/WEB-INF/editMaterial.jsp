@@ -8,7 +8,6 @@
 	</div>
 	<div class="row">
 		<form role="form" action="" method="post" >
-			<input type="hidden" value="${requestScope.mat.id}" name="id" >
 			<div class="form-group">
 				<label for="inputName">Name</label> <input
 					type="text" class="form-control" id="inputName"

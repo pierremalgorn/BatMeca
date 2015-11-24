@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
-@Configuration
+@Configuration("configuration")
 @PropertySource("classpath:batmeca.properties")
 public class Config {
 

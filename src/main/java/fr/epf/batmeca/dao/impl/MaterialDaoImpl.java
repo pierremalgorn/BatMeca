@@ -21,9 +21,8 @@ public class MaterialDaoImpl implements IMaterialDao {
 	@SuppressWarnings("unchecked")
 	public List<Material> findAll() {
 		List<Material> list = null;
-
 		list = em.createNamedQuery("findAllMaterial").getResultList();
-
+		
 		return list;
 	}
 

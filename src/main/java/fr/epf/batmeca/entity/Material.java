@@ -2,6 +2,7 @@ package fr.epf.batmeca.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,12 +28,15 @@ public class Material {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
 	private Set<Test> tests;
 
 	@OneToMany(mappedBy = "material", fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<MaterialAttribute> matAttrs;
 
+	@OneToMany(mappedBy = "materialParent", fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
+	private Set<Material> materialChilds;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_parent", nullable = true)
 	private Material materialParent;

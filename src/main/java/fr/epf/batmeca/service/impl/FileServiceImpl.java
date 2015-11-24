@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -53,6 +54,7 @@ public class FileServiceImpl implements IFileService {
 	private static final String TMP_F = S + "tmp.csv";
 
 	@Autowired
+	@Qualifier("configuration")
 	private Config config;
 
 	@Override
