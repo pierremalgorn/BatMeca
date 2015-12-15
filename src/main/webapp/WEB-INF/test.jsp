@@ -10,6 +10,8 @@
 <div class="container">
 	<div class="row">
 		<h1>Test details - ${requestScope.test.name }</h1>
+		<p>Here is a test page, you can create several curves with the data you want. Select your X and Y axis below and click on Create to add a Curve, at the bottom of the page.</p>
+		<p>If you need to edit the names of the axis, you can do it below, under Edit names</p> 
 		<a class="btn btn-default pull-right"
 			href="Material?idMat=${requestScope.test.material.id }">Return to
 			test list</a>
@@ -171,7 +173,7 @@
 							<c:set var="i" value="1" />
 							<c:forEach items="${requestScope.listData }" var="data">
 								<div class="tab-pane" id="curve${i }">
-									<h3>${data[1] }</h3>
+									<h4>You can zoom on the curve by selecting a portion of it with your mouse. You can then reset the view by double-clicking on the curve.<h4>
 									<div id="graph${i }" style="width: 100%; height: 500px;"></div>
 									<script charset="UTF-8">
 									//$(function(tabGraph) {

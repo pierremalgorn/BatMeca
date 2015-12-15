@@ -9,6 +9,9 @@
 	<div class="row">
 		<h1 class="page-header col-md-offset-2">Material details -
 			${requestScope.material.name }</h1>
+			<p>You can browse the tests associated with this material, and browse the submaterials.</p>
+			<p>You can also add a test, add a submaterial, edit the material name, and delete it</p>
+			<p>Please be aware that the removing of a material which contains submaterials will automatically delete the submaterials.</p>
 	</div>
 	<div class="row">
 		<div id="arbo" class="col-md-3">
@@ -39,35 +42,37 @@
 					}
 					list.add(mat);	
 			%>
-			<ol class="breadcrumb">
- 				<li><a href="<c:url value="/IndexMaterial" />">Material index</a></li>
-				<c:set var="i" value="${ list.size() }" />
-				<c:forEach items="${ list }" var="data">
-					<c:set var="i" value="${i - 1}" />
-					<li><a href="<c:url value="/Material?idMat=${list.get(i).getId()}" />">${list.get(i).getName()}</a></li>
-				</c:forEach>
-			</ol>
+			<!-- 			NON UTILISE -->
+<!-- 			<ol class="breadcrumb"> -->
+<%--  				<li><a href="<c:url value="/IndexMaterial" />">Material index</a></li> --%>
+<%-- 				<c:set var="i" value="${ list.size() }" /> --%>
+<%-- 				<c:forEach items="${ list }" var="data"> --%>
+<%-- 					<c:set var="i" value="${i - 1}" /> --%>
+<%-- 					<li><a href="<c:url value="/Material?idMat=${list.get(i).getId()}" />">${list.get(i).getName()}</a></li> --%>
+<%-- 				</c:forEach> --%>
+<!-- 			</ol> -->
 
-			<h3>Material attributes</h3>
 
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${requestScope.material.matAttrs}" var="matAttr">
-						<tr>
-							<td>${matAttr.typeMatAttr.name }</td>
-							<td>${matAttr.value}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+<!-- 			<h3>Material attributes</h3> -->
+
+<!-- 			<table class="table table-striped"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th>Name</th> -->
+<!-- 						<th>Value</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<%-- 					<c:forEach items="${requestScope.material.matAttrs}" var="matAttr"> --%>
+<!-- 						<tr> -->
+<%-- 							<td>${matAttr.typeMatAttr.name }</td> --%>
+<%-- 							<td>${matAttr.value}</td> --%>
+<!-- 						</tr> -->
+<%-- 					</c:forEach> --%>
+<!-- 				</tbody> -->
+<!-- 			</table> -->
 			<ul class="nav nav-tabs">
-				<li><a href="#tests" data-toggle="tab">Test</a></li>
+				<li class="active"><a href="#tests" data-toggle="tab">Test</a></li>
 				<li><a href="#subMat" data-toggle="tab">Sub-material</a></li>
 			</ul>
 			<div class="tab-content">

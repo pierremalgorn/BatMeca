@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>batmeca</groupId>
-	<artifactId>batmeca2014</artifactId>
+	<artifactId>batmeca</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.2-SNAPSHOT</version>
 
@@ -148,7 +148,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>batmeca2014</finalName>
+		<finalName>batmeca</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

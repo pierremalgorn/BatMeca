@@ -6,10 +6,12 @@
 
 <div class="container" >
 	<div class="row" >
-		<h1 class="page-header" >
-			Users list
-			<a href="<c:url value="/admin/user/add" />" class="btn btn-primary pull-right" >Add user</a>
-		</h1>
+		<h1 class="page-header" >Users list</h1>
+		<p>Here is the list of the users able to connect to the BatMéca interface.</p>
+		<p>You can edit or delete them, and add new ones. A user can be an admin (he will have the rights to access to this page), or a standard user.</p>
+		<p>WARNING : Don't delete the last user, or you will not be able to connect to the interface anymore.</p>
+		<a href="<c:url value="/admin/user/add" />" class="btn btn-primary pull-right" >Add user</a>
+		
 	</div>
 	<c:if test="${param['event'] eq 'removed'}">
 		<div class="alert alert-success alert-dismissable">

@@ -6,6 +6,7 @@
 <div class="container">
 	<div class="row">
 		<h1 class="page-header">Add test</h1>
+		<p>Please enter the name of the test you want to add, and select the files created by the machine.</p>
 	</div>
 	<div class="row">
 		<form method="post" action="" enctype="multipart/form-data" >

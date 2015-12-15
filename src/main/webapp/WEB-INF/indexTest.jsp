@@ -6,6 +6,8 @@
 <div class="container">
 	<div class="row">
 		<h1 class="page-header">Test list</h1>
+		 <p>Here is the list of the tests associed to the materials contained into the database.</p>
+		 <p>You can show the details by clicking on their names, show the related material details or delete them by clicking on the cross.</p>
 	</div>
 	<div class="row">
 	<!-- 										Désactivation du code non utilisable -> fonctions pas implémentées -->

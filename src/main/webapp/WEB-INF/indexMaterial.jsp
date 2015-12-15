@@ -9,7 +9,7 @@
 		<h1 class="page-header" >Material</h1>
 		<a href="<c:url value="/addMaterial" />" class="btn btn-primary pull-right" >Add material</a>
 		<p> Here is the list of the materials contained into the database.</p>
-		<p> You can show the details by clicking on their names, edit them or delete them by clicking on the cross. You can also add a new material by clinking on the blue button.</p>
+		<p> You can show the details by clicking on their names, edit them or delete them by clicking on the cross. You can also add a new material by clicking on the blue button.</p>
 			
 	</div>
 	<div class="row" >

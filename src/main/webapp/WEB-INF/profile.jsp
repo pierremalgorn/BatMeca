@@ -7,6 +7,7 @@
 <div class="container">
 	<div class="row">
 		<h1 class="page-header">Profile</h1>
+		<p>You can edit your user profile here</p>
 	</div>
 	<div class="row">
 		<div class="col-md-4">

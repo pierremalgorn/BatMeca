@@ -4,7 +4,7 @@
 <jsp:include page="include/header.jsp" />
 <div class="container">
 	<div class="row">
-		<h1 class="page-header">Add material</h1>
+		<h1 class="page-header">Add submaterial</h1>
 	</div>
 	<div class="row">
 		<form role="form" action="" method="post">
@@ -13,14 +13,15 @@
 					class="form-control" id="inputName" placeholder="Enter Name"
 					name="inputName">
 			</div>
-			<h3>Material attribute</h3>
-			<c:forEach items="${requestScope.matAttrs }" var="attr">
-				<div class="form-group">
-					<label for="input${attr.name }">${attr.name }</label> <input
-						type="text" class="form-control" id="input${attr.name }"
-						name="input${attr.name }">
-				</div>
-			</c:forEach>
+<!-- 			FONCTIONS NON UTILISEES -->
+<!-- 			<h3>Material attribute</h3> -->
+<%-- 			<c:forEach items="${requestScope.matAttrs }" var="attr"> --%>
+<!-- 				<div class="form-group"> -->
+<%-- 					<label for="input${attr.name }">${attr.name }</label> <input --%>
+<%-- 						type="text" class="form-control" id="input${attr.name }" --%>
+<%-- 						name="input${attr.name }"> --%>
+<!-- 				</div> -->
+<%-- 			</c:forEach> --%>
 			<input type="hidden" id="inputMaterialParent"
 				name="inputMaterialParent" value="${requestScope.idParent }">
 			<button type="submit" class="btn btn-default">Submit</button>
