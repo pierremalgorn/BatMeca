@@ -33,12 +33,22 @@ public class CurveWebservice {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/SelectRow", method = RequestMethod.POST)
-	protected String doPost(@RequestParam("inputX") String inputX,
+	protected String doPost(
+			@RequestParam("inputX") String inputX,
 			@RequestParam("inputY") String inputY,
 			@RequestParam("inputId") String inputId) throws IOException {
-
+		
+		//On sépare l'id du nom des colonnes
+		String[] mixedInputX = inputX.split("T");
+		String[] mixedInputY = inputY.split("T");
+		
 		int x = Integer.parseInt(inputX);
 		int y = Integer.parseInt(inputY);
+		
+		/*String xName = mixedInputX[1];
+		String yName = mixedInputY[1];*/
+		String xName = "x";
+		String yName = "y";
 
 		Test test = testService.find(Integer.parseInt(inputId));
 		File[] list = fileService.listCurve(test);

@@ -5,6 +5,7 @@
 <div class="container">
 	<div class="row">
 		<h1 class="page-header">Add material</h1>
+		<p>To add a new material to the database, please enter the name and its parent material if required</p>
 	</div>
 	<div class="row">
 		<form role="form" action="" method="post">
@@ -13,7 +14,7 @@
 					class="form-control" id="inputName" placeholder="Enter Name"
 					name="inputName">
 			</div>
-			<h3>Material attribute</h3>
+			<h3>Parent material</h3>
 			<c:forEach items="${requestScope.matAttrs }" var="attr">
 				<div class="form-group">
 					<label for="input${attr.name }">${attr.name }</label> <input

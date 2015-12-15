@@ -35,7 +35,8 @@
 						<li id="materials"><a href="<c:url value="/IndexMaterial" />">Materials</a></li>
 						<!-- <li id="configgenerator"><a href="ConfigGenerator">Configuration Generator</a></li>-->
 						<li><a href="<c:url value="/IndexTest" />">Tests</a></li>
-						<li><a href="<c:url value="/Config" />">Config</a></li>
+<!-- 						Commentaire d'une fonction non utilisée -->
+<%-- 						<li><a href="<c:url value="/Config" />">Config</a></li> --%>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<sec:authorize access="hasRole('ROLE_ADMIN')">

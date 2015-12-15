@@ -17,9 +17,10 @@
 	<div class="row">
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab" >Details</a></li>
-			<li><a href="#curve" data-toggle="tab" >Curve</a></li>
-			<li><a id="ongletResult" href="#result" data-toggle="tab" >Result</a></li>
-			<li><a id="ongletHist" href="#historic" data-toggle="tab" >History</a></li>
+			<li><a href="#curve" data-toggle="tab" >Curves</a></li>
+<!-- 			DESACTIVES CAR NON UTILISABLES -->
+<!-- 			<li><a id="ongletResult" href="#result" data-toggle="tab" >Result</a></li> -->
+<!-- 			<li><a id="ongletHist" href="#historic" data-toggle="tab" >History</a></li> -->
 		</ul>
 		<br>
 		<div id="test"></div>
@@ -36,24 +37,25 @@
 							<th>Name</th>
 							<td>${requestScope.test.name }</td>
 						</tr>
-						<tr>
-							<th>Material attribute</th>
-							<td></td>
-						</tr>
-						<tr>
-							<th>Test attribute</th>
-							<td>
-								<table class="table">
-									<c:forEach items="${requestScope.test.testAttributs }"
-										var="attr">
-										<tr>
-											<th>${attr.typeTestAttr.name}</th>
-											<td>${attr.value }</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</td>
-						</tr>
+<!-- 						COMMENTAIRES DES PARTIES NON UTILISEES -->
+<!-- 						<tr> -->
+<!-- 							<th>Material attribute</th> -->
+<!-- 							<td></td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<th>Test attribute</th> -->
+<!-- 							<td> -->
+<!-- 								<table class="table"> -->
+<%-- 									<c:forEach items="${requestScope.test.testAttributs }" --%>
+<%-- 										var="attr"> --%>
+<!-- 										<tr> -->
+<%-- 											<th>${attr.typeTestAttr.name}</th> --%>
+<%-- 											<td>${attr.value }</td> --%>
+<!-- 										</tr> -->
+<%-- 									</c:forEach> --%>
+<!-- 								</table> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
 					</tbody>
 				</table>
 			</div>
@@ -149,23 +151,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-2">
-						<ul class="nav nav-pills nav-stacked">
-							<li><a
-								onclick="lisser('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&lisser=true');">Smooth</a></li>
-							<li><a
-								onclick="calculMax('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&calMax=2');">Calc.
-									max</a></li>
-							<li><a id="btnCutMode" data-toggle="modal" data-target="#modalCut" >Cut mode</a></li>
-							<li><a id="btnFactor" data-toggle="modal" data-target="#myModal">Factor</a></li>
-							<li><a 
-								onclick="reset('${pageContext.request.contextPath}/Traitment','id=${requestScope.test.id }&reset=true');">Reset</a></li>
-
-							<li><a onclick="coeffDir('${pageContext.request.contextPath}/Traitment','${requestScope.test.id }');" >Coef dir</a></li>
-						</ul>
-					</div>
-
-					<div class="col-md-10">
+					<div class="col-md-12">
 						<div class="row">
 							<ul id="navCurve" class="nav nav-tabs">
 								<c:set var="i" value="1" />
@@ -193,12 +179,17 @@
 										var nb = '${i}';
 										var data = '${data[0] }';
 										//console.log(data);
+										
+										//On parse les numéros dans le nom du fichier pour récupérer les noms d'axes...
+										var filePath = "${data[1] }".split("/");
+										filePath = filePath[filePath.length - 1].split(".");
+										filePath = filePath[0].split("-");
+										
 										g = new Dygraph(document
 												.getElementById("graph"+nb),
 												data, {
-											title: 'Titre',
-											xlabel:'time',
-											ylabel:'value',
+											xlabel: $("#inputX > option[value=" + filePath[0] + "]").html(),
+											ylabel: $("#inputY > option[value=" + filePath[1] + "]").html(),
 											strokeWidth: 1.5,
 										});
 										tabGraph.push(g);
@@ -221,124 +212,56 @@
 					</div>
 				</div>
 			</div>
-			<div class="tab-pane" id="result" >
-				<pre>
-					<p id="contentResult" ></p>
-				</pre>
-			</div>
-			<div class="tab-pane" id="historic" >
-				<pre>
-					<p id="contentHistoric" ></p>
-				</pre>
-			</div>
+<!-- 			DESACTIVES CAR NON UTILISABLES -->
+<!-- 			<div class="tab-pane" id="result" > -->
+<!-- 				<pre> -->
+<!-- 					<p id="contentResult" ></p> -->
+<!-- 				</pre> -->
+<!-- 			</div> -->
+<!-- 			<div class="tab-pane" id="historic" > -->
+<!-- 				<pre> -->
+<!-- 					<p id="contentHistoric" ></p> -->
+<!-- 				</pre> -->
+<!-- 			</div> -->
 		</div>
 	</div>
 </div>
 
-<!-- MODAL CHOSE CUT MODE -->
-<div class="modal fade" id="modalCut" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
 
-		<div class="modal-content">
-			
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Apply factor</h4>
-				</div>
-				<div class="modal-body">
-					<div class="col-md-offset-3" >
-						<button onclick="cutAfter('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut after</button>
-						<button onclick="cutBefore('${pageContext.request.contextPath}/Traitment',${requestScope.test.id });" class="btn btn-info" >Cut before</button>
-					</div>
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					
-				</div>
-		
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-
-
-<!-- Formulaire de multiplication par un facteur -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-
-		<div class="modal-content">
-			<form id="formFactor" class="form-inline" role="form"
-				action="Traitment" method="post">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Apply factor</h4>
-				</div>
-				<div class="modal-body">
-
-					<input type="hidden" value="${requestScope.test.id }"
-						name="inputId" id="inputId">
-
-					<div class="form-group">
-						<input class="form-control" name="inputFactor" id="inputFactor"
-							placeholder="Factor">
-					</div>
-					<div class="form-group">
-						<select class="form-control" id="selectRow" name="selectRow">
-							<option value="">...</option>
-							<c:set var="i" value="1" />
-							<c:forEach items="${requestScope.colHeader[0]}" var="rowName">
-
-								<option class="elemList" id="elem${i }" value="${i }">${rowName }</option>
-								<c:set var="i" value="${i + 1}"></c:set>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button id="btnFormFactor" type="button" class="btn btn-primary">Save
-						changes</button>
-				</div>
-			</form>
-		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-<script>
-
+<script type="text/javascript">
 var focus = 1;
-var url = '${pageContext.request.contextPath}/ShowResult';
-var urlHist = '${pageContext.request.contextPath}/ShowHistoric';
-var id =${requestScope.test.id } ;
 
-$("#ongletHist").on('click',function(){
-	getResult(url,id);
-});
-$("#ongletResult").on('click',function(){
-	getHistoric(urlHist,id);
-});
+//BUGFIX la courbe ne s'affiche pas si on appelle pas resize
+setTimeout(function(){
+	tabGraph[focus - 1].resize();
+}, 50);
+
+// var url = '${pageContext.request.contextPath}/ShowResult';
+// var urlHist = '${pageContext.request.contextPath}/ShowHistoric';
+// var id =${requestScope.test.id } ;
+
+//fonctions non utilisées et désactivées
+// $("#ongletHist").on('click',function(){
+// 	getResult(url,id);
+// });
+// $("#ongletResult").on('click',function(){
+// 	getHistoric(urlHist,id);
+// });
 
 
 
 
-listCol();
-
-factorCol();
 
 	
 	$('#navCurve a:first').tab('show') ;// Select first tab
 	$(".ongletCurve").on('click',function(){
 		focus = $(this).attr("data");
 		tabGraph[focus - 1].resize();
+		//BUGFIX la courbe ne s'affiche pas si on appelle pas resize 2 fois : conflit Bootstrap ?
+		setTimeout(function(){
+			tabGraph[focus - 1].resize();
+		}, 50);
+		
 
 	});
 

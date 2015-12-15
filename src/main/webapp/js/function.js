@@ -32,7 +32,7 @@ function lisser(url, data) {
 			// refreshCurve(json);
 			console.log("Succes");
 			console.log("focus = " + focus);
-			tabGraph[focus - 1] = new Dygraph(document.getElementById("graph"
+			s[focus - 1] = new Dygraph(document.getElementById("graph"
 					+ focus), data, {});
 			tabGraph[focus -1].resize();
 		},
@@ -109,7 +109,7 @@ function calculMax(url, data) {
 
 
 /*
- * Permet de selectionner une courbe 
+ * Permet de selectionner une courbe (ajouter une courbe)
  * */
 function selectRow(url) {
 	
@@ -139,6 +139,8 @@ function selectRow(url) {
 				console.log("ERROR ");
 			}
 		});
+		//BUGFIX : n'affiche pas la courbe ajoutée sinon
+		location.reload();
 	});
 }
 
@@ -313,7 +315,7 @@ function cutBefore(url,id) {
 	console.log("CUT BEFOR");
 	var end;
 	$('#graph'+focus).on('click',function(){
-		end = tabGraph[focus - 1].getSelection();
+		end = a[focus - 1].getSelection();
 		cut(url, 'id=' + id + '&end=' + end+"&before=true");
 		$(this).unbind('click');
 	});
@@ -353,7 +355,8 @@ function saveHeader(){
 		
 		
 	});
-	
+	//BUGFIX : n'affiche pas les modifications sinon
+	location.reload();
 	});
 }
 
